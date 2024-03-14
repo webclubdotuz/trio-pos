@@ -35,41 +35,6 @@ return new class extends Migration
             'password' => bcrypt('123456')
         ]);
 
-        DB::table('users')->insert([
-            'fullname' => 'Manager 2',
-            'username' => 'manager2',
-            'phone' => '934879591',
-            'password' => bcrypt('123456')
-        ]);
-
-        DB::table('users')->insert([
-            'fullname' => 'Presser 1',
-            'username' => 'presser1',
-            'phone' => '934879592',
-            'password' => bcrypt('123456')
-        ]);
-
-        DB::table('users')->insert([
-            'fullname' => 'Presser 2',
-            'username' => 'presser2',
-            'phone' => '934879593',
-            'password' => bcrypt('123456')
-        ]);
-
-        DB::table('users')->insert([
-            'fullname' => 'Presser 3',
-            'username' => 'presser3',
-            'phone' => '934879594',
-            'password' => bcrypt('123456')
-        ]);
-
-        DB::table('users')->insert([
-            'fullname' => 'Presser 4',
-            'username' => 'presser4',
-            'phone' => '934879595',
-            'password' => bcrypt('123456')
-        ]);
-
 
     }
 
