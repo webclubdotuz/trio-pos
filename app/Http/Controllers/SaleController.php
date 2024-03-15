@@ -42,6 +42,10 @@ class SaleController extends Controller
 
     public function destroy(Sale $sale)
     {
+
+        $sale->installments()->delete();
+        $sale->payments()->delete();
+        $sale->sale_items()->delete();
         $sale->delete();
         return redirect()->route('sales.index');
     }

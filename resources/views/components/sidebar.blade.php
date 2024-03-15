@@ -90,6 +90,7 @@
             </a>
             <ul>
                 <li><a href="{{ route('reports.sale-report-user') }}"><i class="bx bx-user"></i> Продажник</a></li>
+                <li><a href="{{ route('reports.installment-report-debt') }}"><i class="bx bx-chart"></i> Рассрочки</a></li>
                 <li><a href="{{ route('reports.expense') }}"><i class="bx bx-chart"></i> Расходы</a></li>
             </ul>
         </li>

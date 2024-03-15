@@ -81,4 +81,18 @@ class Sale extends Model
         }
     }
 
+    public function getFactDebtMonthCountAttribute()
+    {
+        $count = 0;
+
+        foreach ($this->installments as $installment) {
+            if (date('Y-m-d') >= $installment->date && $installment->debt > 0)
+            {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
 }

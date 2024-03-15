@@ -28,7 +28,7 @@
                                 <tr>
                                     <td>{{ $brand->id }}</td>
                                     <td>
-                                        <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}" class="img-thumbnail" width="100">
+                                        <img src="{{ $brand->image_url }}" alt="{{ $brand->name }}" class="img-thumbnail" width="50">
                                     </td>
                                     <td>{{ $brand->name }}</td>
                                     <td>{{ $brand->description }}</td>
