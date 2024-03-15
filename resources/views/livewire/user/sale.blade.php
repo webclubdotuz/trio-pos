@@ -16,48 +16,48 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Поставщик</th>
-                    <th>Рулоны</th>
+                    <th>Клиент</th>
+                    <th>Товары</th>
                     <th>Сумма</th>
-                    <th>Статус</th>
                     <th>Оплата</th>
                     <th>Дата</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($transactions as $transaction)
+                @foreach ($sales as $sale)
                     <tr>
-                        <td>{{ $transaction->id }}</td>
+                        <td>{{ $sale->id }}</td>
                         <td>
-                            <a href="{{ route('contacts.show', $transaction->contact->id) }}">{{ $transaction->contact->fullname }}</a>
+                            <a href="{{ route('customers.show', $sale->customer->id) }}">{{ $sale->customer->fullname }}</a>
                         </td>
                         <td>
-                            <div class="dropdown">
-                                <a type="button" data-bs-toggle="dropdown">{{ $transaction->sales->count() }}</a>
+                            {{ $sale->sale_items->count() }}
+                            <div class="dropdown d-inline">
+                                <a type="button" data-bs-toggle="dropdown">
+                                    <i class="bx bx-show"></i>
+                                </a>
                                 <div class="dropdown-menu p-2">
-                                    <table class="table table-bordered table-hover table-sm">
+                                    <table class="table table-bordered table-hover table-sm" id="table">
                                         <thead>
                                             <tr>
                                                 <th>№</th>
-                                                <th>Формат рулона</th>
-                                                <th>Вес рулона</th>
-                                                <th>Плотность</th>
-                                                <th>Клей</th>
+                                                <th>Фото</th>
+                                                <th>Товар</th>
                                                 <th>Цена</th>
                                                 <th>Сумма</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($transaction->sales as $sales)
+                                            @foreach ($sale->sale_items as $sale_item)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $sales->roll->size }} м</td>
-                                                    <td>{{ $sales->roll->weight }} кг</td>
-                                                    <td>{{ $sales->roll->paper_weight }} гр</td>
-                                                    <td>{{ $sales->roll->glue ? 'Да' : 'Нет' }}</td>
-                                                    <td>{{ nf($sales->price) }}</td>
-                                                    <td>{{ nf($sales->total) }}</td>
+                                                    <td>
+                                                        <img src="{{ asset($sale_item->product->image_url) }}" alt="{{ $sale_item->product->name }}" class="img-fluid" style="max-width: 50px;">
+                                                    </td>
+                                                    <td>{{ $sale_item->product->name }}</td>
+                                                    <td>{{ nf($sale_item->quantity, 2) }} {{ $sale_item->product->unit }}</td>
+                                                    <td>{{ nf($sale_item->price, 2) }}</td>
+                                                    <td>{{ nf($sale_item->total, 2) }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -65,41 +65,11 @@
                                 </div>
                             </div>
                         </td>
-                        <td>{{ nf($transaction->total, 2) }} {{ $transaction->debt_info }}</td>
+                        <td>{{ nf($sale->total, 2) }} {{ $sale->debt_info }}</td>
                         <td>
-                            {!! $transaction->status_html !!}
+                            {!! $sale->status_html !!}
                         </td>
-                        <td>
-                            {!! $transaction->payment_status_html !!}
-                        </td>
-                        <td>{{ df($transaction->created_at, 'd.m.Y H:i') }}</td>
-                        <td>
-
-                            <div class="dropdown open">
-                                <button class="btn bt-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    <i class="bx bx-dots-horizontal-rounded"></i>
-                                </button>
-                                <div class="dropdown-menu" style="position: relative;">
-                                    @if ($transaction->debt)
-                                        <button type="button" class="m-2 btn-block btn btn-primary btn-sm"
-                                            wire:click="$dispatch('openModal', { transaction_id: {{ $transaction->id }} })">
-                                            <i class="bx bx-money"></i>[Оплатить]
-                                        </button>
-                                    @endif
-                                    <button type="button" class="m-2 btn-block btn btn-sm btn-danger"
-                                        wire:click="delete({{ $transaction->id }})" wire:confirm="Вы уверены?">
-                                        <i class="bx bx-trash font-size-16 align-middle"></i>
-                                    </button>
-                                    <button type="button" class="m-2 btn-block btn btn-success btn-sm"
-                                            wire:click="$dispatch('openModalTransactionShow', { transaction_id: {{ $transaction->id }} })">
-                                            <i class="bx bx-show"></i>[Показать]
-                                        </button>
-                                </div>
-                            </div>
-
-                            <div class="btn-group">
-                            </div>
-                        </td>
+                        <td>{{ df($sale->created_at, 'd.m.Y H:i') }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -108,20 +78,10 @@
                     <th>Итого</th>
                     <th></th>
                     <th></th>
-                    <th>{{ nf($transactions->sum('total'), 2) }}</th>
-                    <th></th>
-                    <th></th>
+                    <th>{{ nf($sales->sum('total'), 2) }}</th>
                     <th></th>
                     <th></th>
             </tfoot>
         </table>
     </div>
 </div>
-
-@push('js')
-    <script>
-        Livewire.on('contactCloseModal', () => {
-            Livewire.dispatch('refreshContacts');
-        });
-    </script>
-@endpush

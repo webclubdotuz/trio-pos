@@ -25,51 +25,51 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach ($transactions as $transaction)
+				@foreach ($purchases as $purchase)
 					<tr>
-						<td>{{ $transaction->id }}</td>
+						<td>{{ $purchase->id }}</td>
 						<td>
-                            <a href="{{ route('contacts.show', $transaction->contact->id) }}">{{ $transaction->contact->fullname }}</a>
+                            <a href="{{ route('suppliers.show', $purchase->supplier->id) }}">{{ $purchase->supplier->fullname }}</a>
                         </td>
 						<td>
-                            @foreach ($transaction->purchases as $purchase)
+                            @foreach ($purchase->purchase_items as $purchase_item)
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        {{ $purchase->product->name }}
+                                        {{ $purchase_item->product->name }}
                                     </div>
                                     <div>
                                         <a data-bs-toggle="dropdown" class="text-primary">
-                                            {{ nf($purchase->quantity, 2) }} кг
+                                            {{ nf($purchase_item->quantity, 2) }} кг
                                         </a>
                                     </div>
                                 </div>
                             @endforeach
                         </td>
-						<td>{{ nf($transaction->total, 2) }} {{ $transaction->debt_info }}</td>
+						<td>{{ nf($purchase->total, 2) }} {{ $purchase->debt_info }}</td>
                         <td>
-                            {!! $transaction->payment_status_html !!}
+                            {!! $purchase->payment_status_html !!}
                         </td>
-						<td>{{ df($transaction->created_at, 'd.m.Y H:i') }}</td>
+						<td>{{ df($purchase->created_at, 'd.m.Y H:i') }}</td>
                         <td>
-                            @if(hasRoles() || $transaction->user_id == $user->id)
+                            @if(hasRoles() || $purchase->user_id == $user->id)
                             <div class="dropdown open">
                                 <button class="btn bt-sm btn-primary dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown">
                                     <i class="bx bx-dots-horizontal-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu" style="position: relative;">
-                                    @if ($transaction->debt)
+                                    @if ($purchase->debt)
                                         <button type="button" class="m-2 btn-block btn btn-primary btn-sm"
-                                            wire:click="$dispatch('openModal', { transaction_id: {{ $transaction->id }} })">
+                                            wire:click="$dispatch('openModal', { purchase_id: {{ $purchase->id }} })">
                                             <i class="bx bx-money"></i>[Оплатить]
                                         </button>
                                     @endif
                                     <button type="button" class="m-2 btn-block btn btn-sm btn-danger"
-                                        wire:click="delete({{ $transaction->id }})" wire:confirm="Вы уверены?">
+                                        wire:click="delete({{ $purchase->id }})" wire:confirm="Вы уверены?">
                                         <i class="bx bx-trash font-size-16 align-middle"></i>
                                     </button>
                                     <button type="button" class="m-2 btn-block btn btn-success btn-sm"
-                                        wire:click="$dispatch('openModalTransactionShow', { transaction_id: {{ $transaction->id }} })">
+                                        wire:click="$dispatch('openModalpurchaseshow', { purchase_id: {{ $purchase->id }} })">
                                         <i class="bx bx-show"></i>[Показать]
                                     </button>
                                 </div>
@@ -86,8 +86,8 @@
 
 @push('js')
 	<script>
-        Livewire.on('contactCloseModal', () => {
-            Livewire.dispatch('refreshContacts');
+        Livewire.on('supplierCloseModal', () => {
+            Livewire.dispatch('refreshsuppliers');
         });
 	</script>
 @endpush

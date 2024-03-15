@@ -43,18 +43,18 @@
             <div class="card">
                 <div class="card-body">
                     <x-tab.nav>
-                        <x-tab.li :id="'purchases'" :title="'Покупки'" :active="true" :icon="'bx bx-shopping-bag'" />
                         <x-tab.li :id="'sales'" :title="'Продажи'" :icon="'bx bx-cart'" />
+                        <x-tab.li :id="'purchases'" :title="'Покупки'" :active="true" :icon="'bx bx-shopping-bag'" />
                         <x-tab.li :id="'sales_salary'" :title="'Продажи зарплаты'" :icon="'bx bx-money'" />
                         <x-tab.li :id="'expenses'" :title="'Расходы'" :icon="'bx bx-money'" />
                     </x-tab.nav>
 
                     <div class="tab-content py-3">
-                        <x-tab.content :id="'purchases'" :active="true">
-                            @livewire('user.purchase', ['user' => $user])
-                        </x-tab.content>
                         <x-tab.content :id="'sales'">
                             @livewire('user.sale', ['user' => $user])
+                        </x-tab.content>
+                        <x-tab.content :id="'purchases'" :active="true">
+                            @livewire('user.purchase', ['user' => $user])
                         </x-tab.content>
                         <x-tab.content :id="'sales_salary'">
                             {{-- @livewire('user.sale-salary', ['user' => $user]) --}}
@@ -67,10 +67,6 @@
             </div>
         </div>
 
-        @livewire('transaction.payment')
-        @livewire('transaction.change-status')
-        @livewire('transaction.show')
-        @livewire('salary.create')
     </div>
 @endsection
 

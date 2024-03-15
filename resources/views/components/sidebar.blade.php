@@ -89,9 +89,7 @@
                 <div class="menu-title">Отчеты</div>
             </a>
             <ul>
-                <li><a href="{{ route('reports.opiu') }}"><i class="bx bx-chart"></i> ОПиУ и Вал.прибыль</a></li>
-                <li><a href="{{ route('reports.odds') }}"><i class="bx bx-chart"></i> ОДДС</a></li>
-                <li><a href="{{ route('reports.daxod') }}"><i class="bx bx-chart"></i> Доходы</a></li>
+                <li><a href="{{ route('reports.sale-report-user') }}"><i class="bx bx-user"></i> Продажник</a></li>
                 <li><a href="{{ route('reports.expense') }}"><i class="bx bx-chart"></i> Расходы</a></li>
             </ul>
         </li>
