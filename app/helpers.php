@@ -149,6 +149,11 @@ function getInstallmentMonths()
     return \App\Models\InstallmentMonths::get();
 }
 
+function getFinds()
+{
+    return \App\Models\Find::orderBy('name')->get();
+}
+
 // numberToWords
 function numberToWords($lang, $number)
 {

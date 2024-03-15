@@ -6,16 +6,6 @@
         <i class="bx bx-arrow-back"></i> Назад
     </a>
 </x-breadcrumb>
-
-{{-- $table->string('first_name');
-$table->string('last_name');
-$table->string('middle_name')->nullable();
-$table->string('passport')->nullable();
-$table->date('passport_date')->nullable();
-$table->string('passport_by')->nullable();
-$table->string('address')->nullable();
-$table->integer('phone')->nullable();
-$table->text('description')->nullable(); --}}
 <div class="row">
     <div class="col">
         <div class="card">
@@ -63,6 +53,19 @@ $table->text('description')->nullable(); --}}
                             <input type="text" name="phone" id="phone" class="form-control" placeholder="934879598" pattern="[0-9]{9}">
                         </div>
                         @error('phone')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label for="find_id">Как узнали о нас</label>
+                        <select name="find_id" id="find_id" class="form-select" required>
+                            <option value="">Выберите</option>
+                            @foreach (getFinds() as $find)
+                                <option value="{{ $find->id }}">{{ $find->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('find_id')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>

@@ -27,7 +27,7 @@
                         <div class="col-md-4">
                             <p>
                                 <b>Информация о клиенте</b> <br>
-                                <strong>Имя:</strong> {{ $sale->customer->fullname }} <br>
+                                <strong>Имя:</strong> <a href="{{ route('customers.show', $sale->customer->id) }}">{{ $sale->customer->full_name }}</a> <br>
                                 <strong>Телефон:</strong> {{ $sale->customer->phone }} <br>
                                 <strong>Адрес:</strong> {{ $sale->customer->address }} <br>
                             </p>

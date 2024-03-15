@@ -19,11 +19,39 @@ class Customer extends Model
         'passport_by',
         'address',
         'phone',
+        'find_id',
         'description',
     ];
 
     public function getFullNameAttribute(): string
     {
         return $this->first_name . ' ' . $this->last_name . ' ' . $this->middle_name;
+    }
+
+    public function finds()
+    {
+        return $this->belongsTo(Find::class);
+    }
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    public function sale_payments()
+    {
+        return $this->hasMany(SalePayment::class);
+    }
+
+    // debt
+    public function getDebtAttribute(): float
+    {
+        return $this->sales->sum('amount') - $this->sales->sale_payments->sum('amount');
+    }
+
+
+    public function getBalanceAttribute(): float
+    {
+        return $this->sales?->sum('paid')-$this->sales->sum('total');
     }
 }

@@ -27,8 +27,7 @@
                         </tr>
                         <tr>
                             <td>
-                                Баланс клиент: {{ nf($customer->customer_balance) }} <br>
-                                Баланс поставщик: {{ nf($customer->supplier_balance) }}
+                                Баланс клиент: {{ nf($customer->balance) }} <br>
                             </td>
                             <td>
                                 <p>
@@ -47,36 +46,22 @@
         <div class="card">
             <div class="card-body">
                 <x-tab.nav>
-                    <x-tab.li :id="'purchases'" :title="'Покупки'" :active="true" :icon="'bx bx-shopping-bag'"/>
                     <x-tab.li :id="'sales'" :title="'Заказы'" :icon="'bx bx-cart'"/>
                 </x-tab.nav>
 
                 <div class="tab-content py-3">
-                    <x-tab.content :id="'purchases'" :active="true">
-                        {{-- @livewire('customer.purchase', ['customer' => $customer]) --}}
-                    </x-tab.content>
                     <x-tab.content :id="'sales'">
-                        {{-- @livewire('customer.sale', ['customer' => $customer]) --}}
+                        @livewire('customer.sale-list', ['customer_id' => $customer->id])
                     </x-tab.content>
                 </div>
             </div>
         </div>
     </div>
-    @livewire('transaction.payment')
-    @livewire('transaction.show')
 </div>
+
+@livewire('sale.sale-payment')
 @endsection
 
 @push('js')
-
-<script>
-    function opencustomerCreate() {
-        Livewire.dispatch('opencustomerCreate');
-    }
-
-    function editcustomer(id) {
-        Livewire.dispatch('editcustomer', id);
-    }
-</script>
 
 @endpush

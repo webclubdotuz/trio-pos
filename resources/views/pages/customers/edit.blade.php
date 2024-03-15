@@ -57,6 +57,19 @@
                         @enderror
                     </div>
 
+                    <div class="col-md-4 form-group">
+                        <label for="find_id">Как узнали о нас</label>
+                        <select name="find_id" id="find_id" class="form-select" required>
+                            <option value="">Выберите</option>
+                            @foreach (getFinds() as $find)
+                                <option value="{{ $find->id }}" {{ old('find_id', $customer->find_id) == $find->id ? 'selected' : '' }}>{{ $find->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('find_id')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
                     <div class="col-12">
                         <div class="row">
                             <div class="col-md-6 form-group">

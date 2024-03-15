@@ -30,6 +30,7 @@ class StoreCustomerRequest extends FormRequest
             'passport_by' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|integer|regex:/^[0-9]{9}$/',
+            'find_id' => 'nullable|integer|exists:finds,id',
             'description' => 'nullable|string',
         ];
     }
