@@ -126,7 +126,7 @@
 
 <script>
 
-    let currency = "{{ getCurrency() }}";
+    let currency = "{{ getCurrencyRate() }}";
 
     $('.money').on('input', function() {
         let value = $(this).val();

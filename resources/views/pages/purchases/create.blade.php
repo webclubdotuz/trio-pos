@@ -177,7 +177,7 @@
 
 
     <script>
-        let currency = 12500;
+        let currency = {{ getCurrencyRate() }};
 
         function currencyConvert() {
 
