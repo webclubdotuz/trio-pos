@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->integer('phone')->unique();
             $table->string('password');
+            $table->foreignId('warehouse_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
 

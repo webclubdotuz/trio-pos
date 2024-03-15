@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('expense_category_id')->constrained('expense_categories');
             $table->foreignId('user_id')->constrained('users');
-
+            $table->foreignId('warehouse_id')->constrained('warehouses');
 
             $table->unsignedBigInteger('to_user_id')->nullable();
             $table->foreign('to_user_id')->references('id')->on('users')->onDelete('cascade');

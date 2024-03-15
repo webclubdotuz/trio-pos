@@ -13,6 +13,7 @@ class SalePayment extends Model
         'sale_id',
         'payment_method_id',
         'customer_id',
+        'warehouse_id',
         'installment_id',
         'user_id',
         'amount',

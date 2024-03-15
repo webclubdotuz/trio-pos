@@ -260,7 +260,7 @@
                 url: `/api/products/${id}`,
                 type: 'GET',
                 success: function(response) {
-                    price = response.price;
+                    price = response.price_usd * currency;
                     price_usd = response.price_usd;
                     $(`#price_${index}`).val(price);
                     $(`#price_usd_${index}`).val(price_usd);

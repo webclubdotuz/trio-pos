@@ -11,6 +11,7 @@ class SaleItem extends Model
 
     protected $fillable = [
         'sale_id',
+        'warehouse_id', // 'warehouse_id' added
         'product_id',
         'quantity',
         'price',
@@ -24,6 +25,11 @@ class SaleItem extends Model
         'in_total',
         'in_total_usd'
     ];
+
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
 
     public function sale()
     {

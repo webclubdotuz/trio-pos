@@ -138,25 +138,27 @@ class Create extends Component
         $this->quantity[$id] = $cart_quantity + 1;
     }
 
-    public function changeQuantity($id, $quantity)
+    public function changeQuantity($id)
     {
         $this->validate();
 
-        if ($quantity < 1) {
+        if ($this->quantity[$id] < 1) {
             return;
         }
+
+        // dd($this->quantity[$id]);
 
         $cart = new Cart();
 
         $product_quantity = Product::find($id)->quantity($this->warehouse_id);
 
-        if ($quantity > $product_quantity) {
+        if ($this->quantity[$id] > $product_quantity) {
             $this->alert('error', 'Товара в наличии недостаточно ' . $product_quantity . ' шт');
             $this->quantity[$id] = $product_quantity;
             return;
         }
 
-        $cart->updateQty($id, $quantity);
+        $cart->updateQty($id, $this->quantity[$id]);
     }
 
     public function editProduct($id)
@@ -366,6 +368,7 @@ class Create extends Component
 
             $sale = Sale::create([
                 'invoice_number' => 'INV-' . time(),
+                'warehouse_id' => $this->warehouse_id, // 'warehouse_id' => auth()->user()->warehouse_id ?? 1,
                 'customer_id' => $this->customer_id,
                 'user_id' => auth()->id(),
                 'total' => $total,
@@ -386,6 +389,7 @@ class Create extends Component
 
                 $sale->sale_items()->create([
                     'product_id' => $item->id,
+                    'warehouse_id' => $this->warehouse_id, // 'warehouse_id' => auth()->user()->warehouse_id ?? 1,
                     'quantity' => $item->quantity,
                     'price' => $item->price,
                     'price_usd' => $item->price_usd,
@@ -396,7 +400,7 @@ class Create extends Component
                     'in_price_usd' => $product->in_price_usd,
                     'in_total' => $product->in_price * $item->quantity,
                     'in_total_usd' => $product->in_price_usd * $item->quantity,
-                    'imei' => $item?->imei == '' ? null : $item?->imei,
+                    // 'imei' => $item?->imei == '' ? null : $item?->imei,
                 ]);
 
                 $product->decrementQuantity($this->warehouse_id, $item->quantity);

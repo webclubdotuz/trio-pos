@@ -69,6 +69,7 @@ class Payment extends Component
                 if ($payment_amount > 0) {
                     $purchase->purchase_payments()->create([
                         'payment_method_id' => $this->payment_methods[$key],
+                        'warehouse_id' => $purchase->warehouse_id,
                         'supplier_id' => $this->supplier_id,
                         'user_id' => auth()->id(),
                         'amount' => $payment_amount * $purchase->currency_rate,

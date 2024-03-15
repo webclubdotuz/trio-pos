@@ -11,16 +11,7 @@ class SaleObserver
      */
     public function created(Sale $sale): void
     {
-        $sale->update([
-            'count' => $sale->saleItems->count(),
-            'quantity' => $sale->saleItems->sum('quantity'),
-            'total' => $sale->price * $sale->saleItems->sum('quantity'),
-        ]);
 
-        $transaction = $sale->transaction;
-        $transaction->update([
-            'total' => $transaction->sales->sum('total'),
-        ]);
     }
 
     /**
@@ -28,16 +19,7 @@ class SaleObserver
      */
     public function updated(Sale $sale): void
     {
-        $sale->update([
-            'count' => $sale->saleItems->count(),
-            'quantity' => $sale->saleItems->sum('quantity'),
-            'total' => $sale->saleItems->sum('quantity') * $sale->price,
-        ]);
 
-        $transaction = $sale->transaction;
-        $transaction->update([
-            'total' => $transaction->sales->sum('total'),
-        ]);
     }
 
     /**
@@ -45,10 +27,7 @@ class SaleObserver
      */
     public function deleted(Sale $sale): void
     {
-        $transaction = $sale->transaction;
-        $transaction->update([
-            'total' => $transaction->sales->sum('total'),
-        ]);
+
     }
 
     /**

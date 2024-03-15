@@ -13,6 +13,7 @@ class Sale extends Model
     protected $fillable = [
         'invoice_number',
         'customer_id',
+        'warehouse_id', // 'warehouse_id' added
         'user_id',
         'total',
         'total_usd',
@@ -26,6 +27,12 @@ class Sale extends Model
 
         'date'
     ];
+
+
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
 
     public function customer()
     {

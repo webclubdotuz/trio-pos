@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
@@ -43,10 +45,29 @@ class SaleController extends Controller
     public function destroy(Sale $sale)
     {
 
-        $sale->installments()->delete();
-        $sale->payments()->delete();
-        $sale->sale_items()->delete();
-        $sale->delete();
+
+        try {
+            DB::beginTransaction();
+            foreach ($sale->sale_items as $item) {
+                $product = Product::find($item->product_id);
+                $product->incrementQuantity($item->warehouse_id, $item->quantity);
+                $product->save();
+            }
+
+            $sale->installments()->delete();
+            $sale->payments()->delete();
+            $sale->sale_items()->delete();
+
+
+            $sale->delete();
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            dd($th);
+        }
+
         return redirect()->route('sales.index');
     }
 

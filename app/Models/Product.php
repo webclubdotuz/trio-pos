@@ -70,4 +70,12 @@ class Product extends Model
         }
     }
 
+    public function incrementQuantity($warehouse_id, $quantity)
+    {
+        $warehouse = $this->warehouses()->where('warehouse_id', $warehouse_id)->first();
+        if ($warehouse) {
+            $warehouse->pivot->increment('quantity', $quantity);
+        }
+    }
+
 }
