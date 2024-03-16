@@ -40,4 +40,26 @@
             <x-charts.line-chart :title="'Динамика продажи'" :id="'sales-chart'" :labels="$labels" :data="$datas" />
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Платежи</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-sm">
+                        <tbody>
+                            @foreach($sale_payments as $sale_payment)
+                                <tr>
+                                    <td>{{ $sale_payment->payment_method->name }}</td>
+                                    <td>{{ nf($sale_payment->total) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

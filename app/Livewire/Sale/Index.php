@@ -17,7 +17,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->start_date = date('Y-m-d');
+        $this->start_date = date('Y-m-01');
         $this->end_date = date('Y-m-d');
 
         $user = auth()->user();
@@ -33,7 +33,8 @@ class Index extends Component
     public function render()
     {
 
-        $sales = Sale::whereBetween('date', [$this->start_date . ' 00:00:00', $this->end_date . ' 23:59:59'])
+        $sales = Sale::whereDate('date', '>=', $this->start_date)
+        ->whereDate('date', '<=', $this->end_date)
             ->when($this->warehouse_id, function ($query, $warehouse_id) {
                 return $query->where('warehouse_id', $warehouse_id);
             })

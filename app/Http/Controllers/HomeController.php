@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Installment;
 use App\Models\Purchase;
 use App\Models\Sale;
+use App\Models\SalePayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -77,6 +78,14 @@ class HomeController extends Controller
             $datas[] = $value;
         }
 
+        $sale_payments = SalePayment::whereBetween('date', [$start_date, $end_date])
+        ->when($warehouse_id, function ($query, $warehouse_id) {
+            return $query->where('warehouse_id', $warehouse_id);
+        })
+        ->groupBy('payment_method_id')
+        ->selectRaw('sum(amount) as total, payment_method_id')
+        ->get();
+
 
         return view('home', compact(
             'start_date',
@@ -89,7 +98,8 @@ class HomeController extends Controller
             'sales_total',
             'sale_chart',
             'labels',
-            'datas'
+            'datas',
+            'sale_payments'
         ));
     }
 }

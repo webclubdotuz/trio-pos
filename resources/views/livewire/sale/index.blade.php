@@ -57,7 +57,7 @@
                         <td>
                             {!! nf($sale->paid) !!}
                         </td>
-                        <td>{{ df($sale->created_at, 'd.m.Y H:i') }}</td>
+                        <td>{{ df($sale->date, 'd.m.Y H:i') }}</td>
                     </tr>
                 @empty
                     <tr>
