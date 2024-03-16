@@ -23,6 +23,11 @@ class Purchase extends Model
         'date',
     ];
 
+    public function scopeFilter($builder, $filters)
+    {
+        return $filters->apply($builder);
+    }
+
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);

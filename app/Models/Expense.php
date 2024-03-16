@@ -21,6 +21,11 @@ class Expense extends Model
         'description',
     ];
 
+    public function scopeFilter($builder, $filters)
+    {
+        return $filters->apply($builder);
+    }
+
     public function expense_category()
     {
         return $this->belongsTo(ExpenseCategory::class);

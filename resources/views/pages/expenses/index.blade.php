@@ -24,7 +24,7 @@
                     <div class="col-md-3">
                         <label for="expense_category_id">Категория</label>
                         <select name="expense_category_id" id="expense_category_id" class="form-control">
-                            <option value="">Выберите</option>
+                            <option value="">Все</option>
                             @foreach (getExpenseCategories() as $expense_category)
                             <option value="{{ $expense_category->id }}" {{ request()->get('expense_category_id') == $expense_category->id ? 'selected' : '' }}>{{ $expense_category->name }}</option>
                             @endforeach
@@ -32,10 +32,10 @@
                     </div>
                     <div class="col-md-3">
                         {{ Form::label('warehouse_id', 'Склад') }}
-                        <select name="warehouse_id" id="warehouse_id" class="form-control select2" required>
-                            <option value="">Выберите</option>
+                        <select name="warehouse_id" id="warehouse_id" class="form-control select2">
+                            <option value="">Все</option>
                             @foreach (getWarehouses() as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}" {{ request()->get('warehouse_id') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </div>

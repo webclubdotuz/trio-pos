@@ -1,28 +1,43 @@
 @extends('layouts.main')
 @section('content')
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <h3 class="card-text">
-                    Привет, {{ auth()->user()->fullname }}!
-                </h3>
-                <p>
-                    Cегодня {{ nf(getSaleTotal(date('Y-m-d'), date('Y-m-d'))) }} сум продано!
-                </p>
-              </div>
+    <x-breadcrumb :title="'Главная'">
+        <form action="" method="get">
+            <div class="input-group">
+                <input type="date" class="form-control form-control-sm" name="start_date" value="{{ $start_date }}" placeholder="Начальная дата" onchange="this.form.submit()">
+                <input type="date" class="form-control form-control-sm" name="end_date" value="{{ $end_date }}" placeholder="Конечная дата" onchange="this.form.submit()">
+                <select name="warehouse_id" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="">Все склады</option>
+                    @foreach(getWarehouses() as $warehouse)
+                        <option value="{{ $warehouse->id }}" {{ request('warehouse_id') == $warehouse->id ? 'selected' : '' }}>{{ $warehouse->name }}</option>
+                    @endforeach
+                </select>
             </div>
+        </form>
+    </x-breadcrumb>
+    <div class="row">
+        <div class="col-md-4">
+            <x-widgets.static-widget :title="'Клиенты'" :icon="'bx bx-users'" :value="getCustomers()->count()" :route="route('customers.index')" />
         </div>
         <div class="col-md-4">
-            <x-widgets.static-widget :title="'Долг клиентов'" :icon="'bx bx-money'" />
+            <x-widgets.static-widget :title="'Долги без рассрочек'" :icon="'bx bx-money'"  :value="nf($debt)" :route="route('sales.index')" />
+        </div>
+        <div class="col-md-4">
+            <x-widgets.static-widget :title="'Просроченные оплаты рассрочек'" :icon="'bx bx-money'"  :value="nf($installmet_debt)" :route="route('reports.installment-report-debt')" />
+        </div>
+        <div class="col-md-4">
+            <x-widgets.static-widget :title="'Долг от поставщиков'" :icon="'bx bx-money'"  :value="'$' . nf($purchase_debt)" :route="route('purchases.index')" />
+        </div>
+        <div class="col-md-4">
+            <x-widgets.static-widget :title="'Количество продаж'" :icon="'bx bx-line-chart'"  :value="nf($sales_count)" :route="route('sales.index')" />
+        </div>
+        <div class="col-md-4">
+            <x-widgets.static-widget :title="'Сумма продаж'" :icon="'bx bx-money'"  :value="nf($sales_total)" :route="route('sales.index')" />
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
-            <x-charts.line-chart :title="'Динамика продажи'" />
+            <x-charts.line-chart :title="'Динамика продажи'" :id="'sales-chart'" :labels="$labels" :data="$datas" />
         </div>
     </div>
-
-
 @endsection

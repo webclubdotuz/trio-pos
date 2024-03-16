@@ -411,6 +411,7 @@ class Create extends Component
                 foreach ($this->payment_amounts as $key => $payment_amount) {
                     $sale->payments()->create([
                         'payment_method_id' => $this->payment_methods[$key],
+                        'warehouse_id' => $this->warehouse_id, // 'warehouse_id' => auth()->user()->warehouse_id ?? 1,
                         'amount' => $payment_amount,
                         'customer_id' => $this->customer_id, // 'customer_id' => $sale->customer_id,
                         'user_id' => auth()->id(),
@@ -458,6 +459,7 @@ class Create extends Component
             $sale = Sale::create([
                 'invoice_number' => 'INV-' . time(),
                 'customer_id' => $this->customer_id,
+                'warehouse_id' => $this->warehouse_id,
                 'user_id' => auth()->id(),
                 'total' => $total,
                 'total_usd' => $total / $this->currency,
@@ -481,6 +483,7 @@ class Create extends Component
 
                 $sale->sale_items()->create([
                     'product_id' => $item->id,
+                    'warehouse_id' => $this->warehouse_id,
                     'quantity' => $item->quantity,
                     'price' => $item->price + ($item->price * $this->percent / 100),
                     'price_usd' => $item->price_usd + ($item->price_usd * $this->percent / 100),

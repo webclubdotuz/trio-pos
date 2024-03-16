@@ -9,15 +9,15 @@
                 <label for="end_date">Конец периода</label>
                 <input type="date" class="form-control" id="end_date" wire:model.live="end_date">
             </div>
-            {{-- <div class="col-md-4">
-                <label for="product_id">Товар</label>
-                <select class="form-select" id="product_id" wire:model.live="product_id">
-                    <option value="">Выберите товар</option>
-                    @foreach(getNoShopProducts() as $product)
-                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+            <div class="col-md-4">
+                <label for="warehouse_id">Склад</label>
+                <select class="form-select" id="warehouse_id" wire:model.live="warehouse_id">
+                    <option value="">Все</option>
+                    @foreach(getWarehouses() as $warehouse)
+                    <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
                     @endforeach
                 </select>
-            </div> --}}
+            </div>
         </div>
     </div>
     <div class="col-12 table-responsive">

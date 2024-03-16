@@ -2,24 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\ExpenseFilter;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, ExpenseFilter $filters)
     {
+        $start_date = $request->start_date ?? now()->subMonth()->format('Y-m-d');
+        $end_date = $request->end_date ?? now()->format('Y-m-d');
 
-        $start_date = $request->start_date ?? date('Y-m-01');
-        $end_date = $request->end_date ?? date('Y-m-d');
-        $expense_category_id = $request->expense_category_id ?? null;
-
-        $expenses = Expense::whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])
-        ->when($expense_category_id, function ($query) use ($expense_category_id) {
-            return $query->where('expense_category_id', $expense_category_id);
-        })
-        ->orderBy('created_at', 'desc')
-        ->get();
+        $expenses = Expense::filter($filters)
+        ->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])
+        ->orderBy('created_at', 'desc')->get();
 
         return view('pages.expenses.index', compact('expenses', 'start_date', 'end_date'));
     }

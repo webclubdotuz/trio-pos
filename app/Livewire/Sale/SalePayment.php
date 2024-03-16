@@ -133,6 +133,7 @@ class SalePayment extends Component
                     'sale_id' => $this->sale_id,
                     'installment_id' => $installment->id,
                     'payment_method_id' => $this->payment_methods[$key],
+                    'warehouse_id' => $sale->warehouse_id,
                     'customer_id' => $this->customer_id,
                     'user_id' => auth()->user()->id,
                     'amount' => $payment_amount,

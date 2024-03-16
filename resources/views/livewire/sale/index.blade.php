@@ -49,6 +49,7 @@
                 <tr>
                     <td>Итого</td>
                     <td></td>
+                    <td></td>
                     <td>{{ nf($sales->sum('total')) }}</td>
                     <td>{{ nf($sales->sum('debt')) }}</td>
                     <td>{{ nf($sales->sum('paid')) }}</td>

@@ -242,7 +242,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="bx bx-x"></i> Закрыть</button>
                         @if ($carts->getTotal() >= array_sum($payment_amounts) && array_sum($payment_amounts) >= 0)
-                            <button type="button" class="btn btn-sm btn-primary" wire:click="save"><i class="bx bx-check"></i> Оплатить</button>
+                            <button type="button" class="btn btn-sm btn-primary" wire:click="save" wire:loading.attr="disabled">
+                                <i class="bx bx-check"></i> Оплатить</button>
                         @endif
                     </div>
                 </div>
@@ -322,7 +323,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="bx bx-x"></i> Закрыть</button>
                         @if ($carts->getTotal() && $installment_lists)
-                            <button type="button" class="btn btn-sm btn-primary" wire:click="saveInstallment"><i class="bx bx-check"></i> Оформить</button>
+                            <button type="button" class="btn btn-sm btn-primary" wire:click="saveInstallment" wire:loading.attr="disabled"><i class="bx bx-check"></i> Оформить</button>
                         @endif
                     </div>
                 </div>
