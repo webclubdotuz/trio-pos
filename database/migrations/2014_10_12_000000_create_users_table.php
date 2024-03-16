@@ -18,15 +18,29 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->integer('phone')->unique();
             $table->string('password');
-            $table->foreignId('warehouse_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->boolean('is_all_warehouses')->default(false);
             $table->timestamps();
+        });
+
+        Schema::create('user_warehouse', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('warehouse_id')->constrained('warehouses')->cascadeOnDelete();
         });
 
         DB::table('users')->insert([
             'fullname' => 'Admin',
             'username' => 'admin',
             'phone' => '934879598',
-            'password' => bcrypt('admin')
+            'password' => bcrypt('admin'),
+            'is_all_warehouses' => true
+        ]);
+
+        DB::table('users')->insert([
+            'fullname' => 'Salesman 1',
+            'username' => 'salesman1',
+            'phone' => '934879591',
+            'password' => bcrypt('123456')
         ]);
 
         DB::table('users')->insert([
@@ -35,6 +49,8 @@ return new class extends Migration
             'phone' => '934879590',
             'password' => bcrypt('123456')
         ]);
+
+
 
 
     }

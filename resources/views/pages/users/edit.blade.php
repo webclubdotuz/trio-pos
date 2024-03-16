@@ -32,6 +32,17 @@
                             {{ Form::label('roles', 'Роль', ['class' => 'form-label']) }}
                             {{ Form::select('roles[]', $roles->pluck('name', 'id'), $user->roles->pluck('id'), ['class' => 'form-control select2', 'required', 'multiple']) }}
                         </div>
+
+                        <div class="col-md-12">
+                            <label for="warehouse_id" class="form-label">Склад</label>
+                            <select name="warehouse_id[]" id="warehouse_id" class="form-select select2" required multiple>
+                                <option value="all" {{ $user->is_all_warehouses ? 'selected' : '' }}>Все склады</option>
+                                @foreach (getWarehouses() as $warehouse)
+                                    <option value="{{ $warehouse->id }}" {{ $user->warehouse_id == $warehouse->id ? 'selected' : '' }}>{{ $warehouse->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                     </div>
                 </div>
             </div>

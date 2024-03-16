@@ -25,12 +25,14 @@ return new class extends Migration {
 
         DB::table('roles')->insert([
             ['name' => 'Admin', 'slug' => 'admin'],
+            ['name' => 'Продавец', 'slug' => 'salesman'],
             ['name' => 'Менеджер', 'slug' => 'manager'],
         ]);
 
         DB::table('role_user')->insert([
             ['role_id' => 1, 'user_id' => 1],
             ['role_id' => 2, 'user_id' => 2],
+            ['role_id' => 2, 'user_id' => 3],
         ]);
     }
 

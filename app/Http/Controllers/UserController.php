@@ -70,6 +70,7 @@ class UserController extends Controller
             "fullname" => "required|string",
             "phone" => "required|string",
             "roles" => "required|array",
+            'warehouse_id' => 'required|array',
         ]);
 
 
@@ -81,6 +82,16 @@ class UserController extends Controller
         ]);
 
         $user->roles()->sync($request->roles);
+
+        if (in_array('all', $request->warehouse_id)) // if 'all' is selected, then 'is_all_warehouses' will be 'true
+        {
+            $user->warehouses()->sync([]);
+            $user->update(['is_all_warehouses' => true]);
+        }
+        else{
+            $user->warehouses()->sync($request->warehouse_id);
+            $user->update(['is_all_warehouses' => false]);
+        }
 
         return redirect()->route("users.index")->with("success", "Пользователь успешно обновлен");
 
@@ -97,7 +108,7 @@ class UserController extends Controller
         // dd($user);
         if (hasRoles()) {
             auth()->login($user);
-            toast('Вы успешно авторизовались как ' . $user->fullname, 'success');
+            flash("Вы вошли как " . $user->fullname)->success();
             return redirect()->intended('/');
         }
 

@@ -33,6 +33,7 @@ class ExpenseController extends Controller
     {
         $request->validate([
             'expense_category_id' => 'required|exists:expense_categories,id',
+            'warehouse_id' => 'nullable|exists:warehouses,id',
             'to_user_id' => 'nullable|exists:users,id', // 'nullable|exists:users,id
             'amount' => 'required|numeric',
             'payment_method_id' => 'required|exists:payment_methods,id', // 'nullable|exists:payment_methods,id
@@ -41,6 +42,7 @@ class ExpenseController extends Controller
 
         Expense::create([
             'expense_category_id' => $request->expense_category_id,
+            'warehouse_id' => $request->warehouse_id,
             'user_id' => auth()->user()->id,
             'to_user_id' => $request->to_user_id,
             'amount' => $request->amount,
@@ -60,6 +62,7 @@ class ExpenseController extends Controller
     {
         $request->validate([
             'expense_category_id' => 'required|exists:expense_categories,id',
+            'warehouse_id' => 'nullable|exists:warehouses,id',
             'to_user_id' => 'nullable|exists:users,id', // 'nullable|exists:users,id
             'amount' => 'required|numeric',
             'description' => 'nullable|string',
@@ -68,6 +71,7 @@ class ExpenseController extends Controller
 
         $expense->update([
             'expense_category_id' => $request->expense_category_id,
+            'warehouse_id' => $request->warehouse_id,
             'user_id' => auth()->user()->id,
             'to_user_id' => $request->to_user_id,
             'amount' => $request->amount,

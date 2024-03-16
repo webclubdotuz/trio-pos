@@ -19,6 +19,7 @@ class User extends Authenticatable implements HasMedia
         'fullname',
         'username',
         'phone',
+        'is_all_warehouses',
         'password',
     ];
 
@@ -31,9 +32,9 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Role::class);
     }
 
-    public function balanses()
+    public function warehouses()
     {
-        return $this->hasMany(Balans::class, 'user_id');
+        return $this->belongsToMany(Warehouse::class);
     }
 
     public function salaries()
@@ -41,34 +42,17 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Salary::class, 'user_id');
     }
 
-    public function papers()
-    {
-        return $this->hasMany(Paper::class, 'user_id', 'id');
-    }
+
 
     public function getBalanceAttribute()
     {
         // return $this->papers->sum('user_amount') - getSalaryModelSumma($this->id);
     }
 
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class);
-    }
-
-    public function balans()
-    {
-        return $this->hasMany(Balans::class);
-    }
 
     public function purchases()
     {
         return $this->hasMany(Purchase::class);
-    }
-
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
     }
 
     public function HasRole($role)

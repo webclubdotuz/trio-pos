@@ -13,20 +13,29 @@
         <div class="card">
             <div class="card-body">
                 <form action="" class="row g-2">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="start_date">Начальная дата</label>
                         <input type="date" name="start_date" id="start_date" class="form-control" value="{{ $start_date }}">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="end_date">Конечная дата</label>
                         <input type="date" name="end_date" id="end_date" class="form-control" value="{{ $end_date }}">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="expense_category_id">Категория</label>
                         <select name="expense_category_id" id="expense_category_id" class="form-control">
                             <option value="">Выберите</option>
                             @foreach (getExpenseCategories() as $expense_category)
                             <option value="{{ $expense_category->id }}" {{ request()->get('expense_category_id') == $expense_category->id ? 'selected' : '' }}>{{ $expense_category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        {{ Form::label('warehouse_id', 'Склад') }}
+                        <select name="warehouse_id" id="warehouse_id" class="form-control select2" required>
+                            <option value="">Выберите</option>
+                            @foreach (getWarehouses() as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </div>

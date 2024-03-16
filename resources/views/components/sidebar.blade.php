@@ -45,7 +45,7 @@
                 <li><a href="{{ route('warehouses.index') }}"><i class="lni lni-dropbox-original"></i>Склады</a></li>
             </ul>
         </li>
-        @if(hasRoles(['admin','manager']))
+        @if(hasRoles(['admin','manager','salesman']))
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-minus-circle'></i>

@@ -106,7 +106,16 @@ function getSuppliers()
 
 function getWarehouses()
 {
-    return \App\Models\Warehouse::orderBy('name')->get();
+
+    $user = auth()->user();
+
+    if ($user->is_all_warehouses) {
+        return \App\Models\Warehouse::orderBy('name')->get();
+    }
+
+    else {
+        return $user->warehouses;
+    }
 }
 
 function getWarehouse($id)

@@ -22,7 +22,7 @@
             <div class="card-body row g-2">
                 <div class="col-md-12">
                     <div class="row g-2">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             {{ Form::label('expense_category_id', 'Категория расхода') }}
                             <select name="expense_category_id" id="expense_category_id" class="form-control select2" required>
                                 <option value="">Выберите</option>
@@ -31,17 +31,26 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            {{ Form::label('amount', 'Сумма') }}
-                            {{ Form::text('amount', null, ['class' => 'form-control money', 'required']) }}
-                        </div>
-                        <div class="col-md-4">
-                            {{ Form::label('payment_method_id', 'Способ оплаты') }}
-                            {{ Form::select('payment_method_id', array(''=>'Выберите') + getPaymentMethods()->pluck('name', 'id')->toArray(), null, ['class' => 'form-control select2', 'required']) }}
+                        <div class="col-md-6">
+                            {{ Form::label('warehouse_id', 'Склад') }}
+                            <select name="warehouse_id" id="warehouse_id" class="form-control select2" required>
+                                <option value="">Выберите</option>
+                                @foreach (getWarehouses() as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-md-12 d-none" id="user_id_div">
                             {{ Form::label('to_user_id', 'Пользователь') }}
                             {{ Form::select('to_user_id', array(''=>'Выберите') + getAllUsers()->pluck('fullname', 'id')->toArray(), null, ['class' => 'form-control select2']) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ Form::label('amount', 'Сумма') }}
+                            {{ Form::text('amount', null, ['class' => 'form-control money', 'required']) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ Form::label('payment_method_id', 'Способ оплаты') }}
+                            {{ Form::select('payment_method_id', array(''=>'Выберите') + getPaymentMethods()->pluck('name', 'id')->toArray(), null, ['class' => 'form-control select2', 'required']) }}
                         </div>
 
                         <div class="col-12">
