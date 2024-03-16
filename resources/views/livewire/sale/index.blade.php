@@ -34,6 +34,7 @@
                     <th></th>
                     <th>INV</th>
                     <th>Клиент</th>
+                    <th>Склад</th>
                     <th>Сумма</th>
                     <th>Статус</th>
                     <th>Оплата</th>
@@ -50,6 +51,7 @@
                         <td>
                             <a href="{{ route('customers.show', $sale->customer->id) }}">{{ $sale->customer->fullname }}</a>
                         </td>
+                        <td>{{ $sale->warehouse->name }}</td>
                         <td>{{ nf($sale->total, 2) }} {{ $sale->debt_info }}</td>
                         <td>
                             {!! $sale->status_html !!}

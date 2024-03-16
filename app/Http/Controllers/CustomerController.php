@@ -50,4 +50,21 @@ class CustomerController extends Controller
         flash('Клиент успешно удален', 'success');
         return redirect()->back();
     }
+
+    public function report()
+    {
+
+        // sales count > 1
+        $customers = Customer::whereHas('sales', function ($query) {
+            $query->havingRaw('COUNT(*) > 1');
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(100);
+
+        return view('pages.customers.report', compact('customers'));
+    }
+
+
+
+
 }
