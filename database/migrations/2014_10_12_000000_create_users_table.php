@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('phone')->unique();
             $table->string('password');
             $table->boolean('is_all_warehouses')->default(false);
+            $table->decimal('plan', 10, 2)->default(0);
             $table->timestamps();
         });
 

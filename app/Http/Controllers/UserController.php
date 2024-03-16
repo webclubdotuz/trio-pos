@@ -34,6 +34,8 @@ class UserController extends Controller
             "phone" => "required|string",
             "password" => "required",
             "roles" => "required|array",
+            'plan' => 'required|numeric|min:0',
+            'warehouse_id' => 'required|array',
         ]);
 
 
@@ -42,7 +44,18 @@ class UserController extends Controller
             "fullname" => $request->fullname,
             "phone" => $request->phone,
             "password" => bcrypt($request->password),
+            'plan' => $request->plan,
         ]);
+
+        if (in_array('all', $request->warehouse_id)) // if 'all' is selected, then 'is_all_warehouses' will be 'true
+        {
+            $user->warehouses()->sync([]);
+            $user->update(['is_all_warehouses' => true]);
+        }
+        else{
+            $user->warehouses()->sync($request->warehouse_id);
+            $user->update(['is_all_warehouses' => false]);
+        }
 
         $user->roles()->attach($request->roles);
 
@@ -71,6 +84,7 @@ class UserController extends Controller
             "phone" => "required|string",
             "roles" => "required|array",
             'warehouse_id' => 'required|array',
+            'plan' => 'required|numeric|min:0',
         ]);
 
 
@@ -79,6 +93,7 @@ class UserController extends Controller
             "fullname" => $request->fullname,
             "phone" => $request->phone,
             "password" => $request->password ? bcrypt($request->password) : $user->password,
+            'plan' => $request->plan,
         ]);
 
         $user->roles()->sync($request->roles);

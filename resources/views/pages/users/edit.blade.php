@@ -43,6 +43,11 @@
                             </select>
                         </div>
 
+                        <div class="col-md-12">
+                            {{ Form::label('plan', 'План', ['class' => 'form-label']) }}
+                            {{ Form::text('plan', null, ['class' => 'form-control money', 'required']) }}
+                        </div>
+
                     </div>
                 </div>
             </div>
