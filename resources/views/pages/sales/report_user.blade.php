@@ -29,28 +29,35 @@
                                 <thead>
                                     <tr>
                                         <th>Продавец</th>
+                                        <th>План</th>
                                         <th>Количество продаж</th>
                                         <th>Рассрочки</th>
                                         <th>Сумма продаж</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($sales as $sale)
+                                    @forelse ($sales as $sale)
                                         <tr>
                                             <td>
                                                 <a href="{{ route('users.show', $sale->user_id) }}">
                                                     {{ $sale->user->fullname }}
                                                 </a>
                                             </td>
+                                            <td>{{ nf($sale->user->plan) }}</td>
                                             <td>{{ $sale->count }}</td>
                                             <td>{{ nf($sale->installment_status) }}</td>
                                             <td>{{ nf($sale->total) }}</td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">Нет данных</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>Итого</th>
+                                        <th></th>
                                         <th>{{ $sales->sum('count') }}</th>
                                         <th>{{ $sales->sum('installment_status') }}</th>
                                         <th>{{ nf($sales->sum('total')) }}</th>

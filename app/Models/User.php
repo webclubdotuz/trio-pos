@@ -21,6 +21,7 @@ class User extends Authenticatable implements HasMedia
         'phone',
         'is_all_warehouses',
         'password',
+        'plan',
     ];
 
     protected $hidden = [
