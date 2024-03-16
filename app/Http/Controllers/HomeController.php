@@ -64,7 +64,6 @@ class HomeController extends Controller
         ->where('deleted_at', null)
         ->groupBy('date')
         ->get();
-
         $sale_chart = $sale_chart->groupBy('date')
         ->map(function ($item) {
             return $item->sum('total');

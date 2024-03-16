@@ -1,13 +1,29 @@
 <div class="row g-2">
     <div class="col-12">
         <div class="row g-2">
-            <div class="col-6">
+            <div class="col-md-4">
                 <label for="start_date">Начало периода</label>
                 <input type="date" class="form-control" id="start_date" wire:model.live="start_date">
             </div>
-            <div class="col-6">
+            <div class="col-md-4">
                 <label for="end_date">Конец периода</label>
                 <input type="date" class="form-control" id="end_date" wire:model.live="end_date">
+            </div>
+            <div class="col-md-4">
+                <label for="warehouse_id">Склад</label>
+                <select class="form-select" id="warehouse_id" wire:model.live="warehouse_id">
+                    <option value="">Все</option>
+                    @foreach (getWarehouses() as $warehouse)
+                        <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-12" wire:loading>
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
     </div>
@@ -25,7 +41,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($sales as $sale)
+                @forelse ($sales as $sale)
                     <tr>
                         <td>
                             @include('pages.sales.actions', ['sales' => $sales])
@@ -43,7 +59,11 @@
                         </td>
                         <td>{{ df($sale->created_at, 'd.m.Y H:i') }}</td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center">Нет данных</td>
+                    </tr>
+                @endforelse
             </tbody>
             <tfoot>
                 <tr>
@@ -53,7 +73,6 @@
                     <td>{{ nf($sales->sum('total')) }}</td>
                     <td>{{ nf($sales->sum('debt')) }}</td>
                     <td>{{ nf($sales->sum('paid')) }}</td>
-                    <td></td>
                     <td></td>
                 </tr>
             </tfoot>

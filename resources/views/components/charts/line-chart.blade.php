@@ -10,7 +10,7 @@
 <script>
     var options = {
 		series: [{
-			name: 'Likes',
+			name: 'Продажи',
 			data: {!! json_encode($data) !!}
 		}],
 		chart: {
@@ -70,8 +70,13 @@
 		colors: ["#8833ff"],
 		yaxis: {
 			title: {
-				text: 'Engagement',
+				text: 'Сумма'
 			},
+            labels: {
+                formatter: function (value) {
+                    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                }
+            }
 		}
 	};
 	var chart = new ApexCharts(document.querySelector("#{{ $id }}"), options);
