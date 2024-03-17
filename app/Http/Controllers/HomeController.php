@@ -7,6 +7,7 @@ use App\Models\Purchase;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use App\Models\SalePayment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -104,6 +105,8 @@ class HomeController extends Controller
         ->orderBy('total', 'desc')
         ->get();
 
+        $user_plans = User::where('plan', '>', '0')->orderBy('fullname')->get();
+
         return view('home', compact(
             'start_date',
             'end_date',
@@ -118,7 +121,8 @@ class HomeController extends Controller
             'datas',
             'sale_payments',
             'sale_users',
-            'top_products'
+            'top_products',
+            'user_plans'
         ));
     }
 }

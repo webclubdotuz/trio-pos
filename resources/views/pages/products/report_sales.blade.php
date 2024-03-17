@@ -32,7 +32,6 @@
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-primary btn-sm">Фильтр</button>
                                     <a href="{{ route('reports.product-report-sale') }}" class="btn btn-danger btn-sm">Сбросить</a>
-
                                 </div>
                             </form>
                         </div>

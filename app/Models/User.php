@@ -61,5 +61,14 @@ class User extends Authenticatable implements HasMedia
         return $this->roles()->where('slug', $role)->exists();
     }
 
+    // getSaleSumma
+    public function getSaleSumma($year, $month, $warehouse_id=null)
+    {
+        return Sale::whereYear('date', $year)->whereMonth('date', $month)
+            ->when($warehouse_id, function ($query, $warehouse_id) {
+                return $query->where('warehouse_id', $warehouse_id);
+            })->sum('total');
+    }
+
 
 }

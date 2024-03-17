@@ -39,6 +39,38 @@
         <div class="col-md-6">
             <x-charts.line-chart :title="'Динамика продажи'" :id="'sales-chart'" :labels="$labels" :data="$datas" />
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">План продавцов</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-sm">
+                        <tbody>
+                            @foreach($user_plans as $user_plan)
+                                <tr>
+                                    <td>{{ $user_plan->fullname }}</td>
+                                    <td>{{ nf($user_plan->plan) }}</td>
+                                    <td>{{ nf($user_plan->getSaleSumma(date('Y', strtotime($start_date)), date('m', strtotime($start_date)), request('warehouse_id'))) }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: {{ $user_plan->getSaleSumma(date('Y', strtotime($start_date)), date('m', strtotime($start_date)), request('warehouse_id')) / $user_plan->plan * 100 }}%" aria-valuenow="{{ $user_plan->getSaleSumma(date('Y', strtotime($start_date)), date('m', strtotime($start_date)), request('warehouse_id')) / $user_plan->plan * 100 }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="col-12">
+                        <p class="text-end">
+                            <a href="{{ route('reports.product-report-sale') }}">Подробнее <i class="bx bx-arrow-to-right"></i></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
