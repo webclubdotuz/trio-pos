@@ -65,6 +65,7 @@ class User extends Authenticatable implements HasMedia
     public function getSaleSumma($year, $month, $warehouse_id=null)
     {
         return Sale::whereYear('date', $year)->whereMonth('date', $month)
+            ->where('user_id', $this->id)
             ->when($warehouse_id, function ($query, $warehouse_id) {
                 return $query->where('warehouse_id', $warehouse_id);
             })->sum('total');

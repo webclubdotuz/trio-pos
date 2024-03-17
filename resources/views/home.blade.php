@@ -49,6 +49,9 @@
                         <tbody>
                             @foreach($user_plans as $user_plan)
                                 <tr>
+                                    <td rowspan="2">
+                                        {{ $loop->iteration }}
+                                    </td>
                                     <td>{{ $user_plan->fullname }}</td>
                                     <td>{{ nf($user_plan->plan) }}</td>
                                     <td>{{ nf($user_plan->getSaleSumma(date('Y', strtotime($start_date)), date('m', strtotime($start_date)), request('warehouse_id'))) }}</td>
