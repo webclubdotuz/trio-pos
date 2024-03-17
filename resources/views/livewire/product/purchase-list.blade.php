@@ -61,7 +61,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center">Нет данных</td>
+                        <td colspan="8" class="text-center">Нет данных</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -70,7 +70,7 @@
                     <td>Итого</td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                    <td>{{ nf($purchase_items->sum('quantity')) }}</td>
                     <td></td>
                     <td>{{ nf($purchase_items->sum('total_usd')) }}</td>
                     <td>{{ nf($purchase_items->sum('total')) }}</td>

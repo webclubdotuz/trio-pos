@@ -35,6 +35,7 @@
                     <th>Клиент</th>
                     <th>Склад</th>
                     <th>Кол-во</th>
+                    <th>Цена</th>
                     <th>Сумма</th>
                     <th>Дата</th>
                 </tr>
@@ -52,6 +53,7 @@
                         </td>
                         <td>{{ $sale_item->warehouse->name }}</td>
                         <td>{{ nf($sale_item->quantity) }}</td>
+                        <td>{{ nf($sale_item->price) }}</td>
                         <td>{{ nf($sale_item->total) }}</td>
                         <td>{{ df($sale_item->sale->date) }}</td>
                     </tr>
@@ -66,6 +68,7 @@
                     <td>Итого</td>
                     <td></td>
                     <td></td>
+                    <td>{{ nf($sale_items->sum('quantity')) }}</td>
                     <td></td>
                     <td>{{ nf($sale_items->sum('total')) }}</td>
                     <td></td>
