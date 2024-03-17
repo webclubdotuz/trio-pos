@@ -45,4 +45,17 @@ class Installment extends Model
         return $this->amount - $this->paid;
     }
 
+    // status_html
+    public function getStatusHtmlAttribute()
+    {
+        if ($this->status == 'paid') {
+            return '<span class="badge bg-success">Оплачено</span>';
+        } if ($this->status == 'debt') {
+            return '<span class="badge bg-danger">Долг</span>';
+        }
+        else {
+            return '<span class="badge bg-danger">Не оплачено</span>';
+        }
+    }
+
 }

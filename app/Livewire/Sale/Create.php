@@ -224,8 +224,8 @@ class Create extends Component
     public function addPayment()
     {
         $this->payments[] = '';
-        $this->payment_amounts[] = '';
-        $this->payment_methods[] = '';
+        $this->payment_amounts[] = 0;
+        $this->payment_methods[] = 1;
     }
 
     public function removePayment($index)
@@ -494,7 +494,8 @@ class Create extends Component
                     'in_price_usd' => $product->in_price_usd,
                     'in_total' => $product->in_price * $item->quantity,
                     'in_total_usd' => $product->in_price_usd * $item->quantity,
-                    'imei' => $item?->imei == '' ? null : $item?->imei,
+                    // "Undefined property: stdClass::$imei"
+                    'imei' => isset($item->imei) ? $item->imei : null,
                 ]);
 
                 $product->decrementQuantity($this->warehouse_id, $item->quantity);
@@ -505,7 +506,7 @@ class Create extends Component
                         'customer_id' => $this->customer_id,
                         'date' => $installment['date'],
                         'amount' => $installment['amount'],
-                        'debt' => $installment['debt'],
+                        'status' => $installment['amount'] == 0 ? 'paid' : 'pending',
                         'amount_usd' => $installment['amount'] / $this->currency,
                         'currency_rate' => $this->currency,
                     ]);
@@ -539,6 +540,11 @@ class Create extends Component
 
         $carts = new Cart();
 
-        return view('livewire.sale.create', compact('carts'));
+        $payment_amount_summa = 0;
+        foreach ($this->payment_amounts as $key => $payment_amount) {
+            $payment_amount_summa += intval($payment_amount);
+        }
+
+        return view('livewire.sale.create', compact('carts', 'payment_amount_summa'));
     }
 }

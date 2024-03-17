@@ -201,8 +201,8 @@
                             <div class="col-12">
                                 <p>
                                     Сумма: {{ nf($carts->getTotal()) }} <br>
-                                    Оплачено: {{ nf(array_sum($payment_amounts)) }} <br>
-                                    <?php $debt = $carts->getTotal() - array_sum($payment_amounts); ?>
+                                    Оплачено: {{ nf($payment_amount_summa) }} <br>
+                                    <?php $debt = $carts->getTotal() - $payment_amount_summa; ?>
                                     @if ($debt > 0)
                                         <span class="text-danger">Долг: {{ nf($debt) }}</span>
                                     @endif
@@ -241,7 +241,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="bx bx-x"></i> Закрыть</button>
-                        @if ($carts->getTotal() >= array_sum($payment_amounts) && array_sum($payment_amounts) >= 0)
+                        @if ($carts->getTotal() >=$payment_amount_summa && $payment_amount_summa >= 0)
                             <button type="button" class="btn btn-sm btn-primary" wire:click="save" wire:loading.attr="disabled">
                                 <i class="bx bx-check"></i> Оплатить</button>
                         @endif

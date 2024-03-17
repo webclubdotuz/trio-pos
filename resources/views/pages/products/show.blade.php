@@ -1,8 +1,8 @@
 @extends('layouts.main')
 
 @section('content')
-<x-breadcrumb :title="$warehouse->name">
-    <a type="button" class="btn btn-primary btn-sm" href="{{ route('warehouses.index') }}">
+<x-breadcrumb :title="$product->name">
+    <a type="button" class="btn btn-primary btn-sm" href="{{ route('products.index') }}">
         <i class="bx bx-arrow-back"></i> Назад
     </a>
 </x-breadcrumb>

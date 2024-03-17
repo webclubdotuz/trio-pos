@@ -61,5 +61,44 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Топ продавцы</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-sm">
+                        <tbody>
+                            @foreach($sale_users as $sale_user)
+                                <tr>
+                                    <td>{{ $sale_user->user->fullname }}</td>
+                                    <td>{{ nf($sale_user->total) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Топ товары</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-sm">
+                        <tbody>
+                            @foreach($top_products as $top_product)
+                                <tr>
+                                    <td><a href="{{ route('products.show', $top_product->product_id) }}">{{ $top_product->product->name }}</a></td>
+                                    <td>{{ nf($top_product->quantity) }}</td>
+                                    <td>{{ nf($top_product->total) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
