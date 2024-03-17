@@ -92,6 +92,7 @@
                 <li><a href="{{ route('reports.sale-report-user') }}"><i class="bx bx-user"></i> Продажник</a></li>
                 <li><a href="{{ route('reports.installment-report-debt') }}"><i class="bx bx-chart"></i> Рассрочки</a></li>
                 <li><a href="{{ route('reports.customer-report') }}"><i class="bx bx-chart"></i> Клиенты</a></li>
+                <li><a href="{{ route('reports.product-report-sale') }}"><i class="bx bx-chart"></i> Продукты</a></li>
                 <li><a href="{{ route('reports.expense') }}"><i class="bx bx-chart"></i> Расходы</a></li>
             </ul>
         </li>

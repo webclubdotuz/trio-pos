@@ -97,6 +97,11 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="col-12">
+                        <p class="text-end">
+                            <a href="{{ route('reports.product-report-sale') }}">Подробнее <i class="bx bx-arrow-to-right"></i></a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

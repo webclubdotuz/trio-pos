@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use Flasher\Laravel\Http\Request;
+use App\Models\SaleItem;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -81,4 +82,22 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Продукт успешно удален.');
     }
+
+    public function report_sales(Request $request)
+    {
+
+        $start_date = date('Y-m-01') ?? $request->start_date;
+        $end_date = date('Y-m-t') ?? $request->end_date;
+        $warehouse_id = $request->warehouse_id ?? null;
+
+        $sale_items = SaleItem::whereHas('sale', function ($query) use ($start_date, $end_date) {
+            $query->whereBetween('date', [$start_date . ' 00:00:00', $end_date . ' 23:59:59']);
+        })->when($warehouse_id, function ($query, $warehouse_id) {
+                $query->where('warehouse_id', $warehouse_id);
+            })->orderBy('product_id')->get();
+
+        return view('pages.products.report_sales', compact('sale_items', 'start_date', 'end_date'));
+    }
+
+
 }

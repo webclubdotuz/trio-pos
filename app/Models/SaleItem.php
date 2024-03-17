@@ -40,4 +40,16 @@ class SaleItem extends Model
     {
         return $this->belongsTo(Product::class)->withTrashed();
     }
+
+    // profit calculation
+    public function getProfitAttribute()
+    {
+        return $this->total - $this->in_total;
+    }
+
+    // markup calculation
+    public function getMarkupAttribute()
+    {
+        return $this->price - $this->in_price;
+    }
 }
