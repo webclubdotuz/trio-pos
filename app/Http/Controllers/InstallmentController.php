@@ -16,9 +16,9 @@ class InstallmentController extends Controller
         ->where('payment_status', 'installment')
         ->orderBy('date', 'desc')
         ->get();
-
         // dd($sales);
         $fact_debt_month_counts = $sales->pluck('fact_debt_month_count')->unique();
+        // dd($fact_debt_month_counts);
 
         if($fact_debt_month_count)
         {

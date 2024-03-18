@@ -11,14 +11,10 @@
                         <div class="col-md-4 form-group">
                             <label for="fact_debt_month_count">Количество месяцев</label>
                             <select class="form-select" id="fact_debt_month_count" name="fact_debt_month_count">
-                                <option value="">Все</option>
-                                @if (request('fact_debt_month_count'))
-                                    @foreach ($fact_debt_month_counts as $fact_debt_month_count)
-                                        <option value="{{ $fact_debt_month_count }}"
-                                            @if (request('fact_debt_month_count') == $fact_debt_month_count) selected @endif>{{ $fact_debt_month_count }}
-                                            месяцев</option>
-                                    @endforeach
-                                @endif
+                                <option value="" @if (request('fact_debt_month_count') == '') selected @endif>Все</option>
+                                @foreach ($fact_debt_month_counts as $fact_debt_month_count)
+                                    <option value="{{ $fact_debt_month_count }}" @if (request('fact_debt_month_count') == $fact_debt_month_count) selected @endif>{{ $fact_debt_month_count }} месяцев</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-12">
