@@ -18,7 +18,11 @@ class InstallmentController extends Controller
         ->get();
         // dd($sales);
         $fact_debt_month_counts = $sales->pluck('fact_debt_month_count')->unique();
-        // dd($fact_debt_month_counts);
+
+        // value = 0 вырезаем
+        $fact_debt_month_counts = $fact_debt_month_counts->filter(function ($value, $key) {
+            return $value != 0;
+        });
 
         if($fact_debt_month_count)
         {
