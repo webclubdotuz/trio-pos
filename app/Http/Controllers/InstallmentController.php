@@ -24,6 +24,9 @@ class InstallmentController extends Controller
             return $value != 0;
         });
 
+        // order by desc
+        $fact_debt_month_counts = $fact_debt_month_counts->sortDesc();
+
         if($fact_debt_month_count)
         {
             $sales = $sales->where('fact_debt_month_count', $fact_debt_month_count);
