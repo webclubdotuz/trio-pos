@@ -88,6 +88,20 @@ class Sale extends Model
         }
     }
 
+    // fact_debt
+    public function getFactDebtAttribute()
+    {
+        $debt = 0;
+        foreach ($this->installments as $installment) {
+            if (date('Y-m-d') >= $installment->date && $installment->debt > 0)
+            {
+                $debt += $installment->debt;
+            }
+        }
+
+        return $debt;
+    }
+
     public function getFactDebtMonthCountAttribute()
     {
         $count = 0;
