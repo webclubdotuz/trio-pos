@@ -102,21 +102,26 @@ class ProductController extends Controller
     // report_sales_frozen
     function report_sales_frozen(Request $request)
     {
-        $days = [10, 20, 30, 40, 50, 60];
+        $days = [
+            '50-plus' => '50+ дней',
+            '50' => '50 дней',
+            '30' => '30 дней',
+            '20' => '20 дней',
+            '10' => '10 дней',
+        ];
         $warehouse_id = $request->warehouse_id ?? null;
-        $day = $request->day ?? 10;
+        $day = $request->day ?? '50-plus';
 
-        $date = date('Y-m-d', strtotime('-' . $day . ' days'));
+        $products = Product::all();
 
-        $products = Product::when($warehouse_id, function ($query, $warehouse_id) {
-            return $query->where('sale_items.warehouse_id', $warehouse_id);
-        })
-        ->whereHas('sale_items', function ($query) use ($date) {
-            $query->where('created_at', '>=', $date);
-        })
-        ->pluck('id')->toArray();
+        // $products = $products->where('last_sale_day', '<=', $day);
 
-        $products = Product::whereNotIn('id', $products)->get();
+        if ($day == '50-plus') {
+            $products = $products->where('last_sale_day', '>', 50);
+        } else {
+            $products = $products->where('last_sale_day', '<=', $day);
+        }
+
 
         return view('pages.products.report_sales_frozen', compact('products', 'days', 'day'));
 

@@ -14,7 +14,7 @@
                                     <label for="day">День</label>
                                     <select name="day" class="form-select form-select-sm">
                                         @foreach ($days as $key => $value)
-                                            <option value="{{ $key }}" {{ $day == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                            <option value="{{ $value }}" {{ $day == $value ? 'selected' : '' }}>{{ $value }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -57,7 +57,7 @@
                                         <td><img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="img-thumbnail" width="50"></td>
                                         <td><a href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a></td>
                                         {{-- <td>{{ nf($product->quantity) }}</td> --}}
-                                        <td>{{ nf($product->total) }}</td>
+                                        <td>{{ $product->last_sale_day(request('warehouse_id')) }}</td>
                                     </tr>
                                     @empty
                                         <tr>

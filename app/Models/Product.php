@@ -29,6 +29,8 @@ class Product extends Model
         'image',
     ];
 
+    protected $appends = ['image_url', 'last_sale_day'];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -53,6 +55,12 @@ class Product extends Model
     public function sale_items()
     {
         return $this->hasMany(SaleItem::class);
+    }
+
+    // purchases
+    public function purchase_items()
+    {
+        return $this->hasMany(PurchaseItem::class);
     }
 
     public function getImageUrlAttribute()
@@ -85,5 +93,27 @@ class Product extends Model
             $warehouse->pivot->increment('quantity', $quantity);
         }
     }
+
+    public function last_sale_day($warehouse_id=null)
+    {
+        $sale_item = $this->sale_items()->latest()->first();
+        $date = null;
+        $day = 0;
+
+        if ($sale_item) {
+            $date = $sale_item->created_at;
+            $day = now()->diffInDays($date);
+            return $day . ' дней назад';
+        }else{
+            return 'Нет продаж';
+        }
+    }
+
+    public function getLastSaleDayAttribute()
+    {
+        return $this->last_sale_day();
+    }
+
+
 
 }
