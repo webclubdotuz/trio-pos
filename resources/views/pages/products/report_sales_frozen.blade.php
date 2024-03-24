@@ -14,7 +14,7 @@
                                     <label for="day">День</label>
                                     <select name="day" class="form-select form-select-sm">
                                         @foreach ($days as $key => $value)
-                                            <option value="{{ $value }}" {{ $day == $value ? 'selected' : '' }}>{{ $value }}</option>
+                                            <option value="{{ $key }}" {{ $day == $key ? 'selected' : '' }}>{{ $value }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -47,8 +47,9 @@
                                 <thead>
                                     <tr>
                                         <th>Фото</th>
-                                        <th>Кол-во</th>
-                                        <th>Сумма</th>
+                                        <th>Продукт</th>
+                                        <th>Последняя продажа</th>
+                                        <th>Последний покупатель</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,8 +57,8 @@
                                     <tr>
                                         <td><img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="img-thumbnail" width="50"></td>
                                         <td><a href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a></td>
-                                        {{-- <td>{{ nf($product->quantity) }}</td> --}}
                                         <td>{{ $product->last_sale_day(request('warehouse_id')) }}</td>
+                                        <td>{{ $product->last_purchase_day(request('warehouse_id')) }}</td>
                                     </tr>
                                     @empty
                                         <tr>

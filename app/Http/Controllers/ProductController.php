@@ -117,9 +117,14 @@ class ProductController extends Controller
         // $products = $products->where('last_sale_day', '<=', $day);
 
         if ($day == '50-plus') {
-            $products = $products->where('last_sale_day', '>', 50);
+            $product1 = $products->where('last_sale_day', '>', 1);
+            $product2 = $products->where('last_sale_day', 'Нет продаж');
+
+            $products = $product1->merge($product2);
         } else {
-            $products = $products->where('last_sale_day', '<=', $day);
+            $product1 = $products->where('last_sale_day', '<=', $day);
+
+            $products = $product1;
         }
 
 

@@ -29,7 +29,7 @@ class Product extends Model
         'image',
     ];
 
-    protected $appends = ['image_url', 'last_sale_day'];
+    protected $appends = ['image_url', 'last_sale_day', 'last_purchase_day'];
 
     public function category()
     {
@@ -112,6 +112,31 @@ class Product extends Model
     public function getLastSaleDayAttribute()
     {
         return $this->last_sale_day();
+    }
+
+    public function last_purchase_day($warehouse_id=null)
+    {
+        $purchase_item = $this->purchase_items()->latest()->first();
+        $date = null;
+        $day = 0;
+
+        if ($purchase_item) {
+            $date = $purchase_item->created_at;
+            $day = now()->diffInDays($date);
+
+            if ($day == 0) {
+                return 'Сегодня';
+            }
+
+            return $day . ' дней назад';
+        }else{
+            return 'Нет покупок';
+        }
+    }
+
+    public function getlastPurchaseDayAttribute()
+    {
+        return $this->last_purchase_day();
     }
 
 
