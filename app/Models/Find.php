@@ -10,6 +10,7 @@ class Find extends Model
     use HasFactory;
 
     protected $fillable = [
-
+        'name',
+        'description',
     ];
 }

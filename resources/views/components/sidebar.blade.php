@@ -116,6 +116,7 @@
             </a>
             <ul>
                 <li><a href="{{ route('payment-methods.index') }}"><i class="bx bx-list-plus"></i> Способы оплаты</a></li>
+                <li><a href="{{ route('finds.index') }}"><i class="bx bx-list-plus"></i> Источники</a></li>
             </ul>
         </li>
         @endif
