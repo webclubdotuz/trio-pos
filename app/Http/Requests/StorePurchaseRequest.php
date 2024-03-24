@@ -35,6 +35,8 @@ class StorePurchaseRequest extends FormRequest
             'items.*.total_usd' => 'required|numeric|min:1',
             'items.*.sale_price' => 'required|numeric|min:1',
             'items.*.sale_price_usd' => 'required|numeric|min:1',
+            'items.*.installment_price' => 'required|numeric|min:1',
+            'items.*.installment_price_usd' => 'required|numeric|min:1',
         ];
     }
 }

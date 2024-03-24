@@ -23,6 +23,10 @@ return new class extends Migration
             $table->decimal('in_price_usd', 14, 0);
             $table->decimal('price', 14, 0);
             $table->decimal('price_usd', 14, 0);
+
+            $table->decimal('installment_price', 14, 0);
+            $table->decimal('installment_price_usd', 14, 0);
+
             $table->integer('day_sale')->nullable();
             $table->integer('alert_quantity')->default(0);
             $table->boolean('is_imei')->default(false);

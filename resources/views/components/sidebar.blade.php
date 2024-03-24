@@ -107,6 +107,17 @@
                 <li><a href="{{ route('users.index') }}"><i class="bx bx-user"></i> Пользователи</a></li>
             </ul>
         </li>
+
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class='bx bx-cog'></i>
+                </div>
+                <div class="menu-title">Настройки</div>
+            </a>
+            <ul>
+                <li><a href="{{ route('payment-methods.index') }}"><i class="bx bx-list-plus"></i> Способы оплаты</a></li>
+            </ul>
+        </li>
         @endif
     </ul>
     <!--end navigation-->

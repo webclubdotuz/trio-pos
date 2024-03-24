@@ -73,6 +73,9 @@ class PurchaseController extends Controller
                 $product->price = $item['sale_price'];
                 $product->price_usd = $item['sale_price_usd'];
 
+                $product->installment_price = $item['installment_price'];
+                $product->installment_price_usd = $item['installment_price_usd'];
+
                 $product->save();
 
                 $product_warehouse = ProductWarehouse::where('warehouse_id', $request->warehouse_id)

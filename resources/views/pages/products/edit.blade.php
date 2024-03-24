@@ -56,6 +56,20 @@
                         </div>
                     </div>
 
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="installment_price_usd">Цена продажи в рассрочку</label>
+                                <div class="input-group">
+                                    <input type="text" name="installment_price_usd" id="installment_price_usd" class="form-control money" required value="{{ old('installment_price_usd', $product->installment_price_usd) }}">
+                                    <span class="input-group-text"><i class="bx bx-dollar"></i></span>
+                                    <input type="text" name="installment_price" id="installment_price" class="form-control money" value="{{ old('installment_price', $product->installment_price) }}">
+                                    <span class="input-group-text">UZS</i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-3 form-group">
                         <label for="category_id">Категория</label>
                         <select name="category_id" id="category_id" class="form-select" required>

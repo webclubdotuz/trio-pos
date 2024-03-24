@@ -21,6 +21,8 @@ class Product extends Model
         'in_price_usd',
         'price',
         'price_usd',
+        'installment_price',
+        'installment_price_usd',
         'day_sale',
         'alert_quantity',
         'is_imei',

@@ -93,6 +93,15 @@
                                         <span class="input-group-text">Сум</span>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="installment_price_usd">Цена продажи в рассрочку</label>
+                                    <div class="input-group">
+                                        <input type="text" name="items[][installment_price_usd]" id="installment_price_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <span class="input-group-text"><i class="bx bx-dollar"></i></span>
+                                        <input type="text" name="items[][installment_price]" id="installment_price_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <span class="input-group-text">UZS</i></span>
+                                    </div>
+                                </div>
 
                                 <div class="col-12">
                                     <a type="button" class="text-danger purchase-item-remove float-end"><i class="bx bx-trash"></i> Удалить</a> <br>

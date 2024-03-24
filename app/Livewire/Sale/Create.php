@@ -38,6 +38,7 @@ class Create extends Component
 
     public $installment_lists = [];
     public $first_payment, $percent, $month;
+    public $is_installment = false;
 
     public function mount()
     {
@@ -80,12 +81,15 @@ class Create extends Component
 
         $cart = new Cart();
 
+        $price = $this->is_installment ? $product->installment_price : $product->price;
+        $price_usd = $this->is_installment ? $product->installment_price_usd : $product->price_usd;
+
         $cart->add([
             'id' => $product->id,
             'image_url' => $product->image_url,
             'name' => $product->name,
-            'price' => $product->price,
-            'price_usd' => $product->price_usd,
+            'price' => $price,
+            'price_usd' => $price_usd,
             'total_usd' => 0,
             'quantity' => 1,
         ]);

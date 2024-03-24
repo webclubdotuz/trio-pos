@@ -86,5 +86,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
         Route::put('update/{key}', [\App\Http\Controllers\SettingController::class, 'update'])->name('update');
     });
+
+    // PaymentMethods
+    Route::resource('payment-methods', \App\Http\Controllers\PaymentMethodController::class);
+
+
 });
 

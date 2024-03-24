@@ -5,7 +5,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="row">
+                <div class="row g-2">
                     <div class="col-4 form-group">
                         <label for="date">Дата</label>
                         <input type="datetime-local" class="form-control" max="{{ date('Y-m-d H:i') }}" min="{{ date('Y-m-d H:i', strtotime('-1 month')) }}" wire:model="date" required>
@@ -30,6 +30,13 @@
                         </select>
                         @error('warehouse_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+
+                    <div class="col-12 form-group">
+                        <label for="is_installment">
+                            <input type="checkbox" wire:model.live="is_installment" id="is_installment"> Рассрочка
+                        </label>
+                    </div>
+
                 </div>
             </div>
         </div>

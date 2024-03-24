@@ -32,6 +32,8 @@ class UpdateProductRequest extends FormRequest
             'in_price_usd' => 'required|numeric',
             'price' => 'required|numeric',
             'price_usd' => 'required|numeric',
+            'installment_price' => 'required|numeric',
+            'installment_price_usd' => 'required|numeric',
             'day_sale' => 'nullable|integer',
             'alert_quantity' => 'required|integer',
             // is_imei is value on 1 or 0
