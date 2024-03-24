@@ -155,5 +155,17 @@ class ProductController extends Controller
         return view('pages.products.report_top_sale', compact('top_products', 'start_date', 'end_date'));
     }
 
+    // report_alert_quantity
+    function report_alert_quantity()
+    {
+        $products = DB::table('products')
+            ->join('product_warehouse', 'products.id', '=', 'product_warehouse.product_id')
+            ->select('products.*', 'product_warehouse.quantity as quantity')
+            ->where('product_warehouse.quantity', '<', '10')
+            ->get();
+
+        return view('pages.products.report_alert_quantity', compact('products'));
+    }
+
 
 }
