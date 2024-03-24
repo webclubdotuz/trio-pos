@@ -87,18 +87,18 @@
                                 <div class="col-md-6">
                                     <label for="sale_price_0">Цена продажи</label>
                                     <div class="input-group">
-                                        <input type="text" name="items[][sale_price_usd]" id="sale_price_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <input type="text" name="items[][sale_price_usd]" id="saleprice_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
                                         <span class="input-group-text">USD</span>
-                                        <input type="text" name="items[][sale_price]" id="sale_price_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <input type="text" name="items[][sale_price]" id="saleprice_0" class="form-control money" required oninput="currencyConvert.call(this)">
                                         <span class="input-group-text">Сум</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="installment_price_usd">Цена продажи в рассрочку</label>
                                     <div class="input-group">
-                                        <input type="text" name="items[][installment_price_usd]" id="installment_price_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <input type="text" name="items[][installment_price_usd]" id="installmentprice_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
                                         <span class="input-group-text"><i class="bx bx-dollar"></i></span>
-                                        <input type="text" name="items[][installment_price]" id="installment_price_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <input type="text" name="items[][installment_price]" id="installmentprice_0" class="form-control money" required oninput="currencyConvert.call(this)">
                                         <span class="input-group-text">UZS</i></span>
                                     </div>
                                 </div>
@@ -194,13 +194,13 @@
             let id = $(this).attr('id');
             let usd = id.includes('usd');
 
+            console.log(value, id, usd);
+
             if (usd) {
                 let result = value * currency;
                 let target = id.replace('_usd', '');
                 $(`#${target}`).val(result);
             } else {
-                console.log(value, currency);
-
                 let result = value / currency;
                 let splits = id.split('_');
                 let target = `${splits[0]}_usd_${splits[1]}`;

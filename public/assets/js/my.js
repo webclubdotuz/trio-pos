@@ -27,6 +27,7 @@ $(function() {
 });
 
 
+// 0.5 1.5
 $(".money").inputmask({
     alias: "numeric",
     groupSeparator: " ",
@@ -38,7 +39,7 @@ $(".money").inputmask({
     rightAlign: false,
     autoUnmask: true,
     removeMaskOnSubmit: true,
-    unmaskAsNumber: true
+    unmaskAsNumber: true,
 });
 
 

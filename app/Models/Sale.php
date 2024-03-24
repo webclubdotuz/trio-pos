@@ -59,6 +59,11 @@ class Sale extends Model
         return $this->hasMany(SaleItem::class);
     }
 
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
+
     public function getDebtAttribute()
     {
         return $this->total - $this->payments->sum('amount');

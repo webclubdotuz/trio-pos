@@ -119,7 +119,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ df($payment->date, 'd.m.Y') }}</td>
                                             <td>{{ nf($payment->amount) }} uzs</td>
-                                            <td>{{ $payment->method }}</td>
+                                            <td>{{ $payment->payment_method->name }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -166,6 +166,74 @@
                             </table>
                         </div>
                         @endif
+                    </div>
+				</div>
+			</div>
+		</div>
+
+        <div class="col-md-6">
+			<div class="card">
+				<div class="card-body">
+                    <div class="row g-2">
+                        <div class="col-md-12">
+                            <p>
+                                <b>Отвыз</b>
+                            </p>
+                            @if ($sale->review)
+                                <p>
+                                    <a href="{{ asset('storage/' . $sale->review->image) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $sale->review->image) }}" alt="{{ $sale->review->comment }}" width="50%" class="img-thumbnail">
+                                    </a>
+                                    <br>
+                                    <strong>Дата:</strong> {{ df($sale->review->date, 'd.m.Y') }} <br>
+                                    <strong>Комментарий:</strong> {{ $sale->review->comment }} <br>
+                                </p>
+
+                                <form action="{{ route('sales.destroy-review', ['sale' => $sale->id, 'review' => $sale->review->id]) }}" method="post" class="d-inline">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        Удалить отзыв
+                                    </button>
+                                </form>
+
+                            @else
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#review">
+                                    Добавить отзыв
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="review" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Добавить отзыв</h5>
+                                                    <button type="button" class="btn" data-bs-dismiss="modal">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            <div class="modal-body">
+                                                <div class="container-fluid">
+                                                    <form action="{{ route('sales.store-review', $sale->id) }}" method="post" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="form-group">
+                                                            <label for="image">Изображение</label>
+                                                            <input type="file" name="image" id="image" class="form-control" accept="image/*" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="comment">Комментарий</label>
+                                                            <textarea name="comment" id="comment" class="form-control"></textarea>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary mt-2">Сохранить</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
                     </div>
 				</div>
 			</div>

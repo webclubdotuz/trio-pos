@@ -95,9 +95,33 @@ class SaleController extends Controller
             ->get();
 
         return view('pages.sales.report_user', compact('sales', 'start_date', 'end_date'));
+    }
 
+    public function storeReview(Request $request, Sale $sale)
+    {
+        if ($request->hasFile('image')) {
 
+            $path = $request->file('image')->storeAs('reviews', $request->file('image')->getClientOriginalName(), 'public');
+            $sale->review()->create([
+                'user_id' => auth()->id(),
+                'comment' => $request->comment,
+                'image' => $path
+            ]);
 
+            return redirect()->back()->with('success', 'Отзыв успешно добавлен');
+
+        }
+    }
+
+    // destroyReview
+    public function destroyReview(Sale $sale, $review)
+    {
+        if (file_exists(public_path('storage/' . $sale->review()->find($review)->image))) {
+            unlink(public_path('storage/' . $sale->review()->find($review)->image));
+        }
+
+        $sale->review()->find($review)->delete();
+        return redirect()->back()->with('success', 'Отзыв успешно удален');
     }
 
 
