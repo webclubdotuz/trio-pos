@@ -36,6 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Purchases
     Route::resource('purchases', \App\Http\Controllers\PurchaseController::class);
 
+    // Tasks
+    Route::resource('tasks', \App\Http\Controllers\TaskController::class);
+
     // Sales
     Route::resource('sales', \App\Http\Controllers\SaleController::class);
     Route::get('sales/{sale}/contract', [\App\Http\Controllers\SaleController::class, 'contract'])->name('sales.contract');
@@ -80,8 +83,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/sale-report-user', [\App\Http\Controllers\SaleController::class, 'report_user'])->name('sale-report-user');
         Route::get('/installment-report-debt', [\App\Http\Controllers\InstallmentController::class, 'report_debt'])->name('installment-report-debt');
         Route::get('/customer-report', [\App\Http\Controllers\CustomerController::class, 'report'])->name('customer-report');
+        Route::get('/customer-find-report', [\App\Http\Controllers\CustomerController::class, 'find_report'])->name('customer-find-report');
         Route::get('/product-report-sale', [\App\Http\Controllers\ProductController::class, 'report_sales'])->name('product-report-sale');
         Route::get('/expense', [\App\Http\Controllers\ReportController::class, 'expense'])->name('expense');
+    });
+
+    // Installments
+    Route::group(['prefix' => 'installments', 'as' => 'installments.'], function () {
+        Route::get('/debt', [\App\Http\Controllers\InstallmentController::class, 'debt'])->name('debt');
     });
 
     // Settings

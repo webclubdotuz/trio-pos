@@ -35,6 +35,11 @@ class Installment extends Model
         return $this->hasMany(SalePayment::class, 'installment_id');
     }
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
     public function getPaidAttribute()
     {
         return $this->sale_payments->sum('amount');

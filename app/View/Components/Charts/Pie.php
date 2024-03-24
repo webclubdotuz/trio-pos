@@ -17,7 +17,7 @@ class Pie extends Component
         public array $labels = ['Nokisbaev', 'Nurzhanov', 'Kenzhebayev', 'Kenzhebayev']
     )
     {
-        //
+
     }
 
     /**
@@ -25,6 +25,10 @@ class Pie extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.charts.pie');
+        return view('components.charts.pie', [
+            'title' => $this->title,
+            'data' => $this->data,
+            'labels' => $this->labels,
+        ]);
     }
 }

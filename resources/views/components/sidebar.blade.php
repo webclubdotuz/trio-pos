@@ -32,30 +32,17 @@
             </ul>
         </li>
         @endif
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='lni lni-dropbox-original'></i>
-                </div>
-                <div class="menu-title">Продукты</div>
-            </a>
-            <ul>
-                <li><a href="{{ route('products.index') }}"><i class="lni lni-bricks"></i>Продукты</a></li>
-                <li><a href="{{ route('categories.index') }}"><i class="lni lni-bricks"></i>Категории</a></li>
-                <li><a href="{{ route('brands.index') }}"><i class="lni lni-bricks"></i>Бренды</a></li>
-                <li><a href="{{ route('warehouses.index') }}"><i class="lni lni-dropbox-original"></i>Склады</a></li>
-            </ul>
-        </li>
         @if(hasRoles(['admin','manager','salesman']))
         <li>
             <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='bx bx-minus-circle'></i>
-                </div>
-                <div class="menu-title">Расходы</div>
+                <div class="parent-icon"><i class='bx bx-up-arrow-circle'></i></div>
+                <div class="menu-title">Продажи</div>
             </a>
             <ul>
-                <li><a href="{{ route('expenses.create') }}"><i class="bx bx-plus"></i> Добавить расход</a></li>
-                <li><a href="{{ route('expenses.index') }}"><i class="bx bx-list-plus"></i> Список расходов</a></li>
-                <li><a href="{{ route('expense-categories.index') }}"><i class="bx bx-list-plus"></i> Расходные категории</a></li>
+                <li><a href="{{ route('sales.index') }}"><i class="bx bx-list-plus"></i> Список продаж</a></li>
+                <li><a href="{{ route('sales.create') }}"><i class="bx bx-plus"></i> Добавить продажу</a></li>
+                <li><a href="{{ route('installments.debt') }}"><i class="bx bx-list-plus"></i> Рассрочки по долгам</a></li>
+                <li><a href="{{ route('tasks.index') }}"><i class="bx bx-list-plus"></i> Задачи</a></li>
             </ul>
         </li>
         <li>
@@ -71,17 +58,32 @@
         </li>
         <li>
             <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='bx bx-up-arrow-circle'></i></div>
-                <div class="menu-title">Продажи</div>
+                <div class="parent-icon"><i class='bx bx-minus-circle'></i>
+                </div>
+                <div class="menu-title">Расходы</div>
             </a>
             <ul>
-                <li><a href="{{ route('sales.index') }}"><i class="bx bx-list-plus"></i> Список продаж</a></li>
-                <li><a href="{{ route('sales.create') }}"><i class="bx bx-plus"></i> Добавить продажу</a></li>
+                <li><a href="{{ route('expenses.create') }}"><i class="bx bx-plus"></i> Добавить расход</a></li>
+                <li><a href="{{ route('expenses.index') }}"><i class="bx bx-list-plus"></i> Список расходов</a></li>
+                <li><a href="{{ route('expense-categories.index') }}"><i class="bx bx-list-plus"></i> Расходные категории</a></li>
             </ul>
         </li>
         @endif
 
         @if(hasRoles(['admin']))
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class='lni lni-dropbox-original'></i>
+                </div>
+                <div class="menu-title">Продукты</div>
+            </a>
+            <ul>
+                <li><a href="{{ route('products.index') }}"><i class="lni lni-bricks"></i>Продукты</a></li>
+                <li><a href="{{ route('categories.index') }}"><i class="lni lni-bricks"></i>Категории</a></li>
+                <li><a href="{{ route('brands.index') }}"><i class="lni lni-bricks"></i>Бренды</a></li>
+                <li><a href="{{ route('warehouses.index') }}"><i class="lni lni-dropbox-original"></i>Склады</a></li>
+            </ul>
+        </li>
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-chart'></i>
@@ -92,6 +94,7 @@
                 <li><a href="{{ route('reports.sale-report-user') }}"><i class="bx bx-user"></i> Продажник</a></li>
                 <li><a href="{{ route('reports.installment-report-debt') }}"><i class="bx bx-chart"></i> Рассрочки</a></li>
                 <li><a href="{{ route('reports.customer-report') }}"><i class="bx bx-chart"></i> Клиенты</a></li>
+                <li><a href="{{ route('reports.customer-find-report') }}"><i class="bx bx-chart"></i> Источники клиентов</a></li>
                 <li><a href="{{ route('reports.product-report-sale') }}"><i class="bx bx-chart"></i> Продукты</a></li>
                 <li><a href="{{ route('reports.expense') }}"><i class="bx bx-chart"></i> Расходы</a></li>
             </ul>

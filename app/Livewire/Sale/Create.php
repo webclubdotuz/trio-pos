@@ -56,7 +56,6 @@ class Create extends Component
         foreach ($cart->getItems() as $item) {
             $this->quantity[$item->id] = $item->quantity;
         }
-
     }
 
     public function searchProduct()
@@ -101,7 +100,6 @@ class Create extends Component
         if ($product->is_imei) {
             $this->editProduct($id);
         }
-
     }
 
     public function removeProduct($id)
@@ -114,7 +112,7 @@ class Create extends Component
     {
         $cart = new Cart();
 
-        $cart_quantity = New Cart();
+        $cart_quantity = new Cart();
         $cart_quantity = $cart_quantity->get($id);
 
         if ($cart_quantity->quantity > 1) {
@@ -128,7 +126,7 @@ class Create extends Component
         $this->validate();
         $cart = new Cart();
 
-        $cart_quantity = New Cart();
+        $cart_quantity = new Cart();
         $cart_quantity = $cart_quantity->get($id)->quantity;
 
         $product_quantity = Product::find($id)->quantity($this->warehouse_id);
@@ -183,7 +181,6 @@ class Create extends Component
         }
 
         $this->dispatch('editProductOpenModal', $this->product);
-
     }
 
     public function updateProduct()
@@ -216,7 +213,6 @@ class Create extends Component
         if ($this->price) {
             $this->price_usd = $this->price / $this->currency;
         }
-
     }
     public function priceToUzs()
     {
@@ -256,7 +252,6 @@ class Create extends Component
         $this->payment_amounts[0] = $cart->getTotal();
 
         $this->dispatch('checkoutOpenModal');
-
     }
 
     public function checkout_installment()
@@ -340,9 +335,7 @@ class Create extends Component
                 'amount' => $pay,
                 'debt' => $newTotal - $this->first_payment - $pay * $i,
             ];
-
         }
-
     }
 
     public function save()
@@ -408,7 +401,6 @@ class Create extends Component
                 ]);
 
                 $product->decrementQuantity($this->warehouse_id, $item->quantity);
-
             }
 
             if (array_sum($this->payment_amounts) > 0) {
@@ -428,7 +420,6 @@ class Create extends Component
             DB::commit();
             $cart->clear();
             return redirect()->route('sales.create')->with('success', 'Продажа успешно создана');
-
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -503,33 +494,28 @@ class Create extends Component
                 ]);
 
                 $product->decrementQuantity($this->warehouse_id, $item->quantity);
-
-
-                foreach ($this->installment_lists as $installment) {
-                    $sale->installments()->create([
-                        'customer_id' => $this->customer_id,
-                        'date' => $installment['date'],
-                        'amount' => $installment['amount'],
-                        'status' => $installment['amount'] == 0 ? 'paid' : 'pending',
-                        'amount_usd' => $installment['amount'] / $this->currency,
-                        'currency_rate' => $this->currency,
-                    ]);
-                }
-
-                DB::commit();
-                $this->alert('success', 'Продажа успешно создана');
-                $cart->clear();
-                return redirect()->route('sales.index');
             }
 
+            foreach ($this->installment_lists as $installment) {
+                $sale->installments()->create([
+                    'customer_id' => $this->customer_id,
+                    'date' => $installment['date'],
+                    'amount' => $installment['amount'],
+                    'status' => $installment['amount'] == 0 ? 'paid' : 'pending',
+                    'amount_usd' => $installment['amount'] / $this->currency,
+                    'currency_rate' => $this->currency,
+                ]);
+            }
+
+            DB::commit();
+            $this->alert('success', 'Продажа успешно создана');
+            $cart->clear();
+            return redirect()->route('sales.index');
 
         } catch (\Throwable $th) {
             DB::rollBack();
             dd($th);
         }
-
-
-
     }
     // clear cart
     public function clearCart()

@@ -2,11 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Installment;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 
 class InstallmentController extends Controller
 {
+
+    public function debt()
+    {
+        $installments = Installment::where('status', 'debt')
+        ->orderBy('date', 'desc')
+        ->get();
+
+        return view('pages.installments.debt', compact('installments'));
+    }
+
+
+
     public function report_debt(Request $request)
     {
 

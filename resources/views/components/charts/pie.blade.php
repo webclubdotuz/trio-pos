@@ -10,14 +10,14 @@
     <script src="/assets/plugins/apexcharts-bundle/js/apexcharts.min.js"></script>
     <script>
         var options = {
-            series: [44, 55, 13, 43, 22],
+            series: {!! json_encode($data) !!},
             chart: {
                 foreColor: '#9ba7b2',
                 height: 330,
                 type: 'pie',
             },
-            colors: ["#8833ff", "#6c757d", "#17a00e", "#f41127", "#ffc107"],
-            labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+            colors: ['#00d25b', '#ff8d72', '#ff5b8a', '#00acf0', '#ffaa91'],
+            labels: {!! json_encode($labels) !!},
             responsive: [{
                 breakpoint: 480,
                 options: {

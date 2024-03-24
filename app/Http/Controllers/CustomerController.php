@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
@@ -54,7 +55,6 @@ class CustomerController extends Controller
     public function report()
     {
 
-        // sales count > 1
         $customers = Customer::whereHas('sales', function ($query) {
             $query->havingRaw('COUNT(*) > 1');
         })
@@ -62,6 +62,26 @@ class CustomerController extends Controller
         ->paginate(100);
 
         return view('pages.customers.report', compact('customers'));
+    }
+
+    public function find_report(Request $request)
+    {
+
+        $start_date = $request->start_date ?? date('Y-m-d', strtotime('-1 month'));
+        $end_date = $request->end_date ?? date('Y-m-d');
+
+        // find_id group by count
+        $customers = Customer::groupBy('find_id')->selectRaw('find_id, count(*) as total')->get();
+
+        $data = [];
+        $labels = [];
+
+        foreach ($customers as $customer) {
+            $data[] = $customer->total;
+            $labels[] = $customer->find->name;
+        }
+
+        return view('pages.customers.find_report', compact('start_date', 'end_date', 'data', 'labels', 'customers'));
     }
 
 

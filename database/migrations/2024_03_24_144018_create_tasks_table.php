@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('installment_id')->constrained()->cascadeOnDelete();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->text('comment');
+            $table->text('task');
             $table->date('date');
             $table->boolean('status')->default(false);
-            $table->text('result')->nullable();
+            $table->text('task_result')->nullable();
             $table->timestamps();
         });
     }
