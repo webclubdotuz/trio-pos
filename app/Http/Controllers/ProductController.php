@@ -99,5 +99,51 @@ class ProductController extends Controller
         return view('pages.products.report_sales', compact('sale_items', 'start_date', 'end_date'));
     }
 
+    // report_sales_frozen
+    function report_sales_frozen(Request $request)
+    {
+        $days = [10, 20, 30, 40, 50, 60];
+        $warehouse_id = $request->warehouse_id ?? null;
+        $day = $request->day ?? 10;
+
+        $date = date('Y-m-d', strtotime('-' . $day . ' days'));
+
+        $products = Product::when($warehouse_id, function ($query, $warehouse_id) {
+            return $query->where('sale_items.warehouse_id', $warehouse_id);
+        })
+        ->whereHas('sale_items', function ($query) use ($date) {
+            $query->where('created_at', '>=', $date);
+        })
+        ->pluck('id')->toArray();
+
+        $products = Product::whereNotIn('id', $products)->get();
+
+        return view('pages.products.report_sales_frozen', compact('products', 'days', 'day'));
+
+    }
+
+    // report_top_sale
+    function report_top_sale(Request $request)
+    {
+        $start_date = date('Y-m-01') ?? $request->start_date;
+        $end_date = date('Y-m-t') ?? $request->end_date;
+        $warehouse_id = $request->warehouse_id ?? null;
+
+        $order_by = $request->order_by ?? 'total';
+
+        $top_products = SaleItem::whereHas('sale', function ($query) use ($start_date, $end_date, $warehouse_id) {
+            $query->whereBetween('date', [$start_date . ' 00:00:00', $end_date . ' 23:59:59']);
+            if ($warehouse_id) {
+                $query->where('warehouse_id', $warehouse_id);
+            }
+        })
+        ->groupBy('product_id')
+        ->selectRaw('sum(quantity) as quantity, sum(total) as total, product_id')
+        ->orderBy($order_by, 'desc')
+        ->get();
+
+        return view('pages.products.report_top_sale', compact('top_products', 'start_date', 'end_date'));
+    }
+
 
 }

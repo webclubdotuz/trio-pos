@@ -491,6 +491,7 @@ class Create extends Component
                     'in_total_usd' => $product->in_price_usd * $item->quantity,
                     // "Undefined property: stdClass::$imei"
                     'imei' => isset($item->imei) ? $item->imei : null,
+                    'created_at' => $this->date,
                 ]);
 
                 $product->decrementQuantity($this->warehouse_id, $item->quantity);

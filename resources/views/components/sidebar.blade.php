@@ -96,6 +96,8 @@
                 <li><a href="{{ route('reports.customer-report') }}"><i class="bx bx-chart"></i> Клиенты</a></li>
                 <li><a href="{{ route('reports.customer-find-report') }}"><i class="bx bx-chart"></i> Источники клиентов</a></li>
                 <li><a href="{{ route('reports.product-report-sale') }}"><i class="bx bx-chart"></i> Продукты</a></li>
+                <li><a href="{{ route('reports.product-report-frozen') }}"><i class="bx bx-chart"></i> Замороженные продукты</a></li>
+                <li><a href="{{ route('reports.product-report-top-sale') }}"><i class="bx bx-chart"></i> Топ продаж</a></li>
                 <li><a href="{{ route('reports.expense') }}"><i class="bx bx-chart"></i> Расходы</a></li>
             </ul>
         </li>

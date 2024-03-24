@@ -49,6 +49,12 @@ class Product extends Model
         return $this->hasMany(ProductWarehouse::class, 'product_id', 'id');
     }
 
+    // sale_items
+    public function sale_items()
+    {
+        return $this->hasMany(SaleItem::class);
+    }
+
     public function getImageUrlAttribute()
     {
         return $this->image ? asset('storage/' . $this->image) : asset('images/no-image.png');

@@ -85,6 +85,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/customer-report', [\App\Http\Controllers\CustomerController::class, 'report'])->name('customer-report');
         Route::get('/customer-find-report', [\App\Http\Controllers\CustomerController::class, 'find_report'])->name('customer-find-report');
         Route::get('/product-report-sale', [\App\Http\Controllers\ProductController::class, 'report_sales'])->name('product-report-sale');
+        Route::get('/product-report-frozen', [\App\Http\Controllers\ProductController::class, 'report_sales_frozen'])->name('product-report-frozen');
+        Route::get('/product-report-top-sale', [\App\Http\Controllers\ProductController::class, 'report_top_sale'])->name('product-report-top-sale');
         Route::get('/expense', [\App\Http\Controllers\ReportController::class, 'expense'])->name('expense');
     });
 
