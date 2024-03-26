@@ -21,7 +21,7 @@
                                 <tbody>
                                     @forelse ($products as $product)
                                     <tr>
-                                        <td><img src="{{ $product->image ? asset('storage/' . $product->image) : 'images/no-image.png' }}"
+                                        <td><img src="{{ $product->image ? asset('storage/' . $product->image) : '/images/no-image.png' }}"
                                             alt="{{ $product->name }}" class="img-thumbnail" width="50"></td>
                                         <td><a href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a></td>
                                         <td>{{ nf($product->quantity) }}</td>
