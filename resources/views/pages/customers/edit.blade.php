@@ -10,8 +10,9 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <form class="row g-2" action="{{ route('customers.store') }}" method="post">
+                <form class="row g-2" action="{{ route('customers.update', $customer->id) }}" method="POST">.
                     @csrf
+                    @method('PUT')
 
                     <div class="col-md-4 form-group">
                         <label for="first_name">Имя</label>
