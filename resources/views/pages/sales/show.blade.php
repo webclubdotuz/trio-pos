@@ -111,6 +111,7 @@
                                         <th>Дата</th>
                                         <th>Сумма</th>
                                         <th>Способ</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -120,6 +121,11 @@
                                             <td>{{ df($payment->date, 'd.m.Y') }}</td>
                                             <td>{{ nf($payment->amount) }} uzs</td>
                                             <td>{{ $payment->payment_method->name }}</td>
+                                            <td>
+                                                <a href="{{ route('sale-payments.print' , $payment->id) }}" target="_blank">
+                                                    <i class="ln bx bx-printer"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
