@@ -21,7 +21,7 @@
                         <tbody>
                             @foreach($customers as $customer)
                             <tr>
-                                <td>{{ $customer->find->name }}</td>
+                                <td>{{ $customer?->find?->name }}</td>
                                 <td>{{ $customer->total }}</td>
                             </tr>
                             @endforeach
