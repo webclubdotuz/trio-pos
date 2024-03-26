@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="/assets/css/print_plan.css" rel="stylesheet" type="text/css">
 
-    <title>План лечения</title>
+    <title>Квитанция</title>
     <link rel="stylesheet" href="/assets/plugins/print-js/print.min.css">
     <script src="/assets/plugins/print-js/print.min.js"></script>
 </head>
