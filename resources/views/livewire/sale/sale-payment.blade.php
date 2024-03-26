@@ -141,7 +141,7 @@
                                                     <tr>
                                                         <td>{{ $installment->date }}</td>
                                                         <td>{{ nf($installment->amount) }}</td>
-                                                        <td>{{ $installment->status }}</td>
+                                                        <td>{!! $installment->status_html !!}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
