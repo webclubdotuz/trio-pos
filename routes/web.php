@@ -45,6 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('sales/{sale}/review', [\App\Http\Controllers\SaleController::class, 'storeReview'])->name('sales.store-review');
     Route::delete('sales/{sale}/review/{review}', [\App\Http\Controllers\SaleController::class, 'destroyReview'])->name('sales.destroy-review');
 
+    // SalePayments
+    Route::resource('sale-payments', \App\Http\Controllers\SalePaymentController::class);
+    Route::get('sale-payments/{sale_payment}/print', [\App\Http\Controllers\SalePaymentController::class, 'print'])->name('sale-payments.print');
+
     // Users
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
         Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('index');

@@ -1,0 +1,103 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+.print-div {
+    width: 72mm; /* Set the width of your label in millimeters */
+    /* border: 1px solid #000; */
+    padding: 0px;
+    text-align: center;
+}
+
+.print-div h1 {
+    font-size: 100px;
+    font-weight: 700;
+    color: #000;
+}
+
+.print-div .logo {
+    padding: 0;
+    margin: 0;
+}
+
+.print-div .queue-number {
+    padding: 0;
+    margin: 0;
+    font-size: 100px;
+}
+
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+
+.toc-list,
+.toc-list ol {
+    list-style-type: none;
+}
+
+.toc-list {
+    padding: 0;
+}
+
+.toc-list ol {
+    padding-inline-start: 2ch;
+}
+
+.toc-list li > a {
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: auto max-content;
+    align-items: end;
+    color: #000;
+}
+
+.toc-list li > a > .page {
+    text-align: right;
+}
+
+.visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(100%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap;
+}
+
+.toc-list li > a > .title {
+    position: relative;
+    overflow: hidden;
+}
+
+.toc-list li > a .leaders::after {
+    position: absolute;
+    padding-inline-start: 0.25ch;
+    content: " . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . . . . ";
+    text-align: right;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+table th,
+table td {
+    padding: 1px;
+    margin: 0;
+}

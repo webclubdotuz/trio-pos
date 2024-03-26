@@ -86,7 +86,7 @@ class SalePayment extends Component
 
             DB::commit();
             $this->alert('success', 'Оплата успешно добавлена');
-            $this->js('location.reload();');
+            return redirect()->route('sale-payments.print', $this->sale_id);
         } catch (\Throwable $th) {
             //throw $th;
             dd($th);
@@ -154,7 +154,7 @@ class SalePayment extends Component
             }
             DB::commit();
             $this->alert('success', 'Оплата успешно добавлена');
-            $this->js('location.reload();');
+            return redirect()->route('sale-payments.print', $this->sale_id);
         } catch (\Throwable $th) {
             //throw $th;
             dd($th);
