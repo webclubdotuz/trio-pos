@@ -78,7 +78,7 @@ class CustomerController extends Controller
 
         foreach ($customers as $customer) {
             $data[] = $customer->total;
-            $labels[] = $customer->find->name;
+            $labels[] = $customer?->find?->name;
         }
 
         return view('pages.customers.find_report', compact('start_date', 'end_date', 'data', 'labels', 'customers'));
