@@ -22,7 +22,7 @@ class Index extends DataTableComponent
             Column::make("ID", "id")->sortable(),
             Column::make("ФИО", 'id')
                 ->format(function ($id) {
-                    $customer = Customer::find($id);
+                    $customer = Customer::where('id', $id)->first();
                     return $customer->full_name;
                 })->searchable()->sortable(),
             Column::make("Address", "address")->sortable()->searchable(),

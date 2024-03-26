@@ -34,6 +34,7 @@ class ProductController extends Controller
                 $path = $request->file('image')->storeAs('products', $file_name, 'public');
                 $product->image = $path;
                 $product->save();
+
             }
 
         });
