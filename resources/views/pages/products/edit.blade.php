@@ -91,7 +91,7 @@
                     </div>
 
                     <div class="col-md-3 form-group">
-                        <label for="day_sale">Количество продаж в день</label>
+                        <label for="day_sale">Количество продаж  в неделю</label>
                         <input type="number" name="day_sale" id="day_sale" class="form-control" required value="{{ old('day_sale', $product->day_sale) }}" min="0">
                     </div>
 

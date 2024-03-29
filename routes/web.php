@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Reports
     Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
+        Route::get('/kassa', [\App\Http\Controllers\ReportController::class, 'kassa'])->name('kassa');
         Route::get('/sale-report-user', [\App\Http\Controllers\SaleController::class, 'report_user'])->name('sale-report-user');
         Route::get('/installment-report-debt', [\App\Http\Controllers\InstallmentController::class, 'report_debt'])->name('installment-report-debt');
         Route::get('/customer-report', [\App\Http\Controllers\CustomerController::class, 'report'])->name('customer-report');

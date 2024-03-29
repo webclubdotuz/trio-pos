@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sale;
 use App\Models\Payment;
+use App\Models\SalePayment;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,57 +37,21 @@ class ReportController extends Controller
         return view('pages.reports.odds', compact('selected_year'));
     }
 
-    public function daxod(Request $request)
+    public function kassa(Request $request)
     {
         $start_date = $request->start_date ?? date('Y-m-01');
         $end_date = $request->end_date ?? date('Y-m-d');
 
-        $payments = Payment::whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])
-            ->whereHas('transaction', function ($query) {
-                $query->where('type', 'sale');
-            })
-            ->selectRaw('sum(amount) as amount, date(created_at) as date')
-            ->groupBy('date')
-            ->orderBy('date', 'asc')
-            ->get();
-
-        $data = [];
-        $labels = [];
-
-        foreach ($payments as $payment) {
-            $data[] = $payment->amount;
-            $labels[] = $payment->date;
-        }
-
-        $payments = Payment::whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])
-            ->whereHas('transaction', function ($query) {
-                $query->where('type', 'sale');
-            })
-            ->selectRaw('sum(amount) as amount, method as method')
-            ->groupBy('method')
+        $sale_payment_methods = SalePayment::whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])
+            ->selectRaw('sum(amount) as amount, payment_method_id')
+            ->groupBy('payment_method_id')
             ->orderBy('amount', 'desc')
             ->get();
 
-        $sales = DB::table('sales')
-            ->join('transactions', 'sales.transaction_id', '=', 'transactions.id')
-            ->join('rolls', 'sales.roll_id', '=', 'rolls.id')
-            ->whereBetween('transactions.created_at', [now()->startOfMonth(), now()->endOfMonth()])
-            ->where('transactions.status', 'completed')
-            ->selectRaw('sum(sales.total) as sum, sum(rolls.weight) as weight, rolls.glue as glue')
-            ->groupBy('glue')
-            ->get();
-
-        $dataProducts = [];
-        $labelsProducts = [];
-
-        foreach ($sales as $sale) {
-            $dataProducts[] = $sale->weight;
-            $labelsProducts[] = $sale->glue ? 'Рулон клей' : 'Рулон без клей';
-        }
 
 
 
-        return view('pages.reports.daxod', compact('start_date', 'end_date', 'data', 'labels', 'payments', 'dataProducts', 'labelsProducts', 'sales'));
+        return view('pages.reports.kassa', compact('start_date', 'end_date', 'sale_payment_methods'));
     }
 
 
