@@ -3,16 +3,9 @@
         <i class="bx bx-dots-vertical-rounded"></i>
     </button>
     <div class="dropdown-menu">
-        <a class="dropdown-item border-bottom" href="{{ route('sales.show', $sale->id) }}"><i class="bx bx-show"></i> Просмотр</a>
-        @if ($sale->installment_status)
-        <a class="dropdown-item border-bottom" href="{{ route('sales.contract', $sale->id) }}"><i class="bx bx-file"></i> Договор</a>
-        @endif
+        <a class="dropdown-item border-bottom" href="{{ route('transfers.show', $transfer->id) }}"><i class="bx bx-show"></i> Просмотр</a>
 
-        @if ($sale->debt)
-        <a class="dropdown-item border-bottom" href="#" wire:click="$dispatch('openSalePayment', { 'sale_id': {{ $sale->id }} })"><i class="bx bx-money"></i> Оплата</a>
-        @endif
-
-        <form action="{{ route('sales.destroy', $sale->id) }}" method="post" class="d-inline">
+        <form action="{{ route('transfers.destroy', $transfer->id) }}" method="post" class="d-inline">
             @csrf
             @method('DELETE')
             <button class="dropdown-item text-danger" type="submit" onclick="return confirm('Вы уверены?')"><i class="bx bx-trash"></i> Удалить</button>

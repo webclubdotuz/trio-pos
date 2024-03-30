@@ -6,11 +6,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="row g-2">
-                    <div class="col-4 form-group">
+                    <div class="col-md-4 form-group">
                         <label for="date">Дата</label>
                         <input type="datetime-local" class="form-control" max="{{ date('Y-m-d H:i') }}" min="{{ date('Y-m-d H:i', strtotime('-1 month')) }}" wire:model="date" required>
                     </div>
-                    <div class="col-4 form-group">
+                    <div class="col-md-4 form-group">
                         <label for="customer_id">Клиент</label>
                         <select class="form-control select2" wire:model="customer_id" required>
                             <option value="">Выберите клиента</option>
@@ -20,7 +20,7 @@
                         </select>
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-                    <div class="col-4 form-group">
+                    <div class="col-md-4 form-group">
                         <label for="warehouse_id">Склад</label>
                         <select class="form-control select2" wire:model.live="warehouse_id" required>
                             <option value="">Выберите склад</option>

@@ -4,14 +4,15 @@
             <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
             <div class="top-menu ms-auto">
                 <ul class="navbar-nav align-items-center">
+                    <li class="nav-item mobile-search-icon">
+                        <a class="btn btn-primary btn-sm m-1" href="{{ route('sales.create') }}">
+                            <i class='bx bx-shopping-bag'></i>
+                        </a>
+                    </li>
                     <li class="nav-item">
-                        {{-- <a class="btn btn-success btn-sm m-1" href="#">
-                            <i class='bx bx-trending-up'></i> 1$ = {{ nf(getCurrencyRate()) }} UZS
-                        </a> --}}
-
                         <div class="dropdown">
                             <button class="btn btn-success btn-sm m-1" type="button" id="triggerId" data-bs-toggle="dropdown">
-                                <i class='bx bx-trending-up'></i> 1$ = {{ nf(getCurrencyRate()) }} UZS
+                                <i class='bx bx-trending-up'></i>{{ nf(getCurrencyRate()) }} UZS
                             </button>
                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                 <form action="{{ route('settings.update', 'currency') }}" method="post" class="p-2">

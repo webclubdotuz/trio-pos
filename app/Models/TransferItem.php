@@ -24,4 +24,19 @@ class TransferItem extends Model
     {
         return $this->belongsTo(Transfer::class);
     }
+
+    public function fromWarehouse()
+    {
+        return $this->belongsTo(Warehouse::class, 'from_warehouse_id');
+    }
+
+    public function toWarehouse()
+    {
+        return $this->belongsTo(Warehouse::class, 'to_warehouse_id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

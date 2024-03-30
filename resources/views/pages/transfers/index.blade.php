@@ -13,7 +13,7 @@
 		<div class="col">
 			<div class="card">
 				<div class="card-body">
-                    {{-- @livewire('sale.index') --}}
+                    @livewire('transfer.index')
 				</div>
 			</div>
 		</div>

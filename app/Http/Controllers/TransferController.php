@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transfer;
 use Illuminate\Http\Request;
 
 class TransferController extends Controller
@@ -16,8 +17,8 @@ class TransferController extends Controller
         return view('pages.transfers.create');
     }
 
-    public function store(Request $request)
+    public function show(Transfer $transfer)
     {
-        // Validate the request...
+        return view('pages.transfers.show', compact('transfer'));
     }
 }
