@@ -49,6 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('sale-payments', \App\Http\Controllers\SalePaymentController::class);
     Route::get('sale-payments/{sale_payment}/print', [\App\Http\Controllers\SalePaymentController::class, 'print'])->name('sale-payments.print');
 
+    // Transfers
+    Route::resource('transfers', \App\Http\Controllers\TransferController::class);
+
     // Users
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
         Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('index');

@@ -73,6 +73,18 @@
         @if(hasRoles(['admin']))
         <li>
             <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class='bx bx-transfer'></i>
+                </div>
+                <div class="menu-title">Перемещения</div>
+            </a>
+            <ul>
+                <li><a href="{{ route('transfers.index') }}"><i class="lni lni-dropbox-original"></i> Список перемещений</a></li>
+                <li><a href="{{ route('transfers.create') }}"><i class="lni lni-dropbox-original"></i> Добавить перемещение</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='lni lni-dropbox-original'></i>
                 </div>
                 <div class="menu-title">Продукты</div>

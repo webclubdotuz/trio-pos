@@ -84,6 +84,14 @@ class Product extends Model
         if ($warehouse) {
             $warehouse->pivot->decrement('quantity', $quantity);
         }
+        else
+        {
+            $warehouse = new ProductWarehouse();
+            $warehouse->product_id = $this->id;
+            $warehouse->warehouse_id = $warehouse_id;
+            $warehouse->quantity = 0;
+            $warehouse->save();
+        }
     }
 
     public function incrementQuantity($warehouse_id, $quantity)
@@ -91,6 +99,14 @@ class Product extends Model
         $warehouse = $this->warehouses()->where('warehouse_id', $warehouse_id)->first();
         if ($warehouse) {
             $warehouse->pivot->increment('quantity', $quantity);
+        }
+        else
+        {
+            $warehouse = new ProductWarehouse();
+            $warehouse->product_id = $this->id;
+            $warehouse->warehouse_id = $warehouse_id;
+            $warehouse->quantity = $quantity;
+            $warehouse->save();
         }
     }
 
