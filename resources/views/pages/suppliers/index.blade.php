@@ -19,7 +19,6 @@
                                     <th>ID</th>
                                     <th>ФИО</th>
                                     <th>Телефон</th>
-                                    <th>Email</th>
                                     <th>Адрес</th>
                                     <th>Действия</th>
                                 </tr>
@@ -30,7 +29,6 @@
                                     <td>{{ $supplier->id }}</td>
                                     <td>{{ $supplier->full_name }}</td>
                                     <td>{{ $supplier->phone }}</td>
-                                    <td>{{ $supplier->email }}</td>
                                     <td>{{ $supplier->address }}</td>
                                     <td>
                                         <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-primary btn-sm">

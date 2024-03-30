@@ -15,14 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('full_name');
             $table->string('phone')->nullable();
-            $table->string('email')->nullable();
             $table->string('address')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
 
         $suppliers = [
-            ['full_name' => 'Supplier 1', 'phone' => '123456789', 'email' => 'suppliers@example.com', 'address' => 'Address 1']
+            ['full_name' => 'Supplier 1', 'phone' => '123456789', 'address' => 'Address 1']
         ];
 
         \App\Models\Supplier::insert($suppliers);

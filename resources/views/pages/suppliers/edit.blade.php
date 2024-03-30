@@ -26,11 +26,6 @@
                         <input type="text" name="phone" id="phone" class="form-control" required value="{{ old('phone', $supplier->phone) }}">
                     </div>
 
-                    <div class="col-md-4 form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" required value="{{ old('email', $supplier->email) }}">
-                    </div>
-
                     <div class="col-md-12 form-group">
                         <label for="address">Адрес</label>
                         <textarea name="address" id="address" class="form-control">{{ old('address', $supplier->address) }}</textarea>

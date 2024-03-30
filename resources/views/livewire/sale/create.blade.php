@@ -55,7 +55,7 @@
                             <ul class="dropdown-menu" style="display: block; position: relative;">
                                 @foreach ($products as $product)
                                     <li class="dropdown-item" wire:click="addProduct({{ $product->id }})">
-                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" width="30" height="30">{{ $product->name }} ({{ $product->code }})
+                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" width="30" height="30">{{ $product->name }} ({{ $product->code }}) (Остаток: {{ $product->quantity($warehouse_id) }})
                                     </li>
                                 @endforeach
                             </ul>
