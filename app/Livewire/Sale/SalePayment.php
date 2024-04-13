@@ -129,7 +129,7 @@ class SalePayment extends Component
             DB::beginTransaction();
 
             foreach ($this->payment_amounts as $key => $payment_amount) {
-                SalePaymentModel::create([
+                $sale_payment = SalePaymentModel::create([
                     'sale_id' => $this->sale_id,
                     'installment_id' => $installment->id,
                     'payment_method_id' => $this->payment_methods[$key],
@@ -154,7 +154,7 @@ class SalePayment extends Component
             }
             DB::commit();
             $this->alert('success', 'Оплата успешно добавлена');
-            return redirect()->route('sale-payments.print', $this->sale_id);
+            return redirect()->route('sale-payments.print', $sale_payment->id);
         } catch (\Throwable $th) {
             //throw $th;
             dd($th);
