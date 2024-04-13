@@ -271,6 +271,10 @@
                 success: function(response) {
                     price = response.price_usd * currency;
                     price_usd = response.price_usd;
+
+                    saleprice = response.sale_price_usd * currency;
+                    saleprice_usd = response.sale_price_usd;
+
                     $(`#price_${index}`).val(price);
                     $(`#price_usd_${index}`).val(price_usd);
                     calc();
