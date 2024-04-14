@@ -60,11 +60,13 @@ class AuthController extends Controller
 
         if (hasRoles()) {
             auth()->login($user);
-            toast('Вы успешно авторизовались как ' . $user->fullname, 'success');
+            flash('Вы успешно авторизовались как ' . $user->fullname, 'success');
             return redirect()->intended('/');
         }
 
-        return back()->with('toast_error', 'У вас нет доступа!');
+        return back()->withErrors([
+            'username' => 'У вас нет прав для авторизации',
+        ]);
     }
 
 

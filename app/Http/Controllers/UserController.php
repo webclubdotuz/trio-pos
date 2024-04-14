@@ -127,6 +127,6 @@ class UserController extends Controller
             return redirect()->intended('/');
         }
 
-        return back()->with('toast_error', 'У вас нет доступа!');
+        return back()->with('error', 'У вас нет доступа!');
     }
 }

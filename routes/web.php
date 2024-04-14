@@ -112,7 +112,8 @@ Route::group(['middleware' => 'auth'], function () {
     // PaymentMethods
     Route::resource('payment-methods', \App\Http\Controllers\PaymentMethodController::class);
     Route::resource('finds', \App\Http\Controllers\FindController::class);
-    //
+    //InstallmentMonths
+    Route::resource('installment-months', \App\Http\Controllers\InstallmentMonthsController::class);
 
 
 });
