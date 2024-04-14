@@ -1,10 +1,10 @@
 @extends('layouts.main')
 
 @section('content')
-    <x-breadcrumb :title="'Источники'">
-        <a type="button" class="btn btn-primary btn-sm" href="{{ route('finds.create') }}">
+    <x-breadcrumb :title="'Задачи'">
+        {{-- <a type="button" class="btn btn-primary btn-sm" href="{{ route('tasks.create') }}">
             <i class="bx bx-plus"></i>Создать
-        </a>
+        </a> --}}
     </x-breadcrumb>
 
     <div class="row">

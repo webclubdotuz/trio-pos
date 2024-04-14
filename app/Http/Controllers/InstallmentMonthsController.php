@@ -9,12 +9,13 @@ class InstallmentMonthsController extends Controller
 {
     public function index()
     {
-        return view('installment_months.index');
+        $installmentMonths = InstallmentMonths::orderBy('month')->get();
+        return view('pages.installment_months.index', compact('installmentMonths'));
     }
 
     public function create()
     {
-        return view('installment_months.create');
+        return view('pages.installment_months.create');
     }
 
     public function store(Request $request)
@@ -27,17 +28,17 @@ class InstallmentMonthsController extends Controller
 
         $installmentMonth = InstallmentMonths::create($request->all());
 
-        return redirect()->route('installment-months.index')->with('success', 'Installment month created successfully.');
+        return redirect()->route('installment-months.index')->with('success', 'Рассрочка месяц добавлена успешно.');
     }
 
     public function show(InstallmentMonths $installmentMonth)
     {
-        return view('installment_months.show', compact('installmentMonth'));
+        return view('pages.installment_months.show', compact('installmentMonth'));
     }
 
     public function edit(InstallmentMonths $installmentMonth)
     {
-        return view('installment_months.edit', compact('installmentMonth'));
+        return view('pages.installment_months.edit', compact('installmentMonth'));
     }
 
     public function update(Request $request, InstallmentMonths $installmentMonth)
@@ -45,18 +46,17 @@ class InstallmentMonthsController extends Controller
         $request->validate([
             'month' => 'required',
             'percent' => 'required',
-            'description' => 'required'
         ]);
 
         $installmentMonth->update($request->all());
 
-        return redirect()->route('installment-months.index')->with('success', 'Installment month updated successfully.');
+        return redirect()->route('installment-months.index')->with('success', 'Рассрочка месяц обновлена успешно.');
     }
 
     public function destroy(InstallmentMonths $installmentMonth)
     {
         $installmentMonth->delete();
 
-        return redirect()->route('installment-months.index')->with('success', 'Installment month deleted successfully.');
+        return redirect()->route('installment-months.index')->with('success', 'Рассрочка месяц удалена успешно.');
     }
 }
