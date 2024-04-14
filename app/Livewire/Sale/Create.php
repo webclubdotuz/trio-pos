@@ -37,6 +37,14 @@ class Create extends Component
     public $first_payment, $percent, $month;
     public $is_installment = false;
 
+    protected $listeners = ['refreshCustomer' => 'refreshCustomer', 'refreshSale' => '$refresh'];
+
+    public function refreshCustomer($customer_id)
+    {
+        $this->customer_id = $customer_id[0]['id'];
+        $this->dispatch('customerIdReset');
+    }
+
     public function mount()
     {
         $this->date = date('Y-m-d H:i');
@@ -267,37 +275,6 @@ class Create extends Component
         $this->dispatch('checkoutOpenModal');
     }
 
-    public function checkout_installment()
-    {
-        $this->validate([
-            'warehouse_id' => 'required',
-            'customer_id' => 'required',
-        ]);
-
-        $cart = new Cart();
-
-        if ($cart->getTotal() == 0) {
-            flash('Корзина пуста', 'error');
-            return;
-        }
-
-        $this->payment_amounts[0] = $cart->getTotal();
-
-        $this->dispatch('checkoutInstallmentOpenModal');
-    }
-
-    // monthChange
-    public function monthChange($month, $percent)
-    {
-        if (!$this->first_payment) {
-            $this->first_payment = 0;
-        }
-        $this->percent = $percent;
-        $this->month = $month;
-
-        $this->calculateInstallment();
-    }
-
     public function calculateInstallment()
     {
         $this->validate([
@@ -438,101 +415,6 @@ class Create extends Component
         }
     }
 
-    public function saveInstallment()
-    {
-        $this->validate([
-            'warehouse_id' => 'required|exists:warehouses,id',
-            'customer_id' => 'required|exists:customers,id',
-            'date' => 'required',
-            'first_payment' => 'required|numeric|min:0',
-            'percent' => 'required|numeric|min:0',
-            'month' => 'required|numeric|min:0',
-            'installment_lists' => 'required|array|min:2',
-        ]);
-
-        $cart = new Cart();
-        $total = $cart->getTotal();
-        if ($total == 0) {
-            // $this->alert('error', 'Корзина пуста');
-            flash('Корзина пуста', 'error');
-            return;
-        }
-
-        $newTotal = $total + ($total * $this->percent / 100);
-        $total = $newTotal;
-
-        try {
-
-            DB::beginTransaction();
-
-            $sale = Sale::create([
-                'invoice_number' => 'INV-' . time(),
-                'customer_id' => $this->customer_id,
-                'warehouse_id' => $this->warehouse_id,
-                'user_id' => auth()->id(),
-                'total' => $total,
-                'total_usd' => $total / $this->currency,
-                'currency_rate' => $this->currency,
-                'payment_status' => 'installment',
-                'installment_status' => true,
-                'installment_first_payment' => $this->first_payment,
-                'installment_percent' => $this->percent,
-                'installment_month' => $this->month,
-                'date' => $this->date,
-            ]);
-
-            foreach ($cart->getItems() as $item) {
-                $product = Product::find($item->id);
-
-                if ($product->quantity($this->warehouse_id) < $item->quantity) {
-                    DB::rollBack();
-                    // $this->alert('error', $product->name . ' товара в наличии недостаточно');
-                    flash($product->name . ' товара в наличии недостаточно', 'error');
-                    return;
-                }
-
-                $sale->sale_items()->create([
-                    'product_id' => $item->id,
-                    'warehouse_id' => $this->warehouse_id,
-                    'quantity' => $item->quantity,
-                    'price' => $item->price + ($item->price * $this->percent / 100),
-                    'price_usd' => $item->price_usd + ($item->price_usd * $this->percent / 100),
-                    'total' => $item->price * $item->quantity + ($item->price * $item->quantity * $this->percent / 100),
-                    'total_usd' => $item->price_usd * $item->quantity + ($item->price_usd * $item->quantity * $this->percent / 100),
-                    'currency_rate' => $this->currency,
-                    'in_price' => $product->in_price,
-                    'in_price_usd' => $product->in_price_usd,
-                    'in_total' => $product->in_price * $item->quantity,
-                    'in_total_usd' => $product->in_price_usd * $item->quantity,
-                    // "Undefined property: stdClass::$imei"
-                    'imei' => isset($item->imei) ? $item->imei : null,
-                    'created_at' => $this->date,
-                ]);
-
-                $product->decrementQuantity($this->warehouse_id, $item->quantity);
-            }
-
-            foreach ($this->installment_lists as $installment) {
-                $sale->installments()->create([
-                    'customer_id' => $this->customer_id,
-                    'date' => $installment['date'],
-                    'amount' => $installment['amount'],
-                    'status' => $installment['amount'] == 0 ? 'paid' : 'pending',
-                    'amount_usd' => $installment['amount'] / $this->currency,
-                    'currency_rate' => $this->currency,
-                ]);
-            }
-
-            DB::commit();
-            flash('Продажа успешно создана', 'success');
-            $cart->clear();
-            return redirect()->route('sales.index');
-
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            dd($th);
-        }
-    }
     // clear cart
     public function clearCart()
     {

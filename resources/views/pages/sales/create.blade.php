@@ -20,6 +20,7 @@
             @livewire('sale.create')
 		</div>
 	</div>
+    @livewire('customer.create')
 @endsection
 
 @push('js')

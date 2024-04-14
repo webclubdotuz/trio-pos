@@ -12,12 +12,17 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="customer_id">Клиент</label>
-                        <select class="form-control select2" wire:model="customer_id" required>
-                            <option value="">Выберите клиента</option>
-                            @foreach (getCustomers() as $customer)
-                                <option value="{{ $customer->id }}">{{ $customer->full_name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group">
+                            <select class="form-control select2" wire:model="customer_id" required>
+                                <option value="">Выберите клиента</option>
+                                @foreach (getCustomers() as $customer)
+                                    <option value="{{ $customer->id }}">{{ $customer->full_name }}</option>
+                                @endforeach
+                            </select>
+                            <button type="button" class="btn btn-sm btn-primary" wire:click="dispatch('openModal', 'customer.create')">
+                                <i class="bx bx-plus"></i>
+                            </button>
+                        </div>
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-4 form-group">
@@ -355,6 +360,11 @@
 
         Livewire.on('checkoutInstallmentOpenModal', () => {
             $('#installmentModal').modal('show');
+        });
+
+        Livewire.on('customerIdReset', () => {
+            console.log('customerIdReset');
+            $('#customer_id').trigger('change');
         });
 
      });

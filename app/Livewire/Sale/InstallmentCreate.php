@@ -39,6 +39,14 @@ class InstallmentCreate extends Component
     public $first_payment, $percent, $month;
     public $is_installment = false;
 
+    protected $listeners = ['refreshCustomer' => 'refreshCustomer', 'refreshSale' => '$refresh'];
+
+    public function refreshCustomer($customer_id)
+    {
+        $this->customer_id = $customer_id[0]['id'];
+        $this->dispatch('customerIdReset');
+    }
+
     public function mount()
     {
         $this->date = date('Y-m-d H:i');
