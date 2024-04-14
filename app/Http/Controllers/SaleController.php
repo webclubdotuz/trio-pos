@@ -22,6 +22,11 @@ class SaleController extends Controller
         return view('pages.sales.create');
     }
 
+    public function installment()
+    {
+        return view('pages.sales.installment');
+    }
+
     public function store(StoreSaleRequest $request)
     {
         //

@@ -30,13 +30,6 @@
                         </select>
                         @error('warehouse_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-
-                    <div class="col-12 form-group">
-                        <label for="is_installment">
-                            <input type="checkbox" wire:model.live="is_installment" id="is_installment"> Рассрочка
-                        </label>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -126,8 +119,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                        <span class="btn btn-sm btn-success" wire:click="checkout">
-                            Оформить
+                        <span class="btn btn-sm btn-primary" wire:click="checkout_installment">
+                            Рассрочка
                         </span>
 
                         <span class="btn btn-sm btn-danger" wire:click="clearCart" style="float: right;">

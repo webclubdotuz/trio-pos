@@ -12,9 +12,8 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-class Create extends Component
+class InstallmentCreate extends Component
 {
-
     use LivewireAlert;
 
     public $search;
@@ -51,7 +50,7 @@ class Create extends Component
         $this->payment_methods[0] = 1;
         $this->payment_amounts[0] = 0;
 
-        $cart = new Cart();
+        $cart = new Cart('installment');
 
         foreach ($cart->getItems() as $item) {
             $this->quantity[$item->id] = $item->quantity;
@@ -78,10 +77,10 @@ class Create extends Component
 
         $product = Product::find($id);
 
-        $cart = new Cart();
+        $cart = new Cart('installment');
 
-        $price = $product->price;
-        $price_usd = $product->price_usd;
+        $price = $product->installment_price;
+        $price_usd = $product->installment_price_usd;
 
         $cart->add([
             'id' => $product->id,
@@ -104,15 +103,15 @@ class Create extends Component
 
     public function removeProduct($id)
     {
-        $cart = new Cart();
+        $cart = new Cart('installment');
         $cart->remove($id);
     }
 
     public function decreaseProduct($id)
     {
-        $cart = new Cart();
+        $cart = new Cart('installment');
 
-        $cart_quantity = new Cart();
+        $cart_quantity = new Cart('installment');
         $cart_quantity = $cart_quantity->get($id);
 
         if ($cart_quantity->quantity > 1) {
@@ -124,9 +123,9 @@ class Create extends Component
     public function increaseProduct($id)
     {
         $this->validate();
-        $cart = new Cart();
+        $cart = new Cart('installment');
 
-        $cart_quantity = new Cart();
+        $cart_quantity = new Cart('installment');
         $cart_quantity = $cart_quantity->get($id)->quantity;
 
         $product_quantity = Product::find($id)->quantity($this->warehouse_id);
@@ -150,7 +149,7 @@ class Create extends Component
 
         // dd($this->quantity[$id]);
 
-        $cart = new Cart();
+        $cart = new Cart('installment');
 
         $product_quantity = Product::find($id)->quantity($this->warehouse_id);
 
@@ -168,7 +167,7 @@ class Create extends Component
 
         $this->product = Product::find($id);
 
-        $cart = new Cart();
+        $cart = new Cart('installment');
         $cart = $cart->get($id);
 
         $this->product_id = $this->product->id;
@@ -191,7 +190,7 @@ class Create extends Component
             'price_usd' => 'required|numeric',
         ]);
 
-        $cart = new Cart();
+        $cart = new Cart('installment');
 
         $cart->update([
             'id' => $this->product_id,
@@ -242,7 +241,7 @@ class Create extends Component
             'customer_id' => 'required',
         ]);
 
-        $cart = new Cart();
+        $cart = new Cart('installment');
 
         if ($cart->getTotal() == 0) {
             $this->alert('error', 'Корзина пуста');
@@ -261,7 +260,7 @@ class Create extends Component
             'customer_id' => 'required',
         ]);
 
-        $cart = new Cart();
+        $cart = new Cart('installment');
 
         if ($cart->getTotal() == 0) {
             $this->alert('error', 'Корзина пуста');
@@ -295,7 +294,7 @@ class Create extends Component
 
         $this->installment_lists = [];
 
-        $cart = new Cart();
+        $cart = new Cart('installment');
 
         $total = $cart->getTotal();
 
@@ -356,7 +355,7 @@ class Create extends Component
             ]);
         }
 
-        $cart = new Cart();
+        $cart = new Cart('installment');
         $total = $cart->getTotal();
 
         try {
@@ -437,7 +436,7 @@ class Create extends Component
             'installment_lists' => 'required|array|min:2',
         ]);
 
-        $cart = new Cart();
+        $cart = new Cart('installment');
         $total = $cart->getTotal();
         if ($total == 0) {
             $this->alert('error', 'Корзина пуста');
@@ -521,7 +520,7 @@ class Create extends Component
     // clear cart
     public function clearCart()
     {
-        $cart = new Cart();
+        $cart = new Cart('installment');
         $cart->clear();
         return redirect()->route('sales.create');
     }
@@ -529,13 +528,13 @@ class Create extends Component
     public function render()
     {
 
-        $carts = new Cart();
+        $carts = new Cart('installment');
 
         $payment_amount_summa = 0;
         foreach ($this->payment_amounts as $key => $payment_amount) {
             $payment_amount_summa += intval($payment_amount);
         }
 
-        return view('livewire.sale.create', compact('carts', 'payment_amount_summa'));
+        return view('livewire.sale.installment-create', compact('carts', 'payment_amount_summa'));
     }
 }

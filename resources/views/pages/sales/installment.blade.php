@@ -4,7 +4,7 @@
 <link href="{{ asset('assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet"/>
 @endpush
 @section('content')
-	<x-breadcrumb :title="'Продаж'">
+	<x-breadcrumb :title="'Продаж в рассрочку'">
 		<a href="{{ route('purchases.index') }}" class="btn btn-sm btn-primary">
 			<i class="bx bx-list-ul"></i>
 			Список продаж
@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="col-md-12">
-            @livewire('sale.create')
+            @livewire('sale.installment-create')
 		</div>
 	</div>
 @endsection

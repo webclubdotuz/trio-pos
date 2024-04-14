@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Sales
     Route::resource('sales', \App\Http\Controllers\SaleController::class);
+    Route::get('sales-installment', [\App\Http\Controllers\SaleController::class, 'installment'])->name('sales.installment');
     Route::get('sales/{sale}/contract', [\App\Http\Controllers\SaleController::class, 'contract'])->name('sales.contract');
     Route::post('sales/{sale}/review', [\App\Http\Controllers\SaleController::class, 'storeReview'])->name('sales.store-review');
     Route::delete('sales/{sale}/review/{review}', [\App\Http\Controllers\SaleController::class, 'destroyReview'])->name('sales.destroy-review');

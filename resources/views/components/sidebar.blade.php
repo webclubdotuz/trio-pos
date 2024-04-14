@@ -41,6 +41,7 @@
             <ul>
                 <li><a href="{{ route('sales.index') }}"><i class="bx bx-list-plus"></i> Список продаж</a></li>
                 <li><a href="{{ route('sales.create') }}"><i class="bx bx-plus"></i> Добавить продажу</a></li>
+                <li><a href="{{ route('sales.installment') }}"><i class="bx bx-plus"></i> Добавить рассрочку</a></li>
                 <li><a href="{{ route('installments.debt') }}"><i class="bx bx-list-plus"></i> Рассрочки по долгам</a></li>
                 <li><a href="{{ route('tasks.index') }}"><i class="bx bx-list-plus"></i> Задачи</a></li>
             </ul>
