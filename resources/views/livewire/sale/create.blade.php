@@ -31,12 +31,6 @@
                         @error('warehouse_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="col-12 form-group">
-                        <label for="is_installment">
-                            <input type="checkbox" wire:model.live="is_installment" id="is_installment"> Рассрочка
-                        </label>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -170,6 +164,13 @@
                                     </div>
                                     @error('price') <span class="text-danger">{{ $message }}</span> @enderror
                                     @error('price_usd') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="quantity">Количество</label>
+                                    <input type="number" class="form-control" wire:model.live="quantity.{{ $product->id }}" required>
+                                    @error('quantity') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-12 form-group">

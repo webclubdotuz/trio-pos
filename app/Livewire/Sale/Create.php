@@ -8,14 +8,11 @@ use App\Models\Transaction;
 use App\Services\TelegramService;
 use Anam\Phpcart\Cart;
 use Illuminate\Support\Facades\DB;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class Create extends Component
 {
-
-    use LivewireAlert;
 
     public $search;
 
@@ -78,6 +75,11 @@ class Create extends Component
 
         $product = Product::find($id);
 
+        if ($product->quantity($this->warehouse_id) < 1) {
+            flash('Товара в наличии недостаточно', 'error');
+            return;
+        }
+
         $cart = new Cart();
 
         $price = $product->price;
@@ -132,7 +134,7 @@ class Create extends Component
         $product_quantity = Product::find($id)->quantity($this->warehouse_id);
 
         if ($cart_quantity + 1 > $product_quantity) {
-            $this->alert('error', 'Товара в наличии недостаточно');
+            flash('Товара в наличии недостаточно ' . $product_quantity . ' шт', 'error');
             return;
         }
 
@@ -155,7 +157,7 @@ class Create extends Component
         $product_quantity = Product::find($id)->quantity($this->warehouse_id);
 
         if ($this->quantity[$id] > $product_quantity) {
-            $this->alert('error', 'Товара в наличии недостаточно ' . $product_quantity . ' шт');
+            flash('Товара в наличии недостаточно ' . $product_quantity . ' шт', 'error');
             $this->quantity[$id] = $product_quantity;
             return;
         }
@@ -189,15 +191,26 @@ class Create extends Component
             'product_id' => 'required|exists:products,id',
             'price' => 'required|numeric',
             'price_usd' => 'required|numeric',
+            'quantity' => 'required|array',
+            'quantity.*' => 'required|numeric|min:1',
         ]);
 
         $cart = new Cart();
+
+        $product = Product::find($this->product_id);
+
+        if ($product->quantity($this->warehouse_id) < $this->quantity[$this->product_id]) {
+            flash('Товара в наличии недостаточно', 'error');
+            $this->quantity[$this->product_id] = $product->quantity($this->warehouse_id);
+            return;
+        }
 
         $cart->update([
             'id' => $this->product_id,
             'price' => $this->price,
             'price_usd' => $this->price_usd,
             'imei' => $this->imei,
+            'quantity' => $this->quantity[$this->product_id],
         ]);
 
         $this->imei = '';
@@ -205,7 +218,7 @@ class Create extends Component
 
         $this->dispatch('editProductCloseModal');
 
-        $this->alert('success', 'Товар успешно обновлен');
+        flash('Товар успешно обновлен', 'success');
     }
 
     public function priceToUsd()
@@ -245,7 +258,7 @@ class Create extends Component
         $cart = new Cart();
 
         if ($cart->getTotal() == 0) {
-            $this->alert('error', 'Корзина пуста');
+            flash('Корзина пуста', 'error');
             return;
         }
 
@@ -264,7 +277,7 @@ class Create extends Component
         $cart = new Cart();
 
         if ($cart->getTotal() == 0) {
-            $this->alert('error', 'Корзина пуста');
+            flash('Корзина пуста', 'error');
             return;
         }
 
@@ -380,7 +393,7 @@ class Create extends Component
 
                 if ($product->quantity($this->warehouse_id) < $item->quantity) {
                     DB::rollBack();
-                    $this->alert('error', $product->name . ' товара в наличии недостаточно');
+                    flash($product->name . ' товара в наличии недостаточно', 'error');
                     return;
                 }
 
@@ -440,7 +453,8 @@ class Create extends Component
         $cart = new Cart();
         $total = $cart->getTotal();
         if ($total == 0) {
-            $this->alert('error', 'Корзина пуста');
+            // $this->alert('error', 'Корзина пуста');
+            flash('Корзина пуста', 'error');
             return;
         }
 
@@ -472,7 +486,8 @@ class Create extends Component
 
                 if ($product->quantity($this->warehouse_id) < $item->quantity) {
                     DB::rollBack();
-                    $this->alert('error', $product->name . ' товара в наличии недостаточно');
+                    // $this->alert('error', $product->name . ' товара в наличии недостаточно');
+                    flash($product->name . ' товара в наличии недостаточно', 'error');
                     return;
                 }
 
@@ -509,7 +524,7 @@ class Create extends Component
             }
 
             DB::commit();
-            $this->alert('success', 'Продажа успешно создана');
+            flash('Продажа успешно создана', 'success');
             $cart->clear();
             return redirect()->route('sales.index');
 
