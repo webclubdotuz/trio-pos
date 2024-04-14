@@ -33,20 +33,80 @@
         </div>
 
         <div class="row">
-            @foreach ($sale_payment_methods as $sale_payment_method)
-                <div class="col-md-4 col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="text-center">
-                                <strong>{{ nf($sale_payment_method->amount) }}</strong>
-                            </p>
-                            <p class="text-center">
-                                <strong>{{ $sale_payment_method->payment_method->name }}</strong>
-                            </p>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-striped">
+                                    <tbody>
+                                        @foreach (getPaymentMethods() as $payment_method)
+                                            <tr class="text-center" style="background-color: #f1f1f1;">
+                                                <td>
+                                                    {{ $payment_method->name }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Дата</th>
+                                                                <th>Описание</th>
+                                                                <th>Приход</th>
+                                                                <th>Расход</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($payment_method->sale_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59']) as $sale_payment)
+                                                                <tr>
+                                                                    <td>{{ $sale_payment->date }}</td>
+                                                                    <td>{{ $sale_payment->sale->customer->full_name }}</td>
+                                                                    <td>{{ $sale_payment->amount }}</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            @endforeach
+                                                            @foreach ($payment_method->expenses->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59']) as $expense)
+                                                                <tr>
+                                                                    <td>{{ $expense->created_at }}</td>
+                                                                    <td>{{ $expense->description }}</td>
+                                                                    <td></td>
+                                                                    <td>{{ $expense->amount }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                            @foreach ($payment_method->purchase_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59']) as $purchase_payment)
+                                                                <tr>
+                                                                    <td>{{ $purchase_payment->created_at }}</td>
+                                                                    <td>{{ $purchase_payment->purchase->supplier->full_name }}</td>
+                                                                    <td></td>
+                                                                    <td>{{ $purchase_payment->amount }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr style="background-color: #f1f1f1;">
+                                                                <td>Итого</td>
+                                                                <td></td>
+                                                                <td>{{ $payment_method->sale_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') }}</td>
+                                                                <td>{{ $payment_method->expenses->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') + $payment_method->purchase_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') }}</td>
+                                                            </tr>
+                                                            <tr style="font-weight: bold;">
+                                                                <td>Остаток</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td>{{ $payment_method->sale_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') - ($payment_method->expenses->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') + $payment_method->purchase_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount')) }}</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </td>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            @endforeach
+            </div>
         </div>
 
     </div>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Expense;
 use App\Models\Sale;
 use App\Models\Payment;
+use App\Models\PurchasePayment;
 use App\Models\SalePayment;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -11,25 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    public function opiu(Request $request)
-    {
-
-        $transactionYears = Transaction::selectRaw('year(created_at) as year')
-            ->groupBy('year')
-            ->orderBy('year', 'desc')
-            ->get();
-
-        $selected_year = $request->selected_year ?? date('Y');
-
-        $transactionMonths = Transaction::selectRaw('month(created_at) as month')
-            ->whereRaw('year(created_at) = ?', [$selected_year])
-            ->groupBy('month')
-            ->orderBy('month', 'desc')
-            ->get();
-
-        return view('pages.reports.opiu', compact('transactionYears', 'selected_year', 'transactionMonths'));
-    }
-
     public function odds(Request $request)
     {
         $selected_year = $request->selected_year ?? date('Y');
@@ -41,17 +24,41 @@ class ReportController extends Controller
     {
         $start_date = $request->start_date ?? date('Y-m-01');
         $end_date = $request->end_date ?? date('Y-m-d');
+        $warehouse_id = $request->warehouse_id ?? 0;
 
         $sale_payment_methods = SalePayment::whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])
-            ->selectRaw('sum(amount) as amount, payment_method_id')
+            ->selectRaw('sum(amount) as amount, payment_method_id, "sale" as type')
             ->groupBy('payment_method_id')
+            ->when($warehouse_id, function ($query, $warehouse_id) {
+                return $query->where('warehouse_id', $warehouse_id);
+            })
             ->orderBy('amount', 'desc')
             ->get();
 
+        $purchase_payment_methods = PurchasePayment::whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])
+            ->selectRaw('sum(amount) as amount, payment_method_id, "purchase" as type')
+            ->groupBy('payment_method_id')
+            ->when($warehouse_id, function ($query, $warehouse_id) {
+                return $query->where('warehouse_id', $warehouse_id);
+            })
+            ->orderBy('amount', 'desc')
+            ->get();
 
+        $expense_payment_methods = Expense::whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])
+            ->selectRaw('sum(amount) as amount, payment_method_id, "expense" as type')
+            ->groupBy('payment_method_id')
+            ->when($warehouse_id, function ($query, $warehouse_id) {
+                return $query->where('warehouse_id', $warehouse_id);
+            })
+            ->orderBy('amount', 'desc')
+            ->get();
 
+        $all_transactions = collect();
+        $all_transactions = $all_transactions->merge($sale_payment_methods);
+        $all_transactions = $all_transactions->merge($purchase_payment_methods);
+        $all_transactions = $all_transactions->merge($expense_payment_methods);
 
-        return view('pages.reports.kassa', compact('start_date', 'end_date', 'sale_payment_methods'));
+        return view('pages.reports.kassa', compact('start_date', 'end_date', 'all_transactions'));
     }
 
 

@@ -14,4 +14,19 @@ class PaymentMethod extends Model
         'name',
         'description'
     ];
+
+    function sale_payments()
+    {
+        return $this->hasMany(SalePayment::class);
+    }
+
+    function purchase_payments()
+    {
+        return $this->hasMany(PurchasePayment::class);
+    }
+
+    function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
 }
