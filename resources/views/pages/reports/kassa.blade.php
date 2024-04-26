@@ -43,6 +43,8 @@
                                         <?php
                                             $tolal = 0;
                                             $thisTotal = 0;
+                                            $expenseTotal = 0;
+                                            $comingTotal = 0;
                                         ?>
                                         @foreach (getPaymentMethods() as $payment_method)
                                             <tr class="text-center" style="background-color: #f1f1f1;">
@@ -99,6 +101,8 @@
                                                                 <td></td>
                                                                 <td></td>
                                                                 <?php
+                                                                $expenseTotal += $payment_method->expenses->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') + $payment_method->purchase_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount');
+                                                                $comingTotal += $payment_method->sale_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount');
                                                                 $thisTotal = $payment_method->sale_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') - ($payment_method->expenses->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') + $payment_method->purchase_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount'));
                                                                 $tolal += $thisTotal;
 
@@ -110,14 +114,16 @@
                                                 </td>
                                         @endforeach
 
-                                        <tr>
+                                        <tr class="fw-bold">
                                             <td>
                                                 Итого
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="fw-bold">
                                             <td>
-                                                {{ nf($tolal) }}
+                                                Общий остаток: {{ nf($tolal) }} <br>
+                                                Приход: {{ nf($comingTotal) }} <br>
+                                                Расход: {{ nf($expenseTotal) }}
                                             </td>
                                         </tr>
 
