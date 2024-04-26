@@ -5,9 +5,20 @@
             <div class="top-menu ms-auto">
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item mobile-search-icon">
-                        <a class="btn btn-primary btn-sm m-1" href="{{ route('sales.create') }}">
-                            <i class='bx bx-shopping-bag'></i>
-                        </a>
+                        <div class="dropdown open">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="saleHead" data-bs-toggle="dropdown">
+                                <i class='bx bx-shopping-bag'></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="saleHead">
+                                <a class="dropdown-item" href="{{ route('sales.create') }}">
+                                    <i class='bx bx-shopping-bag'></i> Продажа
+                                </a>
+                                <a class="dropdown-item" href="{{ route('sales.installment') }}">
+                                    <i class='bx bx-shopping-bag'></i> Рассрочка
+                                </a>
+                            </div>
+                        </div>
+
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
