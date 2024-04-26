@@ -63,6 +63,7 @@
                 <li><a href="{{ route('tasks.index') }}"><i class="bx bx-list-plus"></i> Задачи</a></li>
             </ul>
         </li>
+        @if(hasRoles(['admin','manager']))
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-down-arrow-circle'></i>
@@ -74,6 +75,7 @@
                 <li><a href="{{ route('purchases.create') }}"><i class="bx bx-plus"></i> Добавить покупку</a></li>
             </ul>
         </li>
+        @endif
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-minus-circle'></i>

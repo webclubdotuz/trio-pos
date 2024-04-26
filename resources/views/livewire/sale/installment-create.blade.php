@@ -16,6 +16,9 @@
                             <select class="form-control select2" wire:model="customer_id" required>
                                 <option value="">Выберите клиента</option>
                                 @foreach (getCustomers() as $customer)
+                                    @if ($customer->id == 1)
+                                        @continue
+                                    @endif
                                     <option value="{{ $customer->id }}">{{ $customer->full_name }}</option>
                                 @endforeach
                             </select>
