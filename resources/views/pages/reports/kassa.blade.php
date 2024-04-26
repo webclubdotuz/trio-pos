@@ -40,6 +40,10 @@
                             <div class="col-md-12">
                                 <table class="table table-bordered table-striped">
                                     <tbody>
+                                        <?php
+                                            $tolal = 0;
+                                            $thisTotal = 0;
+                                        ?>
                                         @foreach (getPaymentMethods() as $payment_method)
                                             <tr class="text-center" style="background-color: #f1f1f1;">
                                                 <td>
@@ -62,7 +66,7 @@
                                                                 <tr>
                                                                     <td>{{ $sale_payment->date }}</td>
                                                                     <td>{{ $sale_payment->sale->customer->full_name }}</td>
-                                                                    <td>{{ $sale_payment->amount }}</td>
+                                                                    <td>{{ nf($sale_payment->amount) }}</td>
                                                                     <td></td>
                                                                 </tr>
                                                             @endforeach
@@ -71,7 +75,7 @@
                                                                     <td>{{ $expense->created_at }}</td>
                                                                     <td>{{ $expense->description }}</td>
                                                                     <td></td>
-                                                                    <td>{{ $expense->amount }}</td>
+                                                                    <td>{{ nf($expense->amount) }}</td>
                                                                 </tr>
                                                             @endforeach
                                                             @foreach ($payment_method->purchase_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59']) as $purchase_payment)
@@ -79,7 +83,7 @@
                                                                     <td>{{ $purchase_payment->created_at }}</td>
                                                                     <td>{{ $purchase_payment->purchase->supplier->full_name }}</td>
                                                                     <td></td>
-                                                                    <td>{{ $purchase_payment->amount }}</td>
+                                                                    <td>{{ nf($purchase_payment->amount) }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
@@ -87,19 +91,36 @@
                                                             <tr style="background-color: #f1f1f1;">
                                                                 <td>Итого</td>
                                                                 <td></td>
-                                                                <td>{{ $payment_method->sale_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') }}</td>
-                                                                <td>{{ $payment_method->expenses->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') + $payment_method->purchase_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') }}</td>
+                                                                <td>{{ nf($payment_method->sale_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount')) }}</td>
+                                                                <td>{{ nf($payment_method->expenses->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') + $payment_method->purchase_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount')) }}</td>
                                                             </tr>
                                                             <tr style="font-weight: bold;">
                                                                 <td>Остаток</td>
                                                                 <td></td>
                                                                 <td></td>
-                                                                <td>{{ $payment_method->sale_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') - ($payment_method->expenses->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') + $payment_method->purchase_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount')) }}</td>
+                                                                <?php
+                                                                $thisTotal = $payment_method->sale_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') - ($payment_method->expenses->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount') + $payment_method->purchase_payments->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->sum('amount'));
+                                                                $tolal += $thisTotal;
+
+                                                                ?>
+                                                                <td>{{ nf($thisTotal) }}</td>
                                                             </tr>
                                                         </tfoot>
                                                     </table>
                                                 </td>
                                         @endforeach
+
+                                        <tr>
+                                            <td>
+                                                Итого
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                {{ nf($tolal) }}
+                                            </td>
+                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>
