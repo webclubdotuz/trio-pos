@@ -67,9 +67,9 @@
                                 <div class="col-md-4 form-group">
                                     <label for="price_0">Цена</label>
                                     <div class="input-group">
-                                        <input type="text" name="items[][price_usd]" id="price_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <input type="text" name="items[][in_price_usd]" id="in_price_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
                                         <span class="input-group-text">USD</span>
-                                        <input type="text" name="items[][price]" id="price_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <input type="text" name="items[][in_price]" id="in_price_0" class="form-control money" required oninput="currencyConvert.call(this)">
                                         <span class="input-group-text">Сум</span>
                                     </div>
                                 </div>
@@ -85,20 +85,20 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="sale_price_0">Цена продажи</label>
+                                    <label for="price_0">Цена продажи</label>
                                     <div class="input-group">
-                                        <input type="text" name="items[][sale_price_usd]" id="saleprice_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <input type="text" name="items[][price_usd]" id="price_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
                                         <span class="input-group-text">USD</span>
-                                        <input type="text" name="items[][sale_price]" id="saleprice_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <input type="text" name="items[][price]" id="price_0" class="form-control money" required oninput="currencyConvert.call(this)">
                                         <span class="input-group-text">Сум</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="installment_price_usd">Цена продажи в рассрочку</label>
                                     <div class="input-group">
-                                        <input type="text" name="items[][installment_price_usd]" id="installmentprice_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <input type="text" name="items[][installment_price_usd]" id="installment_price_usd_0" class="form-control money" required oninput="currencyConvert.call(this)">
                                         <span class="input-group-text"><i class="bx bx-dollar"></i></span>
-                                        <input type="text" name="items[][installment_price]" id="installmentprice_0" class="form-control money" required oninput="currencyConvert.call(this)">
+                                        <input type="text" name="items[][installment_price]" id="installment_price_0" class="form-control money" required oninput="currencyConvert.call(this)">
                                         <span class="input-group-text">UZS</i></span>
                                     </div>
                                 </div>
@@ -237,11 +237,11 @@
 
             for (let i = 0; i < length; i++) {
                 let quantity = parseFloat($(`#quantity_${i}`).val());
-                let price = parseFloat($(`#price_${i}`).val());
+                let price = parseFloat($(`#in_price_${i}`).val());
                 let total_ = quantity * price;
                 $(`#total_${i}`).val(total_);
 
-                let price_usd = parseFloat($(`#price_usd_${i}`).val());
+                let price_usd = parseFloat($(`#in_price_usd_${i}`).val());
                 let total_usd_ = quantity * price_usd;
                 $(`#total_usd_${i}`).val(total_usd_);
 
@@ -269,14 +269,28 @@
                 url: `/api/products/${id}`,
                 type: 'GET',
                 success: function(response) {
+                    console.log(response);
+                    in_price = response.in_price_usd * currency;
+                    in_price_usd = response.in_price_usd;
+
                     price = response.price_usd * currency;
                     price_usd = response.price_usd;
 
-                    saleprice = response.sale_price_usd * currency;
-                    saleprice_usd = response.sale_price_usd;
+                    installment_price = response.installment_price_usd * currency;
+                    installment_price_usd = response.installment_price_usd;
+
+                    $(`#in_price_${index}`).val(in_price);
+                    $(`#in_price_usd_${index}`).val(in_price_usd);
 
                     $(`#price_${index}`).val(price);
                     $(`#price_usd_${index}`).val(price_usd);
+
+                    $(`#installment_price_${index}`).val(installment_price);
+                    $(`#installment_price_usd_${index}`).val(installment_price_usd);
+
+
+
+
                     calc();
                 }
             });

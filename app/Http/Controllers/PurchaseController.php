@@ -27,6 +27,7 @@ class PurchaseController extends Controller
     public function store(StorePurchaseRequest $request)
     {
 
+        // dd($request->all());
         try {
             DB::beginTransaction();
             $currency_rate = getCurrencyRate();
@@ -49,8 +50,8 @@ class PurchaseController extends Controller
             $total_usd = 0;
 
             foreach ($request->items as $item) {
-                $total += $item['quantity'] * $item['price'];
-                $total_usd += $item['quantity'] * $item['price_usd'];
+                $total += $item['quantity'] * $item['in_price'];
+                $total_usd += $item['quantity'] * $item['in_price_usd'];
 
                 PurchaseItem::create([
                     'purchase_id' => $purchase->id,
@@ -58,20 +59,20 @@ class PurchaseController extends Controller
                     'product_id' => $item['product_id'],
                     'supplier_id' => $request->supplier_id,
                     'quantity' => $item['quantity'],
-                    'price' => $item['price'],
-                    'price_usd' => $item['price_usd'],
-                    'total' => $item['quantity'] * $item['price'],
-                    'total_usd' => $item['quantity'] * $item['price_usd'],
+                    'price' => $item['in_price'],
+                    'price_usd' => $item['in_price_usd'],
+                    'total' => $item['quantity'] * $item['in_price'],
+                    'total_usd' => $item['quantity'] * $item['in_price_usd'],
                     'currency_rate' => $currency_rate,
                     'date' => $request->date,
                 ]);
 
                 $product = Product::find($item['product_id']);
-                $product->in_price = $item['price'];
-                $product->in_price_usd = $item['price_usd'];
+                $product->in_price = $item['in_price'];
+                $product->in_price_usd = $item['in_price_usd'];
 
-                $product->price = $item['sale_price'];
-                $product->price_usd = $item['sale_price_usd'];
+                $product->price = $item['price'];
+                $product->price_usd = $item['price_usd'];
 
                 $product->installment_price = $item['installment_price'];
                 $product->installment_price_usd = $item['installment_price_usd'];
