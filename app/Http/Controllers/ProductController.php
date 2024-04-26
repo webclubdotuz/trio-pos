@@ -14,7 +14,20 @@ class ProductController extends Controller
 {
     public function index(Request $request, ProductFilter $filter)
     {
-        $products = Product::filter($filter)->get();
+
+        if (hasRoles())
+        {
+            $products = Product::filter($filter)->get();
+        }
+        else
+        {
+            $products = Product::filter($filter)->whereHas('warehouses', function ($query) {
+                $query->where('warehouse_id', auth()->user()->warehouse_id);
+            })->get();
+
+            $warehouse_id = auth()->user()->warehouse_id;
+            $request->merge(['warehouse_id' => $warehouse_id]);
+        }
 
         return view('pages.products.index', compact('products'));
     }

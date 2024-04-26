@@ -262,6 +262,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
+
+                        <div wire:loading>
+                            <div class="text-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+
                         @if ($carts->getTotal() > 0)
                         <div class="row g-2">
                             <div class="col-12">
@@ -271,12 +280,13 @@
                                         <input type="text" class="form-control" wire:model="first_payment" required>
                                         @error('first_payment') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-
+                                    @if(hasRoles(['admin','manager']))
                                     <div class="col-md-4 form-group">
                                         <label for="percent">Процент</label>
                                         <input type="text" class="form-control" wire:model="percent" required>
                                         @error('percent') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
+                                    @endif
 
                                     <div class="col-md-4 form-group">
                                         <label for="month">Месяцы</label>

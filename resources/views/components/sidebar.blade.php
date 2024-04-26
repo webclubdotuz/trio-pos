@@ -19,7 +19,7 @@
             </a>
         </li>
 
-        @if(hasRoles(['admin','manager']))
+        @if(hasRoles(['admin','manager', 'salesman']))
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='lni lni-users'></i>
@@ -28,11 +28,28 @@
             </a>
             <ul>
                 <li><a href="{{ route('customers.index') }}"><i class="lni lni-users"></i> Клиенты</a></li>
+                @if(hasRoles(['admin','manager']))
                 <li><a href="{{ route('suppliers.index') }}"><i class="lni lni-users"></i> Поставщики</a></li>
+                @endif
             </ul>
         </li>
         @endif
         @if(hasRoles(['admin','manager','salesman']))
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class='lni lni-dropbox-original'></i>
+                </div>
+                <div class="menu-title">Продукты</div>
+            </a>
+            <ul>
+                <li><a href="{{ route('products.index') }}"><i class="lni lni-bricks"></i>Продукты</a></li>
+                @if(hasRoles(['admin','manager']))
+                <li><a href="{{ route('categories.index') }}"><i class="lni lni-bricks"></i>Категории</a></li>
+                <li><a href="{{ route('brands.index') }}"><i class="lni lni-bricks"></i>Бренды</a></li>
+                <li><a href="{{ route('warehouses.index') }}"><i class="lni lni-dropbox-original"></i>Склады</a></li>
+                @endif
+            </ul>
+        </li>
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-up-arrow-circle'></i></div>
@@ -81,20 +98,6 @@
             <ul>
                 <li><a href="{{ route('transfers.index') }}"><i class="lni lni-dropbox-original"></i> Список перемещений</a></li>
                 <li><a href="{{ route('transfers.create') }}"><i class="lni lni-dropbox-original"></i> Добавить перемещение</a></li>
-            </ul>
-        </li>
-
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='lni lni-dropbox-original'></i>
-                </div>
-                <div class="menu-title">Продукты</div>
-            </a>
-            <ul>
-                <li><a href="{{ route('products.index') }}"><i class="lni lni-bricks"></i>Продукты</a></li>
-                <li><a href="{{ route('categories.index') }}"><i class="lni lni-bricks"></i>Категории</a></li>
-                <li><a href="{{ route('brands.index') }}"><i class="lni lni-bricks"></i>Бренды</a></li>
-                <li><a href="{{ route('warehouses.index') }}"><i class="lni lni-dropbox-original"></i>Склады</a></li>
             </ul>
         </li>
         <li>

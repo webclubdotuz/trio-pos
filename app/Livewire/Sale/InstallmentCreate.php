@@ -53,7 +53,7 @@ class InstallmentCreate extends Component
 
         $this->currency = getCurrencyRate();
 
-        $this->warehouse_id = auth()->user()->warehouse_id ?? 1;
+        $this->warehouse_id = auth()->user()->warehouse_id ?? null;
         $this->customer_id = 1;
         $this->payment_methods[0] = 1;
         $this->payment_amounts[0] = 0;

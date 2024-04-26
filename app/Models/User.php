@@ -71,5 +71,9 @@ class User extends Authenticatable implements HasMedia
             })->sum('total');
     }
 
+    public function getWarehouseIdAttribute()
+    {
+        return $this->warehouses?->first()?->id;
+    }
 
 }

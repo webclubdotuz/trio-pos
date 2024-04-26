@@ -69,11 +69,12 @@
                                     </td>
                                     <td>{{ nf($product->price) }} сум</td>
                                     <td>
-                                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary btn-sm">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
                                         <a href="{{ route('products.show', $product->id) }}" class="btn btn-info btn-sm">
                                             <i class="bx bx-show"></i>
+                                        </a>
+                                        @if (hasRoles(['admin','manager']))
+                                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary btn-sm">
+                                            <i class="bx bx-edit"></i>
                                         </a>
                                         <form action="{{ route('products.destroy', $product->id) }}" method="post" class="d-inline">
                                             @csrf
@@ -82,6 +83,7 @@
                                                 <i class="bx bx-trash"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
