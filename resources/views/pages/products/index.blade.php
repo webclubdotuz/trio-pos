@@ -27,9 +27,12 @@
                                 @endif
 
                                 @if (request('warehouse_id'))
-                                    Склад: {{ getWarehouse(request('warehouse_id'))->name }}
+                                    Склад: {{ getWarehouse(request('warehouse_id'))->name }} <br>
                                 @endif
-                                <br>
+                                @if (request('in_stock'))
+                                    В наличии <br>
+                                @endif
+
                                 <a href="{{ route('products.index') }}" class="text-danger">Сбросить фильтры <i class="bx bx-x"></i></a>
                             @endif
                         </p>
@@ -49,6 +52,11 @@
                             </thead>
                             <tbody>
                                 @foreach ($products as $product)
+
+                                @if (request('in_stock') && $product->quantity( request('warehouse_id') ) == 0)
+                                    @continue
+                                @endif
+
                                 <tr>
                                     <td>{{ $product->id }}</td>
                                     <td>
@@ -114,6 +122,13 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="in_stock">
+                            <input type="checkbox" name="in_stock" id="in_stock" {{ request('in_stock') ? 'checked' : '' }}>
+                            В наличии
+                        </label>
                     </div>
 
                     <div class="col-12">
