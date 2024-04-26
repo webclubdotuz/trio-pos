@@ -1,6 +1,6 @@
 $(function () {
 	"use strict";
-	
+
 	// chart1
 	var options = {
 		series: [{
@@ -39,7 +39,7 @@ $(function () {
 			type: 'gradient',
 			gradient: {
 				shade: 'light',
-				gradientToColors: ['#8833ff'],
+				gradientToColors: ['#1b2345'],
 				shadeIntensity: 1,
 				type: 'vertical',
 				opacityFrom: 0.8,
@@ -47,7 +47,7 @@ $(function () {
 				//stops: [0, 100, 100, 100]
 			},
 		},
-		colors: ["#8833ff"],
+		colors: ["#1b2345"],
 		yaxis: {
 		  labels: {
 			formatter: function (value) {
@@ -57,7 +57,7 @@ $(function () {
 		},
 		markers: {
 			size: 4,
-			colors: ["#8833ff"],
+			colors: ["#1b2345"],
 			strokeColors: "#fff",
 			strokeWidth: 2,
 			hover: {
@@ -344,7 +344,7 @@ $(function () {
 			radialBar: {
 				hollow: {
 					margin: 0,
-					//background: '#ffdbed',	
+					//background: '#ffdbed',
 					size: '70%',
 				},
 				track: {
@@ -389,7 +389,7 @@ $(function () {
 			radialBar: {
 				hollow: {
 					margin: 0,
-					//background: '#ffdbed',	
+					//background: '#ffdbed',
 					size: '70%',
 				},
 				track: {

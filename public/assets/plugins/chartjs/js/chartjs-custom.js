@@ -10,7 +10,7 @@ $(function () {
 				label: 'Google',
 				data: [16, 20, 14, 12, 17, 18, 10],
 				backgroundColor: "transparent",
-				borderColor: "#8833ff",
+				borderColor: "#1b2345",
 				pointRadius: "0",
 				borderWidth: 4
 			}, {
@@ -68,7 +68,7 @@ $(function () {
 				label: 'Google',
 				data: [13, 8, 20, 4, 18, 29, 25],
 				barPercentage: .5,
-				backgroundColor: "#8833ff"
+				backgroundColor: "#1b2345"
 			}, {
 				label: 'Facebook',
 				data: [31, 20, 6, 16, 21, 4, 11],
@@ -119,7 +119,7 @@ $(function () {
 			labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
 			datasets: [{
 				label: "Population (millions)",
-				backgroundColor: ["#8833ff", "#212529", "#17a00e", "#29cc39", "#ffc107"],
+				backgroundColor: ["#1b2345", "#212529", "#17a00e", "#29cc39", "#ffc107"],
 				data: [2478, 5267, 734, 784, 433]
 			}]
 		},
@@ -140,7 +140,7 @@ $(function () {
 				label: "1950",
 				fill: true,
 				backgroundColor: "rgb(13 110 253 / 23%)",
-				borderColor: "#8833ff",
+				borderColor: "#1b2345",
 				pointBorderColor: "#fff",
 				pointBackgroundColor: "rgba(179,181,198,1)",
 				data: [8.77, 55.61, 21.69, 6.62, 6.82]
@@ -170,7 +170,7 @@ $(function () {
 			labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
 			datasets: [{
 				label: "Population (millions)",
-				backgroundColor: ["#8833ff", "#212529", "#17a00e", "#29cc39", "#ffc107"],
+				backgroundColor: ["#1b2345", "#212529", "#17a00e", "#29cc39", "#ffc107"],
 				data: [2478, 5267, 734, 784, 433]
 			}]
 		},
@@ -189,7 +189,7 @@ $(function () {
 			labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
 			datasets: [{
 				label: "Population (millions)",
-				backgroundColor: ["#8833ff", "#212529", "#17a00e", "#29cc39", "#ffc107"],
+				backgroundColor: ["#1b2345", "#212529", "#17a00e", "#29cc39", "#ffc107"],
 				data: [2478, 5267, 734, 784, 433]
 			}]
 		},
@@ -208,7 +208,7 @@ $(function () {
 			labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
 			datasets: [{
 				label: "Population (millions)",
-				backgroundColor: ["#8833ff", "#212529", "#17a00e", "#29cc39", "#ffc107"],
+				backgroundColor: ["#1b2345", "#212529", "#17a00e", "#29cc39", "#ffc107"],
 				data: [2478, 5267, 734, 784, 433]
 			}]
 		},
@@ -230,7 +230,7 @@ $(function () {
 			labels: ["1900", "1950", "1999", "2050"],
 			datasets: [{
 				label: "Africa",
-				backgroundColor: "#8833ff",
+				backgroundColor: "#1b2345",
 				data: [133, 221, 783, 2478]
 			}, {
 				label: "Europe",

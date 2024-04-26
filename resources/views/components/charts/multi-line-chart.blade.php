@@ -44,7 +44,7 @@
 			curve: 'smooth',
 			width: 5
 		},
-		colors: ["#8833ff", '#29cc39'],
+		colors: ["#1b2345", '#29cc39'],
 		series: new_series,
 		title: {
 			text: "{{$title}}",

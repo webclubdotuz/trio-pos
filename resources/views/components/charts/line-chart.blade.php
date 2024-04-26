@@ -50,7 +50,7 @@
 			type: 'gradient',
 			gradient: {
 				shade: 'light',
-				gradientToColors: ['#8833ff'],
+				gradientToColors: ['#1b2345'],
 				shadeIntensity: 1,
 				type: 'horizontal',
 				opacityFrom: 1,
@@ -60,14 +60,14 @@
 		},
 		markers: {
 			size: 4,
-			colors: ["#8833ff"],
+			colors: ["#1b2345"],
 			strokeColors: "#fff",
 			strokeWidth: 2,
 			hover: {
 				size: 7,
 			}
 		},
-		colors: ["#8833ff"],
+		colors: ["#1b2345"],
 		yaxis: {
 			title: {
 				text: 'Сумма'

@@ -17,7 +17,7 @@
                 type: 'bar',
                 height: 350
             },
-            colors: ["#8833ff"],
+            colors: ["#1b2345"],
             plotOptions: {
                 bar: {
                     horizontal: true,

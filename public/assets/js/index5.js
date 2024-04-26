@@ -342,7 +342,7 @@ $(function () {
 			width: 0,
 			curve: 'smooth'
 		},
-		colors: ["#8833ff"],
+		colors: ["#1b2345"],
 		xaxis: {
 			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
 		},

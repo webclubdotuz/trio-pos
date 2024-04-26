@@ -22,7 +22,7 @@ var options = {
             left: 14,
             blur: 4,
             opacity: 0.12,
-            color: '#8833ff',
+            color: '#1b2345',
         },
         sparkline: {
             enabled: true
@@ -30,7 +30,7 @@ var options = {
     },
     markers: {
         size: 0,
-        colors: ["#8833ff"],
+        colors: ["#1b2345"],
         strokeColors: "#fff",
         strokeWidth: 2,
         hover: {
@@ -52,7 +52,7 @@ var options = {
         width: 2.5,
         curve: 'smooth'
     },
-    colors: ["#8833ff"],
+    colors: ["#1b2345"],
     xaxis: {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     },
@@ -439,7 +439,7 @@ var options = {
             left: 14,
             blur: 4,
             opacity: 0.12,
-            color: '#8833ff',
+            color: '#1b2345',
         },
         sparkline: {
             enabled: false
@@ -447,7 +447,7 @@ var options = {
     },
     markers: {
         size: 0,
-        colors: ["#8833ff"],
+        colors: ["#1b2345"],
         strokeColors: "#fff",
         strokeWidth: 2,
         hover: {
@@ -461,7 +461,7 @@ var options = {
             endingShape: 'rounded'
         },
     },
-    
+
     dataLabels: {
         enabled: false
     },
@@ -483,7 +483,7 @@ var options = {
             stops: [0, 100]
         }
     },
-    colors: ["#8833ff"],
+    colors: ["#1b2345"],
     grid: {
         show: true,
         borderColor: '#ededed',
@@ -499,7 +499,7 @@ var options = {
     xaxis: {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
     },
-    
+
     tooltip: {
         theme: 'dark',
         y: {
@@ -554,7 +554,7 @@ var options = {
         width: 3,
         colors: ['transparent']
     },
-    colors: [ "#8833ff", '#cba6ff'],
+    colors: [ "#1b2345", '#cba6ff'],
     yaxis: {
         labels: {
             formatter: function (value) {
@@ -608,7 +608,7 @@ var options = {
             left: 14,
             blur: 4,
             opacity: 0.12,
-            color: '#8833ff',
+            color: '#1b2345',
         },
         sparkline: {
             enabled: true
@@ -616,7 +616,7 @@ var options = {
     },
     markers: {
         size: 0,
-        colors: ["#8833ff"],
+        colors: ["#1b2345"],
         strokeColors: "#fff",
         strokeWidth: 2,
         hover: {
@@ -638,7 +638,7 @@ var options = {
         width: 3,
        // curve: 'smooth'
     },
-    colors: ["#8833ff"],
+    colors: ["#1b2345"],
     xaxis: {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     },
@@ -1047,7 +1047,7 @@ chart.render();
 				drilldown: "Others"
 			}]
 		}],
-		
+
 	});
 
 
@@ -1123,13 +1123,13 @@ chart.render();
 				//drilldown: "Others"
 			}]
 		}],
-		
+
 	});
 
 
 
  // world map
-	
+
  jQuery('#geographic-map').vectorMap({
     map: 'world_mill_en',
     backgroundColor: 'transparent',
@@ -1163,7 +1163,7 @@ chart.render();
         regions: [{
             values: {
                 IN: '#29cc39',
-                US: '#8833ff',
+                US: '#1b2345',
                 CN: '#f41127',
                 CA: '#e91e63',
                 AU: '#ffd200'

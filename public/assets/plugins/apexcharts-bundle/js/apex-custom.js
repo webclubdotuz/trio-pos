@@ -44,7 +44,7 @@ $(function () {
 			type: 'gradient',
 			gradient: {
 				shade: 'light',
-				gradientToColors: ['#8833ff'],
+				gradientToColors: ['#1b2345'],
 				shadeIntensity: 1,
 				type: 'horizontal',
 				opacityFrom: 1,
@@ -54,14 +54,14 @@ $(function () {
 		},
 		markers: {
 			size: 4,
-			colors: ["#8833ff"],
+			colors: ["#1b2345"],
 			strokeColors: "#fff",
 			strokeWidth: 2,
 			hover: {
 				size: 7,
 			}
 		},
-		colors: ["#8833ff"],
+		colors: ["#1b2345"],
 		yaxis: {
 			title: {
 				text: 'Engagement',
@@ -70,8 +70,8 @@ $(function () {
 	};
 	var chart = new ApexCharts(document.querySelector("#chart1"), options);
 	chart.render();
-	
-	
+
+
 	// chart 2
 	var optionsLine = {
 		chart: {
@@ -93,7 +93,7 @@ $(function () {
 			curve: 'smooth',
 			width: 5
 		},
-		colors: ["#8833ff", '#29cc39'],
+		colors: ["#1b2345", '#29cc39'],
 		series: [{
 			name: "Music",
 			data: [1, 15, 56, 20, 33, 27]
@@ -139,8 +139,8 @@ $(function () {
 	}
 	var chartLine = new ApexCharts(document.querySelector('#chart2'), optionsLine);
 	chartLine.render();
-	
-	
+
+
 	// chart 3
 	var options = {
 		series: [{
@@ -161,7 +161,7 @@ $(function () {
 				show: true
 			},
 		},
-		colors: ["#8833ff", '#f41127'],
+		colors: ["#1b2345", '#f41127'],
 		title: {
 			text: 'Area Chart',
 			align: 'left',
@@ -188,7 +188,7 @@ $(function () {
 	};
 	var chart = new ApexCharts(document.querySelector("#chart3"), options);
 	chart.render();
-	
+
 	// chart 4
 	var options = {
 		series: [{
@@ -228,7 +228,7 @@ $(function () {
 				fontSize: '14px'
 			}
 		},
-		colors: ["#29cc39", '#8833ff', '#e62e2e'],
+		colors: ["#29cc39", '#1b2345', '#e62e2e'],
 		xaxis: {
 			categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
 		},
@@ -250,8 +250,8 @@ $(function () {
 	};
 	var chart = new ApexCharts(document.querySelector("#chart4"), options);
 	chart.render();
-	
-	
+
+
 	// chart 5
 	var options = {
 		series: [{
@@ -262,7 +262,7 @@ $(function () {
 			type: 'bar',
 			height: 350
 		},
-		colors: ["#8833ff"],
+		colors: ["#1b2345"],
 		plotOptions: {
 			bar: {
 				horizontal: true,
@@ -279,8 +279,8 @@ $(function () {
 	};
 	var chart = new ApexCharts(document.querySelector("#chart5"), options);
 	chart.render();
-	
-	
+
+
 	// chart 6
 	var options = {
 		series: [{
@@ -313,7 +313,7 @@ $(function () {
 				endingShape: 'rounded'
 			}
 		},
-		colors: ["#8833ff", "#29cc39"],
+		colors: ["#1b2345", "#29cc39"],
 		title: {
 			text: 'Traffic Sources'
 		},
@@ -338,8 +338,8 @@ $(function () {
 	};
 	var chart = new ApexCharts(document.querySelector("#chart6"), options);
 	chart.render();
-	
-	
+
+
 	// chart 7
 	var options = {
 		series: [{
@@ -367,7 +367,7 @@ $(function () {
 				show: true
 			},
 		},
-		colors: ["#8833ff", "#17a00e", "#f41127"],
+		colors: ["#1b2345", "#17a00e", "#f41127"],
 		stroke: {
 			width: [0, 2, 5],
 			curve: 'smooth'
@@ -416,8 +416,8 @@ $(function () {
 	};
 	var chart = new ApexCharts(document.querySelector("#chart7"), options);
 	chart.render();
-	
-	
+
+
 	// chart 8
 	var options = {
 		series: [44, 55, 13, 43, 22],
@@ -426,7 +426,7 @@ $(function () {
 			height: 330,
 			type: 'pie',
 		},
-		colors: ["#8833ff", "#6c757d", "#17a00e", "#f41127", "#ffc107"],
+		colors: ["#1b2345", "#6c757d", "#17a00e", "#f41127", "#ffc107"],
 		labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
 		responsive: [{
 			breakpoint: 480,
@@ -442,8 +442,8 @@ $(function () {
 	};
 	var chart = new ApexCharts(document.querySelector("#chart8"), options);
 	chart.render();
-	
-	
+
+
 	// chart 9
 	var options = {
 		series: [44, 55, 41, 17, 15],
@@ -452,7 +452,7 @@ $(function () {
 			height: 380,
 			type: 'donut',
 		},
-		colors: ["#8833ff", "#29cc39", "#17a00e", "#f41127", "#ffc107"],
+		colors: ["#1b2345", "#29cc39", "#17a00e", "#f41127", "#ffc107"],
 		responsive: [{
 			breakpoint: 480,
 			options: {
@@ -467,8 +467,8 @@ $(function () {
 	};
 	var chart = new ApexCharts(document.querySelector("#chart9"), options);
 	chart.render();
-	
-	
+
+
 	// chart 10
 	var options = {
 		series: [{
@@ -492,7 +492,7 @@ $(function () {
 				top: 1
 			}
 		},
-		colors: ["#8833ff", "#29cc39", "#17a00e"],
+		colors: ["#1b2345", "#29cc39", "#17a00e"],
 		title: {
 			text: 'Radar Chart - Multi Series'
 		},
@@ -511,8 +511,8 @@ $(function () {
 	};
 	var chart = new ApexCharts(document.querySelector("#chart10"), options);
 	chart.render();
-	
-	
+
+
 	// chart 11
 	var options = {
 		series: [{
@@ -541,7 +541,7 @@ $(function () {
 		title: {
 			text: 'Radar with Polygon Fill'
 		},
-		colors: ["#8833ff"],
+		colors: ["#1b2345"],
 		markers: {
 			size: 4,
 			colors: ['#fff'],
@@ -573,11 +573,11 @@ $(function () {
 	};
 	var chart = new ApexCharts(document.querySelector("#chart11"), options);
 	chart.render();
-	
-	
-	
+
+
+
 	// chart 12
-	
+
 	var options = {
           series: [70],
           chart: {
@@ -597,11 +597,11 @@ $(function () {
 
         var chart = new ApexCharts(document.querySelector("#chart12"), options);
         chart.render();
-		
-		
-		
+
+
+
 	// chart 13
-	
+
 	var options = {
           series: [44, 55, 67, 83],
           chart: {
@@ -629,14 +629,14 @@ $(function () {
             }
           }
         },
-		colors: ["#8833ff", "#17a00e", "#f41127", "#ffc107"],
+		colors: ["#1b2345", "#17a00e", "#f41127", "#ffc107"],
         labels: ['Apples', 'Oranges', 'Bananas', 'Berries'],
         };
 
         var chart = new ApexCharts(document.querySelector("#chart13"), options);
         chart.render();
-		
-		
-	
-	
+
+
+
+
 });

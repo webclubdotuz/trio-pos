@@ -6,7 +6,7 @@
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item mobile-search-icon">
                         <div class="dropdown open">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="saleHead" data-bs-toggle="dropdown">
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="saleHead" data-bs-toggle="dropdown">
                                 <i class='bx bx-shopping-bag'></i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="saleHead">
