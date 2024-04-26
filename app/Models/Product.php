@@ -31,6 +31,12 @@ class Product extends Model
 
     protected $appends = ['image_url', 'last_sale_day', 'last_purchase_day'];
 
+    // scope filter
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
