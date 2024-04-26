@@ -24,7 +24,7 @@ class Index extends Component
         if ($user->is_all_warehouses) {
             $this->warehouse_id = null;
         } else {
-            $this->warehouse_id = $user->warehouses->first()->id;
+            $this->warehouse_id = $user?->warehouses?->first()?->id;
         }
 
     }

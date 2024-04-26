@@ -11,12 +11,13 @@
         @if ($sale->debt)
         <a class="dropdown-item border-bottom" href="#" wire:click="$dispatch('openSalePayment', { 'sale_id': {{ $sale->id }} })"><i class="bx bx-money"></i> Оплата</a>
         @endif
-
+        @if(hasRoles(['admin','manager']))
         <form action="{{ route('sales.destroy', $sale->id) }}" method="post" class="d-inline">
             @csrf
             @method('DELETE')
             <button class="dropdown-item text-danger" type="submit" onclick="return confirm('Вы уверены?')"><i class="bx bx-trash"></i> Удалить</button>
         </form>
+        @endif
     </div>
 </div>
 

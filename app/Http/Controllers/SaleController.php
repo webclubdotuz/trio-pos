@@ -50,6 +50,10 @@ class SaleController extends Controller
     public function destroy(Sale $sale)
     {
 
+        if (!hasRoles(['admin', 'manager'])) {
+            return redirect()->back()->with('error', 'У вас нет прав для удаления');
+        }
+
 
         try {
             DB::beginTransaction();
