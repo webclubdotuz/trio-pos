@@ -8,23 +8,20 @@
                 <div class="row g-2">
                     <div class="col-md-4 form-group">
                         <label for="date">Дата</label>
-                        <input type="datetime-local" class="form-control" max="{{ date('Y-m-d H:i') }}" min="{{ date('Y-m-d H:i', strtotime('-1 month')) }}" wire:model="date" required>
+                        <input type="datetime-local" class="form-control" max="{{ date('Y-m-d H:i') }}"
+                            min="{{ date('Y-m-d H:i', strtotime('-1 month')) }}" wire:model="date" required>
                     </div>
                     <div class="col-md-4 form-group">
-                        <label for="customer_id">Клиент</label>
+                        <label for="customer_id" class="">Клиент</label>
                         <div class="input-group">
-                            <select class="form-control select2" wire:model="customer_id" required>
-                                <option value="">Выберите клиента</option>
-                                @foreach (getCustomers() as $customer)
-                                    <option value="{{ $customer->id }}">{{ $customer->full_name }}</option>
-                                @endforeach
-                            </select>
-                            <button type="button" class="btn btn-sm btn-primary" wire:click="dispatch('openModal', 'customer.create')">
-                                <i class="bx bx-plus"></i>
-                            </button>
+                            <input type="text" class="form-control" wire:model="customer_info" placeholder="Поиск по клиентам" wire:click="$dispatch('openModalCustomerSearch')" readonly>
+                            <button class="btn btn-primary" type="button" wire:click="$dispatch('openModalCustomerSearch')"><i class="bx bx-search"></i></button>
+                            <button class="btn btn-success" type="button" wire:click="dispatch('openModal', 'customer.create')"><i class="bx bx-plus"></i></button>
                         </div>
+                        <input type="hidden" wire:model="customer_id">
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+
                     <div class="col-md-4 form-group">
                         <label for="warehouse_id">Склад</label>
                         <select class="form-control select2" wire:model.live="warehouse_id" required>
@@ -33,7 +30,9 @@
                                 <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
                             @endforeach
                         </select>
-                        @error('warehouse_id') <span class="text-danger">{{ $message }}</span> @enderror
+                        @error('warehouse_id')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                 </div>
@@ -48,16 +47,19 @@
                     <div class="col-12">
                         <div class="dropdown">
                             <div class="form-group">
-                                <input type="search" class="form-control" placeholder="Поиск по продуктам" wire:model="search" wire:keydown="searchProduct" autofocus>
+                                <input type="search" class="form-control" placeholder="Поиск по продуктам"
+                                    wire:model="search" wire:keydown="searchProduct" autofocus>
                             </div>
                             @if (count($products) > 0 && $search)
-                            <ul class="dropdown-menu" style="display: block; position: relative;">
-                                @foreach ($products as $product)
-                                    <li class="dropdown-item" wire:click="addProduct({{ $product->id }})">
-                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" width="30" height="30">{{ $product->name }} (Остаток: {{ $product->quantity($warehouse_id) }})
-                                    </li>
-                                @endforeach
-                            </ul>
+                                <ul class="dropdown-menu" style="display: block; position: relative;">
+                                    @foreach ($products as $product)
+                                        <li class="dropdown-item" wire:click="addProduct({{ $product->id }})">
+                                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}"
+                                                width="30" height="30">{{ $product->name }} (Остаток:
+                                            {{ $product->quantity($warehouse_id) }})
+                                        </li>
+                                    @endforeach
+                                </ul>
                             @endif
                         </div>
                     </div>
@@ -78,15 +80,20 @@
                                 @foreach ($carts->getItems() as $cart)
                                     <tr>
                                         {{-- @dd($cart) --}}
-                                        <td><img src="{{$cart->image_url}}" alt="{{ $cart->name }}" width="30" height="30"></td>
+                                        <td><img src="{{ $cart->image_url }}" alt="{{ $cart->name }}" width="30"
+                                                height="30"></td>
                                         <td>{{ $cart->name }}</td>
                                         <td>
                                             <div class="input-group">
-                                                <span class="btn btn-sm btn-danger" wire:click="decreaseProduct({{ $cart->id }})">
+                                                <span class="btn btn-sm btn-danger"
+                                                    wire:click="decreaseProduct({{ $cart->id }})">
                                                     <i class="bx bx-minus"></i>
                                                 </span>
-                                                <input type="number" class="form-control form-control-sm" wire:model.live="quantity.{{ $cart->id }}" wire:keydown="changeQuantity({{ $cart->id }}, $event.target.value)">
-                                                <span class="btn btn-sm btn-primary" wire:click="increaseProduct({{ $cart->id }})">
+                                                <input type="number" class="form-control form-control-sm"
+                                                    wire:model.live="quantity.{{ $cart->id }}"
+                                                    wire:keydown="changeQuantity({{ $cart->id }}, $event.target.value)">
+                                                <span class="btn btn-sm btn-primary"
+                                                    wire:click="increaseProduct({{ $cart->id }})">
                                                     <i class="bx bx-plus"></i>
                                                 </span>
                                             </div>
@@ -95,10 +102,12 @@
                                         <td>{{ nf($cart->price * $cart->quantity) }}</td>
                                         <td>
                                             <div class="btn-group">
-                                                <span class="btn btn-sm btn-primary" wire:click="editProduct({{ $cart->id }})">
+                                                <span class="btn btn-sm btn-primary"
+                                                    wire:click="editProduct({{ $cart->id }})">
                                                     <i class="bx bx-edit"></i>
                                                 </span>
-                                                <span class="btn btn-sm btn-danger" wire:click="removeProduct({{ $cart->id }})">
+                                                <span class="btn btn-sm btn-danger"
+                                                    wire:click="removeProduct({{ $cart->id }})">
                                                     <i class="bx bx-trash"></i>
                                                 </span>
                                             </div>
@@ -152,45 +161,59 @@
                     </div>
                     <div class="modal-body">
                         @if ($product)
-                        <div class="row">
-                            <p>
-                                <img src="{{ $product?->image_url }}" alt="{{ $product?->name }}" width="100" height="100">
-                                {{ $product?->name }} ({{ $product?->code }})
-                            </p>
-                            <div class="col-12">
-                                <input type="hidden" wire:model="product_id" value="{{ $product?->id }}">
-                                <div class="form-group mb-3">
-                                    <label for="price">Цена</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control money" wire:model.live="price_usd" wire:keydown="priceToUzs" required>
-                                        <span class="input-group-text">usd</span>
-                                        <input type="text" class="form-control money" wire:model.live="price" wire:keydown="priceToUsd" required>
-                                        <span class="input-group-text">uzs</span>
+                            <div class="row">
+                                <p>
+                                    <img src="{{ $product?->image_url }}" alt="{{ $product?->name }}"
+                                        width="100" height="100">
+                                    {{ $product?->name }} ({{ $product?->code }})
+                                </p>
+                                <div class="col-12">
+                                    <input type="hidden" wire:model="product_id" value="{{ $product?->id }}">
+                                    <div class="form-group mb-3">
+                                        <label for="price">Цена</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control money"
+                                                wire:model.live="price_usd" wire:keydown="priceToUzs" required>
+                                            <span class="input-group-text">usd</span>
+                                            <input type="text" class="form-control money" wire:model.live="price"
+                                                wire:keydown="priceToUsd" required>
+                                            <span class="input-group-text">uzs</span>
+                                        </div>
+                                        @error('price')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        @error('price_usd')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('price') <span class="text-danger">{{ $message }}</span> @enderror
-                                    @error('price_usd') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label for="quantity">Количество</label>
-                                    <input type="number" class="form-control" wire:model.live="quantity.{{ $product->id }}" required>
-                                    @error('quantity') <span class="text-danger">{{ $message }}</span> @enderror
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="quantity">Количество</label>
+                                        <input type="number" class="form-control"
+                                            wire:model.live="quantity.{{ $product->id }}" required>
+                                        @error('quantity')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-12 form-group">
-                                <label for="imei">IMEI</label>
-                                <textarea class="form-control" wire:model.live="imei"></textarea>
-                                <small>Укажите IMEI, если продукт имеет IMEI</small>
-                                @error('imei') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
+                                <div class="col-12 form-group">
+                                    <label for="imei">IMEI</label>
+                                    <textarea class="form-control" wire:model.live="imei"></textarea>
+                                    <small>Укажите IMEI, если продукт имеет IMEI</small>
+                                    @error('imei')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
-                        </div>
+                            </div>
                         @endif
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="bx bx-x"></i> Закрыть</button>
-                        <button type="button" class="btn btn-sm btn-primary" wire:click="updateProduct"><i class="bx bx-check"></i> Сохранить</button>
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i
+                                class="bx bx-x"></i> Закрыть</button>
+                        <button type="button" class="btn btn-sm btn-primary" wire:click="updateProduct"><i
+                                class="bx bx-check"></i> Сохранить</button>
                     </div>
                 </div>
             </div>
@@ -207,52 +230,62 @@
                     </div>
                     <div class="modal-body">
                         @if ($carts->getTotal() > 0)
-                        <div class="row g-2">
-                            <div class="col-12">
-                                <p>
-                                    Сумма: {{ nf($carts->getTotal()) }} <br>
-                                    Оплачено: {{ nf($payment_amount_summa) }} <br>
-                                    <?php $debt = $carts->getTotal() - $payment_amount_summa; ?>
-                                    @if ($debt > 0)
-                                        <span class="text-danger">Долг: {{ nf($debt) }}</span>
-                                    @endif
-                                </p>
-                            </div>
-                            @foreach ($payments as $key => $payment)
-                                <div class="col-6 form-group">
-                                    <label for="payment_amounts.{{ $key }}">Сумма</label>
-                                    <input type="text" class="form-control" wire:model.live="payment_amounts.{{ $key }}" required>
-                                    @error('payment_amounts.'.$key) <span class="text-danger">{{ $message }}</span> @enderror
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <p>
+                                        Сумма: {{ nf($carts->getTotal()) }} <br>
+                                        Оплачено: {{ nf($payment_amount_summa) }} <br>
+                                        <?php $debt = $carts->getTotal() - $payment_amount_summa; ?>
+                                        @if ($debt > 0)
+                                            <span class="text-danger">Долг: {{ nf($debt) }}</span>
+                                        @endif
+                                    </p>
                                 </div>
-                                <div class="col-6 form-group">
-                                    <label for="payment_methods.{{ $key }}">Метод оплаты</label>
-                                    <select class="form-control" wire:model="payment_methods.{{ $key }}" required>
-                                        @foreach (getPaymentMethods() as $payment_method)
-                                            <option value="{{ $payment_method->id }}">{{ $payment_method->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('payment_methods.'.$key) <span class="text-danger">{{ $message }}</span> @enderror
-                                    @if ($key > 0)
-                                        <span wire:click="removePayment({{ $key }})" class="text-danger">
-                                            Удалить <i class="bx bx-trash"></i>
-                                        </span>
-                                    @endif
+                                @foreach ($payments as $key => $payment)
+                                    <div class="col-6 form-group">
+                                        <label for="payment_amounts.{{ $key }}">Сумма</label>
+                                        <input type="text" class="form-control"
+                                            wire:model.live="payment_amounts.{{ $key }}" required>
+                                        @error('payment_amounts.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-6 form-group">
+                                        <label for="payment_methods.{{ $key }}">Метод оплаты</label>
+                                        <select class="form-control" wire:model="payment_methods.{{ $key }}"
+                                            required>
+                                            @foreach (getPaymentMethods() as $payment_method)
+                                                <option value="{{ $payment_method->id }}">{{ $payment_method->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('payment_methods.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        @if ($key > 0)
+                                            <span wire:click="removePayment({{ $key }})"
+                                                class="text-danger">
+                                                Удалить <i class="bx bx-trash"></i>
+                                            </span>
+                                        @endif
 
+                                    </div>
+                                @endforeach
+
+                                <div class="col-12">
+                                    <span wire:click="addPayment">
+                                        Добавить <i class="bx bx-plus"></i>
+                                    </span>
                                 </div>
-                            @endforeach
-
-                            <div class="col-12">
-                                <span wire:click="addPayment">
-                                    Добавить <i class="bx bx-plus"></i>
-                                </span>
                             </div>
-                        </div>
                         @endif
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="bx bx-x"></i> Закрыть</button>
-                        @if ($carts->getTotal() >=$payment_amount_summa && $payment_amount_summa >= 0)
-                            <button type="button" class="btn btn-sm btn-primary" wire:click="save" wire:loading.attr="disabled">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i
+                                class="bx bx-x"></i> Закрыть</button>
+                        @if ($carts->getTotal() >= $payment_amount_summa && $payment_amount_summa >= 0)
+                            <button type="button" class="btn btn-sm btn-primary" wire:click="save"
+                                wire:loading.attr="disabled">
                                 <i class="bx bx-check"></i> Оплатить</button>
                         @endif
                     </div>
@@ -271,69 +304,82 @@
                     </div>
                     <div class="modal-body">
                         @if ($carts->getTotal() > 0)
-                        <div class="row g-2">
-                            <div class="col-12">
-                                <div class="row g-2">
-                                    <div class="col-md-4 form-group">
-                                        <label for="first_payment">Первоначальный</label>
-                                        <input type="text" class="form-control" wire:model="first_payment" required>
-                                        @error('first_payment') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <div class="row g-2">
+                                        <div class="col-md-4 form-group">
+                                            <label for="first_payment">Первоначальный</label>
+                                            <input type="text" class="form-control" wire:model="first_payment"
+                                                required>
+                                            @error('first_payment')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-                                    <div class="col-md-4 form-group">
-                                        <label for="percent">Процент</label>
-                                        <input type="text" class="form-control" wire:model="percent" required>
-                                        @error('percent') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+                                        <div class="col-md-4 form-group">
+                                            <label for="percent">Процент</label>
+                                            <input type="text" class="form-control" wire:model="percent" required>
+                                            @error('percent')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-                                    <div class="col-md-4 form-group">
-                                        <label for="month">Месяцы</label>
-                                        <select class="form-select" wire:model="month" required wire:change="monthChange($event.target.value, $event.target.options[$event.target.selectedIndex].getAttribute('percent'))">
-                                            <option value="">Выберите месяцы</option>
-                                            @foreach (getInstallmentMonths() as $installment_month)
-                                                <option value="{{ $installment_month->month }}" percent="{{ $installment_month->percent }}">{{ $installment_month->month }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('month') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+                                        <div class="col-md-4 form-group">
+                                            <label for="month">Месяцы</label>
+                                            <select class="form-select" wire:model="month" required
+                                                wire:change="monthChange($event.target.value, $event.target.options[$event.target.selectedIndex].getAttribute('percent'))">
+                                                <option value="">Выберите месяцы</option>
+                                                @foreach (getInstallmentMonths() as $installment_month)
+                                                    <option value="{{ $installment_month->month }}"
+                                                        percent="{{ $installment_month->percent }}">
+                                                        {{ $installment_month->month }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('month')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-                                    <div class="col-12">
-                                        <span class="btn btn-sm btn-primary" wire:click="calculateInstallment">Рассчитать</span>
+                                        <div class="col-12">
+                                            <span class="btn btn-sm btn-primary"
+                                                wire:click="calculateInstallment">Рассчитать</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {{-- scroll --}}
-                            <div class="col-12" style="max-height: 300px; overflow-y: auto;">
-                                <table class="table table-bordered table-sm">
-                                    {{-- header sticky --}}
-                                    <thead style="position: sticky; top: 0; background: #fff;">
-                                        <tr>
-                                            <th>№</th>
-                                            <th>Дата</th>
-                                            <th>Сумма</th>
-                                            <th>Остаток</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($installment_lists as $key => $installment_list)
+                                {{-- scroll --}}
+                                <div class="col-12" style="max-height: 300px; overflow-y: auto;">
+                                    <table class="table table-bordered table-sm">
+                                        {{-- header sticky --}}
+                                        <thead style="position: sticky; top: 0; background: #fff;">
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ df($installment_list['date']) }}</td>
-                                                <td>{{ nf($installment_list['amount']) }}</td>
-                                                <td>{{ nf($installment_list['debt']) }}</td>
+                                                <th>№</th>
+                                                <th>Дата</th>
+                                                <th>Сумма</th>
+                                                <th>Остаток</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($installment_lists as $key => $installment_list)
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ df($installment_list['date']) }}</td>
+                                                    <td>{{ nf($installment_list['amount']) }}</td>
+                                                    <td>{{ nf($installment_list['debt']) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
                         @endif
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="bx bx-x"></i> Закрыть</button>
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i
+                                class="bx bx-x"></i> Закрыть</button>
                         @if ($carts->getTotal() && $installment_lists)
-                            <button type="button" class="btn btn-sm btn-primary" wire:click="saveInstallment" wire:loading.attr="disabled"><i class="bx bx-check"></i> Оформить</button>
+                            <button type="button" class="btn btn-sm btn-primary" wire:click="saveInstallment"
+                                wire:loading.attr="disabled"><i class="bx bx-check"></i> Оформить</button>
                         @endif
                     </div>
                 </div>
@@ -344,30 +390,28 @@
 </form>
 
 @push('js')
-<script>
-    document.addEventListener('livewire:init', () => {
-        Livewire.on('editProductOpenModal', (product) => {
-            $('#editProduct').modal('show');
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('editProductOpenModal', (product) => {
+                $('#editProduct').modal('show');
+            });
+
+            Livewire.on('editProductCloseModal', () => {
+                $('#editProduct').modal('hide');
+            });
+
+            Livewire.on('checkoutOpenModal', () => {
+                $('#paymentModel').modal('show');
+            });
+
+            Livewire.on('checkoutInstallmentOpenModal', () => {
+                $('#installmentModal').modal('show');
+            });
+
+            Livewire.on('customerIdReset', () => {
+                console.log('customerIdReset');
+                $('#customer_id').trigger('change');
+            });
         });
-
-        Livewire.on('editProductCloseModal', () => {
-            $('#editProduct').modal('hide');
-        });
-
-        Livewire.on('checkoutOpenModal', () => {
-            $('#paymentModel').modal('show');
-        });
-
-        Livewire.on('checkoutInstallmentOpenModal', () => {
-            $('#installmentModal').modal('show');
-        });
-
-        Livewire.on('customerIdReset', () => {
-            console.log('customerIdReset');
-            $('#customer_id').trigger('change');
-        });
-
-     });
-</script>
-
+    </script>
 @endpush

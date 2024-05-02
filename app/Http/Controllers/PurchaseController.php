@@ -134,12 +134,42 @@ class PurchaseController extends Controller
 
     public function destroy(Purchase $purchase)
     {
-        //
+
+        DB::beginTransaction();
+        try {
+
+            foreach ($purchase->purchase_items as $purchase_item) {
+
+                $product = Product::find($purchase_item->product_id);
+
+                $product->decrementQuantity($purchase_item->warehouse_id, $purchase_item->quantity);
+                $product->save();
+
+                $purchase_item->delete();
+            }
+
+            foreach ($purchase->purchase_payments as $purchase_payment) {
+                $purchase_payment->delete();
+            }
+
+
+            $purchase->delete();
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            dd($th);
+            return redirect()->route('purchases.index')->with('error', 'Ошибка удаления покупки' . $th->getMessage());
+        }
+
+        return redirect()->route('purchases.index')->with('success', 'Покупка успешно удалена');
     }
 
     private function generateInvoiceNumber()
     {
-        $lastInvoice = Purchase::whereDate('date', Date('Y-m-d'))->count() + 1;
+        // $lastInvoice = Purchase::whereDate('date', Date('Y-m-d'))->count() + 1;
+        $lastInvoice = DB::table('purchases')->whereDate('date', Date('Y-m-d'))->count() + 1;
         return 'INV-' . Date('dmy') . '-' . $lastInvoice;
     }
 }

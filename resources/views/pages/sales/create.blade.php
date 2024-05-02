@@ -21,6 +21,7 @@
 		</div>
 	</div>
     @livewire('customer.create')
+    @livewire('sale.customer-search')
 @endsection
 
 @push('js')

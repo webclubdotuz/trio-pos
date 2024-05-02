@@ -7,6 +7,7 @@ use App\Models\Sale;
 use App\Models\Transaction;
 use App\Services\TelegramService;
 use Anam\Phpcart\Cart;
+use App\Models\Customer;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -14,7 +15,7 @@ use Livewire\Component;
 class Create extends Component
 {
 
-    public $search;
+    public $search, $customer_info;
 
     #[Validate('required')]
     public $warehouse_id;
@@ -37,12 +38,18 @@ class Create extends Component
     public $first_payment, $percent, $month;
     public $is_installment = false;
 
-    protected $listeners = ['refreshCustomer' => 'refreshCustomer', 'refreshSale' => '$refresh'];
+    protected $listeners = ['refreshCustomer' => 'refreshCustomer', 'refreshSale' => '$refresh', 'setCustomer'];
 
-    public function refreshCustomer($customer_id)
+    // setCustomer
+
+    public function setCustomer($customer_id)
     {
-        $this->customer_id = $customer_id[0]['id'];
-        $this->dispatch('customerIdReset');
+
+        $customer = Customer::where('id', $customer_id)->first();
+
+        $this->customer_id = $customer->id;
+        $this->customer_info = $customer->full_name . ' (' . $customer->phone . ')';
+
     }
 
     public function mount()
@@ -52,7 +59,7 @@ class Create extends Component
         $this->currency = getCurrencyRate();
 
         $this->warehouse_id = auth()->user()->warehouse_id ?? 1;
-        $this->customer_id = 1;
+        $this->customer_id = null;
         $this->payment_methods[0] = 1;
         $this->payment_amounts[0] = 0;
 

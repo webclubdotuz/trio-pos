@@ -26,6 +26,7 @@
                 <tr>
                     <th></th>
                     <th>INV</th>
+                    <th>Продукт</th>
                     <th>Дата</th>
                     <th>Поставщик</th>
                     <th>Сумма</th>
@@ -39,6 +40,15 @@
                             {{ view('pages.purchases.actions', ['purchase' => $purchase]) }}
                         </td>
                         <td>{{ $purchase->invoice_number }}</td>
+                        <td>
+                            <ul>
+                                @foreach($purchase->purchase_items as $purchase_item)
+                                <li>
+                                    <a href="{{ route('products.show', $purchase_item->product->id) }}">{{ $purchase_item->product->name }}</a> ({{ nf($purchase_item->quantity) }} x ${{ nf($purchase_item->price_usd) }} = ${{ nf($purchase_item->total_usd) }})
+                                </li>
+                                @endforeach
+                            </ul>
+                        </td>
                         <td>{{ df($purchase->date) }}</td>
                         <td>{{ $purchase->supplier->full_name }}</td>
                         <td>{{ nf($purchase->total) }}</td>

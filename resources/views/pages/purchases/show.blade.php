@@ -74,7 +74,8 @@
                                 <tbody>
                                     @foreach($purchase->purchase_items as $purchase_item)
                                         <tr>
-                                            <td>{{ $purchase_item->product->name }}</td>
+                                            <td>{{ $purchase_item?->product_id }}</td>
+                                            <td>{{ ($purchase_item->product->name) }}</td>
                                             <td>{{ $purchase_item->quantity }}</td>
                                             <td>{{ nf($purchase_item->price) }} uzs / ${{ nf($purchase_item->price_usd) }}</td>
                                             <td>{{ nf($purchase_item->total) }} uzs / ${{ nf($purchase_item->total_usd) }}</td>
