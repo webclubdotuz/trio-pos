@@ -24,9 +24,11 @@
         <div class="col-md-4">
             <x-widgets.static-widget :title="'Просроченные оплаты рассрочек'" :icon="'bx bx-money'"  :value="nf($installmet_debt)" :route="route('reports.installment-report-debt')" />
         </div>
+        @if (hasRoles(['admin', 'manager']))
         <div class="col-md-4">
             <x-widgets.static-widget :title="'Долг от поставщиков'" :icon="'bx bx-money'"  :value="'$' . nf($purchase_debt)" :route="route('purchases.index')" />
         </div>
+        @endif
         <div class="col-md-4">
             <x-widgets.static-widget :title="'Количество продаж'" :icon="'bx bx-line-chart'"  :value="nf($sales_count)" :route="route('sales.index')" />
         </div>

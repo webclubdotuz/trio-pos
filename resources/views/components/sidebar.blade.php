@@ -19,7 +19,7 @@
             </a>
         </li>
 
-        @if (hasRoles(['admin', 'manager', 'salesman']))
+        @if (hasRoles(['admin', 'manager', 'salesman', 'kassir']))
             <li>
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class='lni lni-users'></i>
@@ -31,6 +31,20 @@
                     @if (hasRoles(['admin', 'manager']))
                         <li><a href="{{ route('suppliers.index') }}"><i class="lni lni-users"></i> Поставщики</a></li>
                     @endif
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class='bx bx-minus-circle'></i>
+                    </div>
+                    <div class="menu-title">Расходы</div>
+                </a>
+                <ul>
+                    <li><a href="{{ route('expenses.create') }}"><i class="bx bx-plus"></i> Добавить расход</a></li>
+                    <li><a href="{{ route('expenses.index') }}"><i class="bx bx-list-plus"></i> Список расходов</a>
+                    </li>
+                    <li><a href="{{ route('expense-categories.index') }}"><i class="bx bx-list-plus"></i> Расходные
+                            категории</a></li>
                 </ul>
             </li>
         @endif
@@ -81,21 +95,6 @@
                     </ul>
                 </li>
             @endif
-            <li>
-                <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon"><i class='bx bx-minus-circle'></i>
-                    </div>
-                    <div class="menu-title">Расходы</div>
-                </a>
-                <ul>
-                    <li><a href="{{ route('expenses.create') }}"><i class="bx bx-plus"></i> Добавить расход</a></li>
-                    <li><a href="{{ route('expenses.index') }}"><i class="bx bx-list-plus"></i> Список расходов</a>
-                    </li>
-                    <li><a href="{{ route('expense-categories.index') }}"><i class="bx bx-list-plus"></i> Расходные
-                            категории</a></li>
-                </ul>
-            </li>
-
             @if (hasRoles(['salesman']))
                 <li>
                     <a href="javascript:;" class="has-arrow">
@@ -177,6 +176,19 @@
                             месяцы</a></li>
                 </ul>
             </li>
+        @endif
+
+        @if (hasRoles(['kassir']))
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class='bx bx-chart'></i>
+                </div>
+                <div class="menu-title">Отчеты</div>
+            </a>
+            <ul>
+                <li><a href="{{ route('reports.kassa') }}"><i class="bx bx-money"></i> Касса</a></li>
+            </ul>
+        </li>
         @endif
     </ul>
     <!--end navigation-->
