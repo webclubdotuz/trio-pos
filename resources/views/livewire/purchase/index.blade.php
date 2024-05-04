@@ -44,7 +44,7 @@
                             <ul>
                                 @foreach($purchase->purchase_items as $purchase_item)
                                 <li>
-                                    <a href="{{ route('products.show', $purchase_item?->product?->id) }}">{{ $purchase_item->product->name }}</a> ({{ nf($purchase_item->quantity) }} x ${{ nf($purchase_item->price_usd) }} = ${{ nf($purchase_item->total_usd) }})
+                                    <a href="{{ route('products.show', $purchase_item->product->id) }}">{{ $purchase_item->product->name }}</a> ({{ nf($purchase_item->quantity) }} x ${{ nf($purchase_item->price_usd) }} = ${{ nf($purchase_item->total_usd) }})
                                 </li>
                                 @endforeach
                             </ul>
