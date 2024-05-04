@@ -25,6 +25,7 @@
                             <button class="btn btn-success btn-sm m-1" type="button" id="triggerId" data-bs-toggle="dropdown">
                                 <i class='bx bx-trending-up'></i>{{ nf(getCurrencyRate()) }} UZS
                             </button>
+                            @if (hasRoles())
                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                 <form action="{{ route('settings.update', 'currency') }}" method="post" class="p-2">
                                     @csrf
@@ -35,6 +36,7 @@
                                     </button>
                                 </form>
                             </div>
+                            @endif
                         </div>
 
                     </li>

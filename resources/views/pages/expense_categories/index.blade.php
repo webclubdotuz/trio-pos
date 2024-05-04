@@ -27,6 +27,7 @@
                             <td>{{ $expense_category->id }}</td>
                             <td>{{ $expense_category->name }}</td>
                             <td>
+                                @if (hasRoles())
                                 <form action="{{ route('expense-categories.destroy', $expense_category->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -41,6 +42,7 @@
                                         @endif
                                     </div>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

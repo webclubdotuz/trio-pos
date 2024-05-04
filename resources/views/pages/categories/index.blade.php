@@ -29,11 +29,12 @@
                                     <td>{{ $category->name }}</td>
                                     <td>{{ $category->description }}</td>
                                     <td>
-                                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary btn-sm">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
                                         <a href="{{ route('categories.show', $category->id) }}" class="btn btn-info btn-sm">
                                             <i class="bx bx-show"></i>
+                                        </a>
+                                        @if (hasRoles())
+                                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary btn-sm">
+                                            <i class="bx bx-edit"></i>
                                         </a>
                                         <form action="{{ route('categories.destroy', $category->id) }}" method="post" class="d-inline">
                                             @csrf
@@ -42,6 +43,7 @@
                                                 <i class="bx bx-trash"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

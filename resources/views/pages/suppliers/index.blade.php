@@ -31,11 +31,12 @@
                                     <td>{{ $supplier->phone }}</td>
                                     <td>{{ $supplier->address }}</td>
                                     <td>
-                                        <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-primary btn-sm">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
                                         <a href="{{ route('suppliers.show', $supplier->id) }}" class="btn btn-info btn-sm">
                                             <i class="bx bx-show"></i>
+                                        </a>
+                                        @if (hasRoles())
+                                        <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-primary btn-sm">
+                                            <i class="bx bx-edit"></i>
                                         </a>
                                         <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="post" class="d-inline">
                                             @csrf
@@ -44,6 +45,7 @@
                                                 <i class="bx bx-trash"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

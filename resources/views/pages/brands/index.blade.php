@@ -33,11 +33,12 @@
                                     <td>{{ $brand->name }}</td>
                                     <td>{{ $brand->description }}</td>
                                     <td>
-                                        <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-primary btn-sm">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
                                         <a href="{{ route('brands.show', $brand->id) }}" class="btn btn-info btn-sm">
                                             <i class="bx bx-show"></i>
+                                        </a>
+                                        @if (hasRoles())
+                                        <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-primary btn-sm">
+                                            <i class="bx bx-edit"></i>
                                         </a>
                                         <form action="{{ route('brands.destroy', $brand->id) }}" method="post" class="d-inline">
                                             @csrf
@@ -46,6 +47,7 @@
                                                 <i class="bx bx-trash"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

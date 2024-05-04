@@ -31,11 +31,12 @@
                                     <td>{{ $warehouse->phone }}</td>
                                     <td>{{ $warehouse->address }}</td>
                                     <td>
-                                        <a href="{{ route('warehouses.edit', $warehouse->id) }}" class="btn btn-primary btn-sm">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
                                         <a href="{{ route('warehouses.show', $warehouse->id) }}" class="btn btn-info btn-sm">
                                             <i class="bx bx-show"></i>
+                                        </a>
+                                        @if (hasRoles())
+                                        <a href="{{ route('warehouses.edit', $warehouse->id) }}" class="btn btn-primary btn-sm">
+                                            <i class="bx bx-edit"></i>
                                         </a>
                                         <form action="{{ route('warehouses.destroy', $warehouse->id) }}" method="post" class="d-inline">
                                             @csrf
@@ -44,6 +45,7 @@
                                                 <i class="bx bx-trash"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

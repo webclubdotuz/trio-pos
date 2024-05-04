@@ -189,6 +189,7 @@
                                     <strong>Комментарий:</strong> {{ $sale->review->comment }} <br>
                                 </p>
 
+                                @if (hasRoles())
                                 <form action="{{ route('sales.destroy-review', ['sale' => $sale->id, 'review' => $sale->review->id]) }}" method="post" class="d-inline">
                                     @csrf
                                     @method('delete')
@@ -196,6 +197,7 @@
                                         Удалить отзыв
                                     </button>
                                 </form>
+                                @endif
 
                             @else
                                 <!-- Button trigger modal -->
