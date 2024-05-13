@@ -75,6 +75,7 @@
                                 <td>{{ $expense->payment_method->name }}</td>
                                 <td>{{ $expense->created_at->format('d.m.Y') }}</td>
                                 <td>
+                                    @if (hasRoles(['admin']))
                                     <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -87,6 +88,7 @@
                                             </button>
                                         </div>
                                     </form>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
