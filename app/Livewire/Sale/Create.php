@@ -37,6 +37,7 @@ class Create extends Component
     public $installment_lists = [];
     public $first_payment, $percent, $month;
     public $is_installment = false;
+    public $user_id;
 
     protected $listeners = ['refreshCustomer' => 'refreshCustomer', 'refreshSale' => '$refresh', 'setCustomer'];
 
@@ -344,6 +345,7 @@ class Create extends Component
             'payments' => 'required|array',
             'payment_amounts' => 'required|array',
             'payment_amounts.*' => 'required|numeric|min:0',
+            'user_id' => 'required|exists:users,id',
         ]);
 
         if (array_sum($this->payment_amounts) > 0) {
@@ -364,7 +366,7 @@ class Create extends Component
                 'invoice_number' => 'INV-' . time(),
                 'warehouse_id' => $this->warehouse_id, // 'warehouse_id' => auth()->user()->warehouse_id ?? 1,
                 'customer_id' => $this->customer_id,
-                'user_id' => auth()->id(),
+                'user_id' => $this->user_id,
                 'total' => $total,
                 'total_usd' => $total / $this->currency,
                 'currency_rate' => $this->currency,
